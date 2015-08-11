@@ -3,7 +3,6 @@
 use App\Models\ReferentialModels\Brand;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 
 class BrandController extends Controller {
@@ -103,6 +102,27 @@ class BrandController extends Controller {
         $independiente = 'Vehiculo';
         $controlador = '\Brand';
         return array($referencial, $independiente, $controlador);
+    }
+
+
+    public function storeModal()
+    {
+        $input=\Input::all();
+        $description=$input['value'];
+        $input['description']=$description;
+        unset($input['pk']);
+        unset($input['name']);
+        unset($input['value']);
+        unset($input['_token']);
+        $number=Brand::where('description','=',$input['description'])->count();
+
+        if($number==0){
+            Brand::create($input);
+            $html=Brand::select('id','description')->get();
+            return $html;
+        }else{
+            return 0;
+        }
     }
 
 }

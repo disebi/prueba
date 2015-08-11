@@ -34,5 +34,5 @@
            @endsection
 
 @section('javascripts')
-@include('partials.msj')
+@include('partials.functionMsj')
 @stop

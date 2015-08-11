@@ -44,6 +44,7 @@
                 </a>
                 <ul class="treeview-menu">
                  <li><a href="{{ action('ReferentialControllers\BranchController@index') }}"><i class="fa fa-circle-o"></i> Sucursales</a></li>
+                           <li><a href="{{ action('ReferentialControllers\DriveController@index') }}"><i class="fa fa-circle-o"></i> Vehiculos</a></li>
 
                     <li><a href="{{ action('ReferentialControllers\PositionController@index') }}"><i class="fa fa-circle-o"></i> Cargos</a></li>
                     <li><a href="{{ action('ReferentialControllers\BusinessController@index') }}"><i class="fa fa-circle-o"></i> Rubros</a></li>
@@ -70,6 +71,21 @@
                                 <li><a href="{{ action('ReferentialControllers\AromaController@index') }}"><i class="fa fa-circle-o"></i> Aromas</a></li>
                                 <li><a href="{{ action('ReferentialControllers\UnityController@index') }}"><i class="fa fa-circle-o"></i> Unidades de Medida</a></li>
                                  <li><a href="{{ action('ReferentialControllers\ProviderController@index') }}"><i class="fa fa-circle-o"></i> Proveedores</a></li>
+
+                            </ul>
+                        </li>
+
+            <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-files-o"></i>
+                                <span>Usuarios</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+
+                            </a>
+                            <ul class="treeview-menu">
+                             <li><a href="{{ action('LicenseController@index') }}"><i class="fa fa-user"></i> Permisos</a></li>
+
+
 
                             </ul>
                         </li>

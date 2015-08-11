@@ -5,8 +5,8 @@
    {!! Form:: select ('city_list',$cities,null,['class'=>'form-control input-lg'])!!}
    </div>
    <div class="col-lg-6">
-     {{--<a class="btn btn-sm btn-success" onclick="nuevaCiudad()"><i class="fa fa-plus"></i> Nueva Ciudad</a>--}}
-    <a class="btn btn-sm btn-success simpleModal"  data-type="text" data-title="Nueva Ciudad"><i class="fa fa-plus"></i></a>
+     {{--<a class="btn btn-sm btn-success" onclick="modal('dialogCiudad')"><i class="fa fa-plus"></i> Nueva Ciudad</a>--}}
+    <a class="btn btn-sm btn-success simpleModal" id="citypop" data-type="text" data-title="Nueva Ciudad"><i class="fa fa-plus"></i></a>
    </div>
   <p class="help-block">Ciudad a que pertenece la zona</p>
   </div>
@@ -41,16 +41,9 @@
 
 <!-- Text input-->
 
-
-
+@section('javascripts')
+<script src="{{ URL::asset('/js/select2.full.min.js') }}"></script>
 <script type="text/javascript">
-
-
-function nuevaCiudad (){
-
-
-  $("#dialogCiudad").modal('show');
-
-
-   }
-</script>
+$("#city_list").select2();
+ </script>
+@append

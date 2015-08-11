@@ -1,14 +1,17 @@
 @extends('app2')
+@section('css')
+ <link href="{{ asset('/css/select2.css') }}" rel="stylesheet" type="text/css" />
 
+@stop
            @section('content')
 
 
 
                 <section class="content-header">
-                         <h1>Nuevo proveedor<small>de productos</small> </h1>
+                         <h1>Nuevo Permiso<small>de Rol</small> </h1>
                    <ol class="breadcrumb">
-                           <li><a href="#"><i class="fa fa-dashboard"></i> Productos</a></li>
-                           <li><a href="#">Proveedor</a></li>
+                           <li><a href="#"><i class="fa fa-dashboard"></i> {{$independiente}}</a></li>
+                           <li><a href="#">{{$referencial}}</a></li>
                   </ol>
                 </section>
 
@@ -17,13 +20,13 @@
                 <section class="content animsition">
                              <div class="row">
                                <div class="col-xs-12">
-                                 <div class="box box-primary">
+                                 <div class="box">
                                    <div class="box-header" >
-                                     <h3 class="box-title">Crear un nuevo registro de Proveedor</h3>
+                                     <h3 class="box-title">Crear un nuevo registro de Permisos</h3>
                                    </div><!-- /.box-header -->
 
-                                           {!! Form:: open(['url'=>'/proveedores'])!!}
-                                               @include('provider.form',['submit'=>'Guardar'])
+                                           {!! Form:: open(['url'=>$url])!!}
+                                               @include('license.form',['submit'=>$submit])
                                            {!!Form::close()!!}
 
 

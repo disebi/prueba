@@ -17,7 +17,7 @@
 
 
         <!-- Main content -->
-     <section class="content">
+     <section class="content animsition">
                   <div class="row">
                     <div class="col-xs-12">
                       <div class="box">
@@ -35,18 +35,9 @@
                     </div><!-- /.col -->
                  </div><!-- /.row -->
         </section><!-- /.content -->
-@include('simpleRef.simple_referential_modal',['urlmodal'=>'/ciudad','modalreferential'=>'Ciudad','id'=>'dialogCiudad'])
-
 @endsection
 
 @section('javascripts')
-@include('partials.msj')
-
- <script src="{{ URL::asset('/js/select2.full.min.js') }}"></script>
-
-<script type="text/javascript">
-
-$("#city_list").select2();
-</script>
-
-@stop
+@include('partials.functionMsj')
+    @include('simpleRef.simple_referential_popout',['comboBox'=>'city_list','urlmodal'=>'/ciudad','idpop'=>'citypop','controllermodal'=>'\City'])
+@append

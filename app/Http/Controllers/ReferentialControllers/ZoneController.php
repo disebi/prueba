@@ -75,33 +75,26 @@ class ZoneController extends Controller {
     public function update($id,Requests\CreateZoneRequest $request)
     {
         $model = Zone::find($id);
-
         $obj=$request->all();
-
         $obj['city_id'] = $obj['city_list'];
         unset($obj['city_list']);
         $model->update($obj);
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return redirect()->to('/zonas')->with($params);
-
     }
-
 
     public function destroy($id)
     {
-
         try{
         Zone::destroy($id);
         return redirect()->back()->with('message', 'El registro se ha eliminado con exito')
             ->with('alert', 'success');
-
     }catch(QueryException $e){
             return redirect()->back()->with('message', 'El registro no ha podido ser eliminado, esta siendo utilizado actualmente')
                 ->with('alert', 'error');
         }
     }
-
 
     public function sendInfo()
     {

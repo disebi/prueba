@@ -1,5 +1,10 @@
 @extends('app2')
 
+@section('css')
+ <link href="{{ asset('/css/select2.css') }}" rel="stylesheet" type="text/css" />
+
+@stop
+
 @section('content')
 
      <section class="content-header">
@@ -20,16 +25,19 @@
                           <h3 class="box-title">Editar un registro de {{$referencial}}</h3>
                         </div><!-- /.box-header -->
                                 {!! Form:: model($model, ['action'=>[$action,$model->id],'method'=>'PATCH'])!!}
-                                    @include('simpleRef.simple_referential_form',['submit'=>$submit])
+                                  {!! Form::hidden('id', $model->id) !!}
+
+                                    @include('drive.form',['submit'=>$submit])
+
                                 {!!Form::close()!!}
                      </div><!-- /.box -->
 
                     </div><!-- /.col -->
                  </div><!-- /.row -->
         </section><!-- /.content -->
-
 @endsection
 
 @section('javascripts')
-@include('partials.functionMsj')
-@stop
+     @include('partials.functionMsj')
+     @include('simpleRef.simple_referential_popout',['comboBox'=>'brand_list','urlmodal'=>'/marcasModal','idpop'=>'brandpop','controllermodal'=>'\Brand'])
+@append

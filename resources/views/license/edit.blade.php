@@ -1,5 +1,8 @@
 @extends('app2')
+@section('css')
+ <link href="{{ asset('/css/select2.css') }}" rel="stylesheet" type="text/css" />
 
+@stop
 @section('content')
 
      <section class="content-header">
@@ -20,7 +23,7 @@
                           <h3 class="box-title">Editar un registro de {{$referencial}}</h3>
                         </div><!-- /.box-header -->
                                 {!! Form:: model($model, ['action'=>[$action,$model->id],'method'=>'PATCH'])!!}
-                                    @include('simpleRef.simple_referential_form',['submit'=>$submit])
+                                    @include('license.form',['submit'=>$submit])
                                 {!!Form::close()!!}
                      </div><!-- /.box -->
 

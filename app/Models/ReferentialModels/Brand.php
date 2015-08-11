@@ -7,4 +7,8 @@ class Brand extends Model {
     protected $fillable =['description'];
 
 
+    public function drive(){
+        return $this->hasMany('App\Models\ReferentialModels\Drive');
+    }
+
 }

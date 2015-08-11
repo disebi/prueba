@@ -3,10 +3,9 @@
 use App\Models\ReferentialModels\City;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use Log;
 
 class CityController extends Controller {
 
@@ -17,48 +16,24 @@ class CityController extends Controller {
         $url='ciudad';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('simpleRef.simple_referential_index',compact('url','tabla','referencial','independiente','controlador'));
-
     }
 
 
 	public function create()
 	{
-
-
         $url='ciudad';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $submit='Guardar';
         return view ('simpleRef.simple_referential_create',compact('url','referencial','independiente','controlador','submit'));
-
     }
 
 
     public function store(Requests\CreateSimpleReffRequest $request)
     {
-
-
-        $input=\Input::all();
-
         $params = ['message'=>'La ciudad se ha guardado con exito',
             'alert'=>'success'];
-        if(array_key_exists('modal',$input)){
-            unset($input['modal']);
-            $number=City::where('description','=',$input['description'])->count();
-
-            if($number==0){
-               City::create($request->all());
-                $html=City::select('id','description')->get();
-                return $html;
-
-            }else{
-
-                return 0;
-            }
-
-        }else{
-            City::create($request->all());
-            return \Redirect::to('ciudad')->with($params);
-        }
+         City::create($request->all());
+         return \Redirect::to('ciudad')->with($params);
     }
 
 
@@ -69,9 +44,7 @@ class CityController extends Controller {
         $url='ciudad';
         $action='ReferentialControllers\CityController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
-
         return view ('simpleRef.simple_referential_edit',compact('action','url','model','submit','referencial','independiente'));
-
     }
 
 
@@ -84,7 +57,6 @@ class CityController extends Controller {
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return \Redirect::to('ciudad')->with($params);
-
 	}
 
 
@@ -96,11 +68,9 @@ class CityController extends Controller {
                 ->with('alert','success');
         }
         catch(QueryException $e){
-
             return redirect()->to('/ciudad')->with('message','El registro seleccionado no puede ser eliminado, esta siendo utilizado actualmente')
                 ->with('alert','error');
         }
-
 	}
 
 
@@ -116,5 +86,24 @@ class CityController extends Controller {
      * @param $input
      */
 
+    public function storeModal()
+    {
+        $input=\Input::all();
+        $description=$input['value'];
+        $input['description']=$description;
+        unset($input['pk']);
+        unset($input['name']);
+        unset($input['value']);
+        unset($input['_token']);
+        $number=City::where('description','=',$input['description'])->count();
+
+        if($number==0){
+            City::create($input);
+            $html=City::select('id','description')->get();
+            return $html;
+        }else{
+            return 0;
+        }
+    }
 
 }

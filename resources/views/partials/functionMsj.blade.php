@@ -20,25 +20,18 @@
 
 
 
+
+      @if (\Session::has('message') ||$errors->any())
       $(document).ready(function() {
+           @if (\Session::has('message'))
+            mensajito(<?php echo json_encode(\Session::get('alert')); ?>,<?php echo json_encode(\Session::get('message')); ?>);
+           @endif
+           @if($errors->any())
+                  @foreach($errors->all() as $error)
+                    mensajito('error',<?php echo json_encode($error); ?>);
+                  @endforeach
 
-      @if (\Session::has('message'))
-          mensajito(<?php echo json_encode(\Session::get('alert')); ?>,<?php echo json_encode(\Session::get('message')); ?>);
-      @endif
-       @if($errors->any())
-          @foreach($errors->all() as $error)
-
-                mensajito('error',<?php echo json_encode($error); ?>);
-          @endforeach
-       @endif
-      });
-
-
-
-
-                      $(document).ready(function() {
-
-                      });
-
-
+           @endif
+     });
+     @endif
        </script>

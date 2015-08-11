@@ -14,7 +14,7 @@
 
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> de la Empresa</a></li>
-            <li><a href="#">Cargo</a></li>
+            <li><a href="#">Sucursales</a></li>
 
           </ol>
  </section>
@@ -83,5 +83,5 @@
 
       });
     </script>
-    @include('partials.msj')
+  @include('partials.functionMsj')
 @stop

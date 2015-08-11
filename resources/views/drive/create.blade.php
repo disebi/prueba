@@ -19,10 +19,10 @@
                                <div class="col-xs-12">
                                  <div class="box box-primary">
                                    <div class="box-header" >
-                                     <h3 class="box-title">Crear un nuevo registro de Zona</h3>
+                                     <h3 class="box-title">Crear un nuevo registro de Vehiculo</h3>
                                    </div><!-- /.box-header -->
-                                           {!! Form:: open(['url'=>'/zonas'])!!}
-                                               @include('zone.form',['submit'=>'Guardar'])
+                                           {!! Form:: open(['url'=>'/vehiculos'])!!}
+                                               @include('drive.form',['submit'=>'Guardar'])
                                            {!!Form::close()!!}
                              </div><!-- /.col -->
                                </div><!-- /.col -->
@@ -32,6 +32,6 @@
 @endsection
 
 @section('javascripts')
-    @include('simpleRef.simple_referential_popout',['comboBox'=>'city_list','urlmodal'=>'/ciudad','idpop'=>'citypop','controllermodal'=>'\City'])
+    @include('simpleRef.simple_referential_popout',['comboBox'=>'brand_list','urlmodal'=>'/marcasModal','idpop'=>'brandpop','controllermodal'=>'\Brand'])
 @append
 

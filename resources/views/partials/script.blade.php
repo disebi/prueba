@@ -27,7 +27,7 @@
 
      $(document).ready(function() {
 
-                    $('.simpleModal').editable({display:false});
+
 
        $(".animsition").animsition({
 

@@ -109,6 +109,6 @@
    }
     </script>
 
-@include('partials.msj')
+@include('partials.functionMsj')
 
 @stop

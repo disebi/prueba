@@ -88,7 +88,7 @@
 @stop
 
 @section('javascripts')
-@include('partials.msj')
+@include('partials.functionMsj')
 <script type="text/javascript">
   $(function () {
          $("#tablalista").dataTable();
