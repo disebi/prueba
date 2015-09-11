@@ -1,10 +1,11 @@
 @extends('app2')
 
 
-@section('css')
- <link href="{{ asset('/css/select2.css') }}" rel="stylesheet" type="text/css" />
-
-@stop
+{{--@section('css')--}}
+ {{--<link href="{{ asset('/css/select2.css') }}" rel="stylesheet" type="text/css" />--}}
+    {{--<!-- x-editable (bootstrap) -->--}}
+  {{--<link href="/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">--}}
+{{--@append--}}
 @section('content')
                 <section class="content-header">
                          <h1>Nueva {{$referencial}}<small>de {{$independiente}}</small> </h1>
@@ -22,7 +23,7 @@
                                      <h3 class="box-title">Crear un nuevo registro de Zona</h3>
                                    </div><!-- /.box-header -->
                                            {!! Form:: open(['url'=>'/zonas'])!!}
-                                               @include('zone.form',['submit'=>'Guardar'])
+                                               @include('zone.form',['submit'=>$submit,'kmt'=>'km','comisiont'=>'comision','descriptiont'=>'description'])
                                            {!!Form::close()!!}
                              </div><!-- /.col -->
                                </div><!-- /.col -->

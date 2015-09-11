@@ -33,7 +33,8 @@ class CreateZonesTable extends Migration {
 	 * @return void
 	 */
 	public function down()
-	{
+	{   Schema::dropIfExists('businesses');
+        Schema::dropIfExists('clients');
         Schema::dropIfExists('cities');
 		Schema::dropIfExists('zones');
 	}

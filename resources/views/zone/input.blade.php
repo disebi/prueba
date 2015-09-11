@@ -13,27 +13,27 @@
 </div>
 
 <div class="control-group">
-{!! Form:: label ('description','Zona:')!!}
+{!! Form:: label ($descriptiont,'Zona:')!!}
 <div class="controls">
-{!! Form:: text ('description',null,['placeholder'=>'Sajonia', 'class'=>'input-medium', 'required'=>'','class'=>'form-control'])!!}
+{!! Form:: text ($descriptiont,null,['placeholder'=>'Sajonia', 'class'=>'input-medium', 'class'=>'form-control'])!!}
  <p class="help-block">Nombre de la Zona</p>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="control-group">
-{!! Form:: label ('comision','Comision:')!!}
+{!! Form:: label ($comisiont,'Comision:')!!}
   <div class="controls">
-  {!! Form:: text ('comision',null,['placeholder'=>'10%', 'class'=>'input-medium', 'required'=>'','class'=>'form-control'])!!}
+  {!! Form:: text ($comisiont,null,['placeholder'=>'10%', 'class'=>'input-medium', 'class'=>'form-control'])!!}
     <p class="help-block">Porcentaje de comision de la zona</p>
   </div>
 </div>
 
 <!-- Text input-->
 <div class="control-group">
-{!! Form:: label ('km','KM:')!!}
+{!! Form:: label ($kmt,'KM:')!!}
   <div class="controls">
-   {!! Form:: text ('km',null,['placeholder'=>'120', 'class'=>'input-medium', 'required'=>'','class'=>'form-control'])!!}
+   {!! Form:: text ($kmt,null,['placeholder'=>'120', 'class'=>'input-medium', 'class'=>'form-control'])!!}
 
     <p class="help-block">Km de recorrido aproximado</p>
   </div>

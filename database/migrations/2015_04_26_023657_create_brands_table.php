@@ -27,6 +27,7 @@ class CreateBrandsTable extends Migration {
 	 */
 	public function down()
 	{
+        Schema::dropIfExists('drives');
 		Schema::drop('brands');
 	}
 

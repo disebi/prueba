@@ -1,10 +1,5 @@
 @extends('app2')
 
-@section('css')
- <link href="{{ asset('/css/select2.css') }}" rel="stylesheet" type="text/css" />
-
-@stop
-
 @section('content')
 
      <section class="content-header">
@@ -14,8 +9,6 @@
                 <li><a href="#">{{$referencial}}</a></li>
        </ol>
      </section>
-
-
         <!-- Main content -->
      <section class="content animsition">
                   <div class="row">
@@ -26,9 +19,7 @@
                         </div><!-- /.box-header -->
                                 {!! Form:: model($model, ['action'=>[$action,$model->id],'method'=>'PATCH'])!!}
                                   {!! Form::hidden('id', $model->id) !!}
-
-                                    @include('zone.form',['submit'=>$submit])
-
+                                    @include('zone.form',['submit'=>$submit,'kmt'=>'km','comisiont'=>'comision','descriptiont'=>'description'])
                                 {!!Form::close()!!}
                      </div><!-- /.box -->
 

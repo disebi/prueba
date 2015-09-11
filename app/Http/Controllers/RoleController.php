@@ -1,16 +1,20 @@
-<?php namespace App\Http\Controllers\ReferentialControllers;
+<?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class ProductController extends Controller {
+class RoleController extends Controller {
 
-
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
 	public function index()
 	{
-
+		//
 	}
 
 	/**

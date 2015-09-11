@@ -27,7 +27,8 @@ class CreateAromasTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('aromas');
+        Schema::dropIfExists('products');
+        Schema::dropIfExists('aromas');
 	}
 
 }

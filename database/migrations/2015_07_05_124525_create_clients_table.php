@@ -42,10 +42,10 @@ class CreateClientsTable extends Migration {
 	 */
 	public function down()
 	{
-
+        Schema::dropIfExists('clients');
         Schema::dropIfExists('businesses');
         Schema::dropIfExists('zones');
-		Schema::dropIfExists('clients');
+
 	}
 
 }

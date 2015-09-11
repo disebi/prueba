@@ -27,7 +27,8 @@ class CreateLinesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('lines');
+        Schema::dropIfExists('products');
+		Schema::dropIfExists('lines');
 	}
 
 }

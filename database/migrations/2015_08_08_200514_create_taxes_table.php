@@ -15,6 +15,7 @@ class CreateTaxesTable extends Migration {
 		Schema::create('taxes', function(Blueprint $table)
 		{
 			$table->increments('id');
+            $table->integer('valor');
             $table->string('description');
 			$table->timestamps();
 		});
@@ -27,6 +28,7 @@ class CreateTaxesTable extends Migration {
 	 */
 	public function down()
 	{
+        Schema::dropIfExists('products');
 		Schema::drop('taxes');
 	}
 

@@ -27,8 +27,9 @@ class CreateBusinessesTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::dropIfExists('locals');
+        Schema::dropIfExists('clients');
 		Schema::dropIfExists('businesses');
+
 	}
 
 }

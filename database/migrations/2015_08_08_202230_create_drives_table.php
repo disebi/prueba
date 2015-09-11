@@ -32,6 +32,7 @@ class CreateDrivesTable extends Migration {
 	 */
 	public function down()
 	{
+
 		Schema::drop('drives');
 	}
 

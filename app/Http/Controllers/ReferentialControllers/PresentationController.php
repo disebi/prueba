@@ -83,4 +83,24 @@ class PresentationController extends Controller {
         return array($referencial, $independiente, $controlador);
     }
 
+    public function storeModal()
+    {
+        $input=\Input::all();
+        $description=$input['value'];
+        $input['description']=$description;
+        unset($input['pk']);
+        unset($input['name']);
+        unset($input['value']);
+        unset($input['_token']);
+        $number=Presentation::where('description','=',$input['description'])->count();
+
+        if($number==0){
+            Presentation::create($input);
+            $html=Presentation::select('id','description')->get();
+            return $html;
+        }else{
+            return 0;
+        }
+    }
+
 }

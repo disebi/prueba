@@ -44,7 +44,7 @@
                 </a>
                 <ul class="treeview-menu">
                  <li><a href="{{ action('ReferentialControllers\BranchController@index') }}"><i class="fa fa-circle-o"></i> Sucursales</a></li>
-                           <li><a href="{{ action('ReferentialControllers\DriveController@index') }}"><i class="fa fa-circle-o"></i> Vehiculos</a></li>
+                  <li><a href="{{ action('ReferentialControllers\DriveController@index') }}"><i class="fa fa-circle-o"></i> Vehiculos</a></li>
 
                     <li><a href="{{ action('ReferentialControllers\PositionController@index') }}"><i class="fa fa-circle-o"></i> Cargos</a></li>
                     <li><a href="{{ action('ReferentialControllers\BusinessController@index') }}"><i class="fa fa-circle-o"></i> Rubros</a></li>
@@ -71,6 +71,7 @@
                                 <li><a href="{{ action('ReferentialControllers\AromaController@index') }}"><i class="fa fa-circle-o"></i> Aromas</a></li>
                                 <li><a href="{{ action('ReferentialControllers\UnityController@index') }}"><i class="fa fa-circle-o"></i> Unidades de Medida</a></li>
                                  <li><a href="{{ action('ReferentialControllers\ProviderController@index') }}"><i class="fa fa-circle-o"></i> Proveedores</a></li>
+                                <li><a href="{{ action('ReferentialControllers\TaxController@index') }}"><i class="fa fa-circle-o"></i> Impuestos</a></li>
 
                             </ul>
                         </li>

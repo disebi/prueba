@@ -7,72 +7,44 @@ use App\Http\Controllers\Controller;
 
 class AromaController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
 	public function index()
 	{
         $tabla=Aroma::all();
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url = 'aromas';
-
         return view ('simpleRef.simple_referential_index',compact('url','tabla','referencial','independiente','controlador'));
-
     }
-
 
 	public function create()
 	{
-
-
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $submit='Guardar';
         $url = 'aromas';
         return view ('simpleRef.simple_referential_create',compact('url','referencial','independiente','controlador','submit'));
-
-
     }
-
 
 	public function store(Requests\CreateSimpleReffRequest $request)
 	{
-
         $row=$request->input('description');
         $rowcount= Aroma::where('description','=',$row)->get()->toArray();
-
         if ( Empty($rowcount)){
-
             Aroma::create($request->all());
             $params = ['message'=>'Se ha guardado con exito',
                 'alert'=>'success'];
             return Redirect::to('aromas')->with($params);
-
-
         }else{
-
-
             return redirect()->back()->with('message','El registro ya existe')
                 ->with('alert','error');
-
         }
-
     }
-
 
 	public function edit($id)
 	{
         $submit='Guardar Cambios';
         $model = Aroma::find($id);
-
-
         $url='aromas';
         $action='ReferentialControllers\AromaController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
-
-
-
         return view ('simpleRef.simple_referential_edit',compact('action','url','model','submit','referencial','independiente'));
 	}
 
@@ -87,28 +59,20 @@ class AromaController extends Controller {
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return \Redirect::to('aromas')->with($params);
-
-
 	}
 
 
 	public function destroy($id)
 	{
-
         try{
 		Aroma::destroy($id);
         return redirect()->back()->with('message','El registro se ha eliminado con exito')
         ->with('alert','success');
             }
         catch(QueryException $e){
-
         return redirect()->to('/aromas')->with('message','Su registro no ha podido ser eliminado, ya que se esta utilizando')->with('alert','error');
-
         }
-
-
 	}
-
 
     public function sendInfo()
     {
@@ -118,4 +82,23 @@ class AromaController extends Controller {
         return array($referencial, $independiente, $controlador);
     }
 
+    public function storeModal()
+    {
+        $input=\Input::all();
+        $description=$input['value'];
+        $input['description']=$description;
+        unset($input['pk']);
+        unset($input['name']);
+        unset($input['value']);
+        unset($input['_token']);
+        $number=Aroma::where('description','=',$input['description'])->count();
+
+        if($number==0){
+            Aroma::create($input);
+            $html=Aroma::select('id','description')->get();
+            return $html;
+        }else{
+            return 0;
+        }
+    }
 }

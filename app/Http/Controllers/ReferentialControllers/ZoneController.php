@@ -26,8 +26,6 @@ class ZoneController extends Controller {
 
     public function create()
     {
-
-
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='zonas';
         $submit='Guardar';
@@ -40,17 +38,11 @@ class ZoneController extends Controller {
 
     public function store(Requests\CreateZoneRequest $request)
     {
-        $obj=$request->all();
-
-        $obj['city_id'] = $obj['city_list'];
-        unset($obj['city_list']);
-
+       $obj=$request->all();
+       $obj['city_id'] = $obj['city_list'];
+       unset($obj['city_list']);
        Zone::create($obj);
-
-        return redirect()->to('/zonas')->with('message','Su zona se ha creado con exito')->with('alert','success');
-
-
-
+       return redirect()->to('/zonas')->with('message','Su zona se ha creado con exito')->with('alert','success');
     }
 
 
@@ -104,4 +96,12 @@ class ZoneController extends Controller {
         return array($referencial, $independiente, $controlador);
     }
 
+    public function storeModal(Requests\CreateZoneRequest $request)
+    {
+        $input=$request->all();
+        unset($input['_token']);
+        Zone::create($input);
+        $html=Zone::select('id','description')->get();
+        return $html;
+    }
 }

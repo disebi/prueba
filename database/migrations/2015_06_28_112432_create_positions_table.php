@@ -29,6 +29,7 @@ class CreatePositionsTable extends Migration {
 	 */
 	public function down()
 	{
+        Schema::dropIfExists('users');
 		Schema::drop('positions');
 	}
 

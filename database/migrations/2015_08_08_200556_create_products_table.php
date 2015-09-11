@@ -12,8 +12,9 @@ class CreateProductsTable extends Migration {
 	 */
 	public function up()
 	{
+
 		Schema::create('products', function(Blueprint $table)
-		{
+		{   $table->increments('id');
             $table->string('description');
             $table->integer('comision');
             $table->integer('compra');
@@ -33,6 +34,7 @@ class CreateProductsTable extends Migration {
             $table->foreign('unity_id')->references('id')->on('unities');
             $table->foreign('provider_id')->references('id')->on('providers');
             $table->foreign('tax_id')->references('id')->on('taxes');
+
 		});
 	}
 
@@ -43,7 +45,7 @@ class CreateProductsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('products');
+		Schema::dropIfExists('products');
 	}
 
 }

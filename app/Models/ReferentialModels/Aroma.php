@@ -7,4 +7,7 @@ class Aroma extends Model {
     protected $table ='aromas';
     protected $fillable =['description'];
 
+    public function product(){
+        return $this->hasMany('App\Models\ReferentialModels\Product');
+    }
 }

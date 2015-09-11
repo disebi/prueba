@@ -13,17 +13,10 @@ class ClientController extends Controller {
 
 
     public function index()
-    {
-
-
-        $tables=Client::all();
-
-
-
+    {   $tables=Client::all();
         $url='clientes';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('local.index',compact('url','tables','referencial','independiente','controlador'));
-
     }
 
 
@@ -36,14 +29,13 @@ class ClientController extends Controller {
         $edit=0;
         $cities = City::all()->lists('description', 'id');
         return view ('local.create',compact('cities','edit','url','referencial','independiente','controlador','submit','zones','business'));
-
     }
 
 
     public function store(Requests\CreateLocalRequest $request)
     {
         $obj=$request->all();
-
+        $this->cleanStore($obj);
         $obj['zona_id'] = $obj['zone_list'];
         unset($obj['zone_list']);
         $obj['rubro_id'] = $obj['business_list'];
@@ -63,24 +55,22 @@ class ClientController extends Controller {
     {
         $submit='Guardar Cambios';
         $model = Client::findOrFail($id);
-
-
-        $url='Clients';
-        $action='ReferentialControllers\ClientController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
-
+        $url='clientes';
         list($zones, $business) = $this->getCombos();
-
-        return view ('local.edit',compact('business','zones','action','url','model','submit','referencial','independiente'));
+        $edit=0;
+        $cities = City::all()->lists('description', 'id');
+        $action='ReferentialControllers\ClientController@update';
+        return view ('local.edit',compact('zones','action','url','model','submit','cities','edit','referencial','independiente','controlador','business'));
 
     }
-
 
     public function update($id,Requests\CreateLocalRequest $request)
     {
         $model = Client::find($id);
 
         $obj=$request->all();
+        $this->cleanStore($obj);
         $obj['zona_id'] = $obj['zone_list'];
         unset($obj['zone_list']);
         $obj['rubro_id'] = $obj['business_list'];
@@ -117,6 +107,17 @@ class ClientController extends Controller {
         $zones = Zone::all()->lists('description', 'id');
         $business = Business::all()->lists('description', 'id');
         return array($zones, $business);
+    }
+
+    /**
+     * @param $obj
+     */
+    public function cleanStore($obj)
+    {
+        unset($obj['city_list']);
+        unset($obj['kmModal']);
+        unset($obj['descriptionModal']);
+        unset($obj['comisionModal']);
     }
 
 }

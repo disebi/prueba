@@ -6,5 +6,8 @@ class Presentation extends Model {
 
     protected $fillable =['description'];
 
+    public function product(){
+        return $this->hasMany('App\Models\ReferentialModels\Product');
+    }
 
 }

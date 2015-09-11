@@ -15,25 +15,21 @@ class BusinessController extends Controller {
         $url='rubros';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('simpleRef.simple_referential_index',compact('url','tabla','referencial','independiente','controlador'));
-
     }
 
 
 	public function create()
 	{
-
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $submit='Guardar';
         $url='rubros';
         return view ('simpleRef.simple_referential_create',compact('url','referencial','independiente','controlador','submit'));
-
     }
 
 
     public function store(Requests\CreateSimpleReffRequest $request)
     {
         Business::create($request->all());
-
         return (BusinessController::index());
     }
 
@@ -43,14 +39,9 @@ class BusinessController extends Controller {
 	{
         $submit='Guardar Cambios';
         $model = Business::find($id);
-
-
         $url='rubros';
         $action='ReferentialControllers\BusinessController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
-
-
-
         return view ('simpleRef.simple_referential_edit',compact('action','url','model','submit','referencial','independiente'));
 
     }
@@ -87,6 +78,26 @@ class BusinessController extends Controller {
         $independiente = 'Locales';
         $controlador = '\Business';
         return array($referencial, $independiente, $controlador);
+    }
+
+    public function storeModal()
+    {
+        $input=\Input::all();
+        $description=$input['value'];
+        $input['description']=$description;
+        unset($input['pk']);
+        unset($input['name']);
+        unset($input['value']);
+        unset($input['_token']);
+        $number=Business::where('description','=',$input['description'])->count();
+
+        if($number==0){
+            Business::create($input);
+            $html=Business::select('id','description')->get();
+            return $html;
+        }else{
+            return 0;
+        }
     }
 
 }

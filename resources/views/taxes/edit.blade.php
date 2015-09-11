@@ -1,20 +1,18 @@
 @extends('app2')
 
-
-
 @section('content')
 
      <section class="content-header">
               <h1>Editar {{$referencial}}<small>de {{$independiente}}</small> </h1>
         <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Locales {{$independiente}}</a></li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> {{$independiente}}</a></li>
                 <li><a href="#">{{$referencial}}</a></li>
        </ol>
      </section>
 
 
         <!-- Main content -->
-     <section class="content">
+     <section class="content animsition">
                   <div class="row">
                     <div class="col-xs-12">
                       <div class="box">
@@ -22,24 +20,16 @@
                           <h3 class="box-title">Editar un registro de {{$referencial}}</h3>
                         </div><!-- /.box-header -->
                                 {!! Form:: model($model, ['action'=>[$action,$model->id],'method'=>'PATCH'])!!}
-                                  {!! Form::hidden('id', $model->id) !!}
-                                    @include('local.form',['submit'=>$submit])
+                                    @include('taxes.form',['submit'=>$submit])
                                 {!!Form::close()!!}
                      </div><!-- /.box -->
 
                     </div><!-- /.col -->
                  </div><!-- /.row -->
         </section><!-- /.content -->
-@include('partials.functionMsj')
+
 @endsection
 
 @section('javascripts')
-<script src="{{ URL::asset('/js/select2.full.min.js') }}"></script>
-<script type="text/javascript">
-$("#city_list").select2({ width: '100%' });
-$("#business_list").select2();
-$("#zone_list").select2();
-</script>
-
-
-@append
+@include('partials.functionMsj')
+@stop

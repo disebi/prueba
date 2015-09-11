@@ -23,13 +23,11 @@ class CreateSimpleReffRequest extends Request {
 	{
 		return [
 			'description'=> "required"
-
 		];
 	}
     public function messages()
     {
         return [
             'description.required' => 'Favor completar el campo descripcion'
-
         ];
     }}

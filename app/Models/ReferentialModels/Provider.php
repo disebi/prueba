@@ -11,4 +11,8 @@ class Provider extends Model {
                          'direcc',
                          'razon',
                          'ruc'];
+
+    public function product(){
+        return $this->hasMany('App\Models\ReferentialModels\Product');
+    }
 }
