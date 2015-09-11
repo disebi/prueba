@@ -12,12 +12,8 @@ class ZoneController extends Controller {
 
     public function index()
     {
-
-
         $tables=Zone::all();
-        //dd($tables[0]->city->description);
-
-        $url='unidades';
+        $url='zonas';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('zone.index',compact('url','tables','referencial','independiente','controlador'));
 
