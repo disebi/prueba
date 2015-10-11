@@ -1,9 +1,9 @@
  <div class="box-body">
 <!-- Text input-->
 <div class="row">
-<div class="col-xs-6">
-@include('zone.input')
-</div>
+
+@include('product.input')
+
 </div>
 
 <div class="box-footer">

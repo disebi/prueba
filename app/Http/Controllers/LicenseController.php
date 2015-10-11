@@ -29,7 +29,7 @@ class LicenseController extends Controller {
     public function store(Requests\CreateLicenseRequest $request)
     {
 
-        $partials=[0=>'.all',1=>'.view',2=>'.mod',3=>'.del',4=>'.rep'];
+        $partials=[0=>'.all',1=>'.view',2=>'.create|mod',3=>'.del',4=>'.rep'];
         $description=$request->input('description');
         $partial=$partials[$request->input('partials')];
 

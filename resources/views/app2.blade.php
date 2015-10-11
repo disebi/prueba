@@ -38,6 +38,6 @@
             @include('partials.script')
 
             @yield('javascripts')
-            @yield('footter')
+            @yield('footer')
 
 </html>

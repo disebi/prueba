@@ -4,7 +4,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model {
 
-	protected $fillable=[];
+	protected $fillable=[
+      'id',
+      'description',
+      'compra',
+      'venta',
+      'contenido',
+      'aroma_id',
+      'presentation_id',
+      'line_id',
+      'unity_id',
+      'provider_id',
+      'tax_id' ];
     //taxes
     public function tax(){
         return $this->belongsTo('App\Models\ReferentialModels\Tax');

@@ -3,11 +3,9 @@
  <link href="{{ asset('/css/select2.css') }}" rel="stylesheet" type="text/css" />
 
 @stop
-           @section('content')
+@section('content')
 
-
-
-                <section class="content-header">
+     <section class="content-header">
                          <h1>Nuevo Permiso<small>de Rol</small> </h1>
                    <ol class="breadcrumb">
                            <li><a href="#"><i class="fa fa-dashboard"></i> {{$independiente}}</a></li>
@@ -34,9 +32,6 @@
                             </div><!-- /.row -->
                    </section><!-- /.content -->
 
+     @include('partials.functionMsj')
+     @endsection
 
-           @endsection
-
-@section('javascripts')
-@include('partials.functionMsj')
-@stop

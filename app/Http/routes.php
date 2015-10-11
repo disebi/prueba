@@ -26,7 +26,8 @@ Route::group(['middleware' => 'auth'],
         Route::post ('/sucursalesModal','ReferentialControllers\BranchController@storeModal');
         Route::resource ('impuestos','ReferentialControllers\TaxController');
         Route::post ('/impuestosModal','ReferentialControllers\TaxController@storeModal');
-
+        Route::resource ('productos','ReferentialControllers\ProductController');
+        Route::post ('/productosModal','ReferentialControllers\ProductController@storeModal');
 //rutas de referenciales simples de distribucion
         Route::resource ('ciudad','ReferentialControllers\CityController');
         Route::post ('/ciudadModal','ReferentialControllers\CityController@storeModal');

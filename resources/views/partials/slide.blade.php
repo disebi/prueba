@@ -34,6 +34,18 @@
                     <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                 </ul>
             </li>
+               <li class="header">Modulos</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-files-o"></i>
+                                <span>Stock</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+
+                            </a>
+                            <ul class="treeview-menu">
+                             <li><a href="{{ action('ReferentialControllers\ProductController@index') }}"><i class="fa fa-circle-o"></i> Productos</a></li>
+                            </ul>
+                        </li>
             <li class="header">Referenciales</li>
             <li class="treeview">
                 <a href="#">
@@ -57,6 +69,7 @@
                 </ul>
             </li>
 
+
             <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-files-o"></i>
@@ -66,7 +79,7 @@
                             </a>
                             <ul class="treeview-menu">
 
-                                <li><a href="{{ action('ReferentialControllers\PresentationController@index') }}"><i class="fa fa-circle-o"></i> Presentacion</a></li>
+                                 <li><a href="{{ action('ReferentialControllers\PresentationController@index') }}"><i class="fa fa-circle-o"></i> Presentacion</a></li>
                                 <li><a href="{{ action('ReferentialControllers\LineController@index') }}"><i class="fa fa-circle-o"></i> Lineas</a></li>
                                 <li><a href="{{ action('ReferentialControllers\AromaController@index') }}"><i class="fa fa-circle-o"></i> Aromas</a></li>
                                 <li><a href="{{ action('ReferentialControllers\UnityController@index') }}"><i class="fa fa-circle-o"></i> Unidades de Medida</a></li>

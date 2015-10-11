@@ -1,11 +1,5 @@
 @extends('app2')
 
-
-{{--@section('css')--}}
- {{--<link href="{{ asset('/css/select2.css') }}" rel="stylesheet" type="text/css" />--}}
-    {{--<!-- x-editable (bootstrap) -->--}}
-  {{--<link href="/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">--}}
-{{--@append--}}
 @section('content')
                 <section class="content-header">
                          <h1>Nueva {{$referencial}}<small>de {{$independiente}}</small> </h1>
@@ -20,10 +14,10 @@
                                <div class="col-xs-12">
                                  <div class="box box-primary">
                                    <div class="box-header" >
-                                     <h3 class="box-title">Crear un nuevo registro de Zona</h3>
+                                     <h3 class="box-title">Crear un nuevo registro de Producto</h3>
                                    </div><!-- /.box-header -->
-                                           {!! Form:: open(['url'=>'/zonas'])!!}
-                                               @include('zone.form',['submit'=>$submit,'kmt'=>'km','comisiont'=>'comision','descriptiont'=>'description'])
+                                           {!! Form:: open(['url'=>'/productos'])!!}
+                                               @include('product.form',['submit'=>$submit])
                                            {!!Form::close()!!}
                              </div><!-- /.col -->
                                </div><!-- /.col -->
@@ -33,6 +27,10 @@
 @endsection
 
 @section('javascripts')
-    @include('simpleRef.simple_referential_popout',['comboBox'=>'city_list','urlmodal'=>'/ciudad','idpop'=>'citypop','controllermodal'=>'\City'])
-@append
+    @include('simpleRef.simple_referential_popout',['comboBox'=>'unity_list','urlmodal'=>'/unidades','idpop'=>'unitypop','controllermodal'=>'\Unity'])
+    @include('simpleRef.simple_referential_popout',['comboBox'=>'line_list','urlmodal'=>'/lineas','idpop'=>'linepop','controllermodal'=>'\Line'])
+    @include('simpleRef.simple_referential_popout',['comboBox'=>'aroma_list','urlmodal'=>'/aromas','idpop'=>'aromapop','controllermodal'=>'\Aroma'])
+    @include('simpleRef.simple_referential_popout',['comboBox'=>'presentation_list','urlmodal'=>'/presentaciones','idpop'=>'presentationpop','controllermodal'=>'\Presentation'])
+    @include('simpleRef.simple_referential_popout',['comboBox'=>'tax_list','urlmodal'=>'/inpuestos','idpop'=>'taxpop','controllermodal'=>'\Tax'])
+   @append
 

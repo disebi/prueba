@@ -21,7 +21,7 @@
 
 
 
-      @if (\Session::has('message') ||$errors->any())
+      @if (\Session::has('message') || $errors->any())
       $(document).ready(function() {
            @if (\Session::has('message'))
             mensajito(<?php echo json_encode(\Session::get('alert')); ?>,<?php echo json_encode(\Session::get('message')); ?>);
@@ -34,4 +34,5 @@
            @endif
      });
      @endif
-       </script>
+
+     </script>

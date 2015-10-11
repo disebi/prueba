@@ -6,7 +6,7 @@
           <h1>
             {{$referencial}}
             <small>de {{$independiente}}      |
-            <a class="btn btn-success" href="{{ action('ReferentialControllers\ZoneController@create') }}"><i class="fa fa-plus"></i> Nuevo</a></small>
+            <a class="btn btn-success" href="{{ action('ReferentialControllers\ProductController@create') }}"><i class="fa fa-plus"></i> Nuevo</a></small>
            </h1>
 
 

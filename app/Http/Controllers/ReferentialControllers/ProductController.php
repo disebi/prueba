@@ -3,8 +3,14 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\ReferentialModels\Aroma;
+use App\Models\ReferentialModels\Presentation;
 use App\Models\ReferentialModels\Product;
+use App\Models\ReferentialModels\Provider;
+use App\Models\ReferentialModels\Tax;
+use App\Models\ReferentialModels\Unity;
 use Illuminate\Http\Request;
+use App\Models\ReferentialModels\Line;
 
 class ProductController extends Controller {
     public function index()
@@ -22,9 +28,16 @@ class ProductController extends Controller {
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='zonas';
         $submit='Guardar';
-        $cities=City::all()->lists('description','id');
+        $taxes=Tax::all()->lists('valor','id');
+        $providers=Provider::all()->lists('description','id');
+        $unities=Unity::all()->lists('description','id');
+        $presentations=Presentation::all()->lists('description','id');
+        $lines=Line::all()->lists('description','id');
+        $aromas=Aroma::all()->lists('description','id');
         $edit=0;
-        return view ('zone.create',compact('edit','url','referencial','independiente','controlador','submit','cities'));
+        return view ('product.create',compact('edit','url','referencial','independiente',
+                                                  'controlador','submit','taxes','providers',
+                                            'unities','presentations','lines','aromas'));
 
     }
 
