@@ -22,8 +22,6 @@
 
                                             <button type="button"  class="btn btn-default pull-right" data-dismiss="modal">Cancelar</button>
                                         </div>
-
-
                </div>
             </div>
 </div>
@@ -35,6 +33,7 @@
          function modal (modal){ $("#"+modal).modal('show'); }
          function sendM(){
          var token= '{{csrf_token()}}';
+
          var data={_token:token,
                     description:document.getElementById("{{$modalreferential}}Modal").value,
                     modal:'t'};
@@ -45,16 +44,16 @@
 
                      if(data2==0){
                           mensajito('error','El registro que intenta ingresar ya existe');
-
                      }else{
 
                          $("#"+"{{$comboBox}}").html("");
-
                          //recorremos todas las filas del resultado del proceso que obtenemos en Json
+                         $("#"+"{{$comboBox}}").append("<option value=0>Seleccionar</option>");
                              $.each(data2, function(i,item){
                          //introducimos los option del Json obtenido
                             $("#"+"{{$comboBox}}").append("<option value="+item.id+">"+item.description+"</option>");
                              });
+
                          mensajito('El registro fue guardado con exito','success');
                      }
                  });

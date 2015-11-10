@@ -27,7 +27,7 @@
                     description:document.getElementById("descriptionModal").value,
                     km:document.getElementById("kmModal").value,
                     comision:document.getElementById("comisionModal").value,
-                    city_id:document.getElementById("city_list").value
+                    city_list:document.getElementById("city_list").value
                     };
 
          $.ajax({

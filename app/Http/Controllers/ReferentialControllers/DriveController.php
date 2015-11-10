@@ -21,25 +21,22 @@ class DriveController extends Controller {
 
 
     public function create()
-    {
-        list($referencial, $independiente, $controlador) = $this->sendInfo();
-        $url='zonas';
+    {   list($referencial, $independiente, $controlador) = $this->sendInfo();
+        $url='vehiculos';
         $submit='Guardar';
         $brands=Brand::all()->lists('description','id');
         $edit=0;
         return view ('drive.create',compact('edit','url','referencial','independiente','controlador','submit','brands'));
-
-
     }
 
 
     public function store(Requests\CreateDriveRequest $request)
     {
         $obj=$request->all();
+        dd($obj);
         $obj['brand_id'] = $obj['brand_list'];
         unset($obj['brand_list']);
         Drive::create($obj);
-
         return redirect()->to('/vehiculos')->with('message','Su registro se ha creado con exito')->with('alert','success');
     }
 
@@ -59,9 +56,7 @@ class DriveController extends Controller {
     public function update($id,Requests\CreateDriveRequest $request)
     {
         $model = Drive::find($id);
-
         $obj=$request->all();
-
         $obj['brand_id'] = $obj['brand_list'];
         unset($obj['brand_list']);
         $model->update($obj);
@@ -86,8 +81,8 @@ class DriveController extends Controller {
 
     public function sendInfo()
     {
-        $referencial = 'Marcas';
-        $independiente = 'Vehiculos';
+        $referencial = 'Vehiculos';
+        $independiente = 'Orden De Trabajo';
         $controlador = '\Drive';
         return array($referencial, $independiente, $controlador);
     }

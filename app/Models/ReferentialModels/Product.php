@@ -15,6 +15,7 @@ class Product extends Model {
       'line_id',
       'unity_id',
       'provider_id',
+      'peso',
       'tax_id' ];
     //taxes
     public function tax(){

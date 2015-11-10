@@ -18,7 +18,8 @@ class CreateDriveRequest extends Request {
                 'description'=> "required",
                 "chapa" =>"required|unique:drives,chapa,". $this->get('id'),
                 "chasis" => "required|unique:drives,chasis,". $this->get('id'),
-                "year" => "required|digits:4"
+                "year" => "required|digits:4",
+                "brand_list" => "exists:brands,id"
             ];
         }
         else
@@ -28,6 +29,7 @@ class CreateDriveRequest extends Request {
                 'chapa'=> "required|unique:drives,chapa",
                 'chasis'=> "required|unique:drives,chasis",
                 "year" => "required|digits:4",
+                "brand_list" => "exists:brands,id"
             ];
         }
 
@@ -41,7 +43,7 @@ class CreateDriveRequest extends Request {
             "chasis.required" => 'Favor completar el campo chasis',
             "chasis.unique" => 'El numero de chasis que ingreso ya es utilizado por otro vehículo',
             "year.required" => 'Favor completar el campo año',
-
+            "brand_list.exists" => 'Favor seleccionar una marca',
             "year.digits" => 'El año debe se numerico y tenter 4 digitos'
 
         ];

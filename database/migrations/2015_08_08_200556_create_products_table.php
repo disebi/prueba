@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration {
             $table->integer('unity_id')->unsigned();
             $table->integer('provider_id')->unsigned();
             $table->integer('tax_id')->unsigned();
+            $table->float('peso')->unsigned();
             $table->timestamps();
 
             $table->foreign('aroma_id')->references('id')->on('aromas');

@@ -106,6 +106,14 @@
  <p class="help-block">Precio de venra del producto</p>
   </div>
 </div>
+
+<div class="control-group">
+{!! Form:: label ('peso','Peso del producto en gr.:')!!}
+<div class="controls">
+{!! Form:: text ('peso',null,['placeholder'=>'1200,3', 'class'=>'input-medium', 'class'=>'form-control'])!!}
+ <p class="help-block">Peso del producto en gramos</p>
+  </div>
+</div>
 <div class="control-group">
 {!! Form:: label ('tax_list','Impuesto:')!!}
   <div class="controls">

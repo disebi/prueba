@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class City extends Model {
 
+
     protected $fillable =['description'];
 
     public function zone(){

@@ -2,16 +2,13 @@
 <!-- Text input-->
  <div class="row">
         <div class="col-xs-6">
-
           <div class="control-group">
           <div class="row">
             <div class="col-lg-12">
-                        {    {!! Form:: label ('business_list','Rubro:')!!}
+                           {!! Form:: label ('business_list','Rubro:')!!}
                           </div>
           <div class="controls">
-
           <div class="col-lg-6">
-
           {!! Form:: select ('business_list',$business,null,['class'=>'form-control input-small'])!!}
           </div>
           <div class="col-lg-6">
@@ -22,31 +19,23 @@
         </div>
 
         <div class="control-group">
-
             <div class="row">
             <div class="col-lg-12">
             {!! Form:: label ('zone_list','Zona:')!!}
               </div>
             <div class="controls">
              <div class="row">
-
-
              </div>
                <div class="col-lg-6">
-
-
                 {!! Form:: select ('zone_list',$zones,null,['class'=>'input-medium form-control'])!!}
-
                  <p class="help-block">Zona a la que pertenece el local</p>
                  </div>
-
                  <div class="col-lg-6" style="padding-bottom: 40px">
                     <a class="btn btn-sm btn-success" onclick="nuevaZona()"><i class="fa fa-plus"></i></a>
                     </div>
                  </div>
                  </div>
         </div>
-        
         <div class="control-group">
         {!! Form:: label ('description','Local:')!!}
         <div class="controls">
@@ -54,7 +43,6 @@
          <p class="help-block">Nombre del Local</p>
           </div>
         </div>
-
         <div class="control-group">
         {!! Form:: label ('direcc','Direccion del Local:')!!}
           <div class="controls">
@@ -62,8 +50,6 @@
             <p class="help-block">Direccion del Local</p>
           </div>
         </div>
-
-
         <!-- Text input-->
         <div class="control-group">
         {!! Form:: label ('ruc','RUC:')!!}
@@ -75,7 +61,6 @@
 </div>
 
 <div class="col-xs-6">
-
          <div class="control-group">
                 {!! Form:: label ('razon','Razon Social:')!!}
                   <div class="controls">

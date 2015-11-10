@@ -44,7 +44,7 @@
                      $("#zone_list").html("");
                      $.each(data2, function(i,item){
                      $("#zone_list").append("<option value="+item.id+">"+item.description+"</option>");
-                     })
+                     });
                      var value=data2[data2.length-1].description;
 
 

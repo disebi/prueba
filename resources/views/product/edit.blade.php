@@ -19,10 +19,9 @@
                         </div><!-- /.box-header -->
                                 {!! Form:: model($model, ['action'=>[$action,$model->id],'method'=>'PATCH'])!!}
                                   {!! Form::hidden('id', $model->id) !!}
-                                    @include('zone.form',['submit'=>$submit,'kmt'=>'km','comisiont'=>'comision','descriptiont'=>'description'])
+                                    @include('product.form',['submit'=>$submit,'kmt'=>'km','comisiont'=>'comision','descriptiont'=>'description'])
                                 {!!Form::close()!!}
                      </div><!-- /.box -->
-
                     </div><!-- /.col -->
                  </div><!-- /.row -->
         </section><!-- /.content -->

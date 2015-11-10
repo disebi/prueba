@@ -2,7 +2,7 @@
 
 use App\Http\Requests\Request;
 
-class CreateLocalRequest extends Request {
+class CreateProductRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -10,7 +10,6 @@ class CreateLocalRequest extends Request {
 	 * @return bool
 	 */
 	public function authorize()
-
 	{
 		return true;
 	}
@@ -25,15 +24,17 @@ class CreateLocalRequest extends Request {
         if ($this->method() == 'PATCH')
         {
             return [
-                'description'=> "required|unique:clients,description,". $this->get('id'),
-                "razon" =>"required",
-                "ruc" => "required|unique:clients,ruc,". $this->get('id'),
-                "direcc" => "required",
-                "tel" => "required",
-                "nombre" => "required",
-                "apellido" => "required",
-                "zone_list" => "exists:zones,id",
-                "business_list" => "exists:businesses,id"
+                'description'=> "required|unique:products,description,". $this->get('id'),
+                "compra" =>"required",
+                "venta" => "required",
+                "contenido" => "required",
+                "peso" => "required|numeric",
+                "aroma_list" => "exists:aromas,id",
+                "presentation_list" => "exists:presentations,id",
+                "line_list" => "exists:lines,id",
+                "provider_list" => "exists:providers,id",
+                "unity_list" => "exists:unities,id",
+                "tax_list" => "exists:unities,id"
 
 
             ];
@@ -41,21 +42,19 @@ class CreateLocalRequest extends Request {
         else
         {
             return [
-                'description'=> "required|unique:clients,description",
-                "razon" =>"required",
-                "ruc" => "required|unique:clients,ruc",
-                "direcc" => "required",
-                "tel" => "required",
-                "nombre" => "required",
-                "apellido" => "required",
-                "zone_list" => "exists:zones,id",
-                "business_list" => "exists:businesses,id"
-
-
-
+                'description'=> "required|unique:products,description",
+                "compra" =>"required",
+                "venta" => "required",
+                "contenido" => "required",
+                "peso" => "required|numeric",
+                "aroma_list" => "exists:aromas,id",
+                "presentation_list" => "exists:presentations,id",
+                "line_list" => "exists:lines,id",
+                "provider_list" => "exists:providers,id",
+                "unity_list" => "exists:unities,id",
+                "tax_list" => "exists:taxes,id"
             ];
         }
-
     }
     public function messages()
     {
@@ -74,6 +73,5 @@ class CreateLocalRequest extends Request {
 
         ];
     }
-
 
 }

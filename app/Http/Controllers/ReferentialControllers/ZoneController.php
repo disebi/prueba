@@ -47,14 +47,10 @@ class ZoneController extends Controller {
     {
         $submit='Guardar Cambios';
         $model = Zone::findOrFail($id);
-
-
         $url='zonas';
         $action='ReferentialControllers\ZoneController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
-
         $cities=City::all()->lists('description','id');
-
         return view ('zone.edit',compact('cities','action','url','model','submit','referencial','independiente'));
 
     }
@@ -96,6 +92,8 @@ class ZoneController extends Controller {
     {
         $input=$request->all();
         unset($input['_token']);
+        $input['city_id'] = $input['city_list'];
+        unset($input['city_list']);
         Zone::create($input);
         $html=Zone::select('id','description')->get();
         return $html;

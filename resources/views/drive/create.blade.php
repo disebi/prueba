@@ -7,7 +7,7 @@
 @stop
 @section('content')
                 <section class="content-header">
-                         <h1>Nueva {{$referencial}}<small>de {{$independiente}}</small> </h1>
+                         <h1>Nuevo Vehiculo</h1>
                    <ol class="breadcrumb">
                            <li><a href="#"><i class="fa fa-dashboard"></i>{{$independiente}}</a></li>
                            <li><a href="#">{{$referencial}}r</a></li>

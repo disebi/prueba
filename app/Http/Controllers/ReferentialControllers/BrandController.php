@@ -3,6 +3,7 @@
 use App\Models\ReferentialModels\Brand;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller {
@@ -85,7 +86,7 @@ class BrandController extends Controller {
 
 	public function destroy($id)
 	{
-         try{
+        try{
         Brand::destroy($id);
         return redirect()->back()->with('message','El registro se ha eliminado con exito')
             ->with('alert','success');

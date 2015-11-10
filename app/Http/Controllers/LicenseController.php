@@ -19,7 +19,7 @@ class LicenseController extends Controller {
     {
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $submit='Guardar';
-        $partials=[0=>'.all',1=>'.view',2=>'.mod',3=>'.del',4=>'.rep'];
+        $partials = $this->getPartials();
         $url='permisos';
          $array=0;
         return view ('license.create',compact('array','partials','url','referencial','independiente','controlador','submit'));
@@ -29,7 +29,7 @@ class LicenseController extends Controller {
     public function store(Requests\CreateLicenseRequest $request)
     {
 
-        $partials=[0=>'.all',1=>'.view',2=>'.create|mod',3=>'.del',4=>'.rep'];
+        $partials = $this->getPartials();
         $description=$request->input('description');
         $partial=$partials[$request->input('partials')];
 
@@ -47,7 +47,7 @@ class LicenseController extends Controller {
     public function edit($id)
     {   $submit='Guardar Cambios';
         $model = License::find($id);
-        $partials=[0=>'.all',1=>'.view',2=>'.mod',3=>'.del',4=>'.rep'];
+        $partials = $this->getPartials();
         $description=$model->description;
         $partial=substr($description,-4);
         $description=substr($description,0,-4);
@@ -57,7 +57,7 @@ class LicenseController extends Controller {
             case '.all':
                 $array=0;
                 break;
-            case '.view':
+            case '.see':
                 $array=1;
                 break;
             case '.mod':
@@ -74,6 +74,7 @@ class LicenseController extends Controller {
         $url='permisos';
         $action='LicenseController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
+
         return view ('license.edit',compact('array','partials','action','url','model','submit','referencial','independiente'));
     }
 
@@ -82,7 +83,7 @@ class LicenseController extends Controller {
     {
         $model = License::find($id);
 
-        $partials=[0=>'.all',1=>'.view',2=>'.mod',3=>'.del',4=>'.rep'];
+        $partials = $this->getPartials();
         $description=$request->input('description');
         $partial=$partials[$request->input('partials')];
         $model->description=$description.$partial;
@@ -134,6 +135,15 @@ class LicenseController extends Controller {
         }else{
             return 0;
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getPartials()
+    {
+        $partials = [0 => '.all', 1 => '.see', 2 => '.mod', 3 => '.del', 4 => '.rep'];
+        return $partials;
     }
 
 
