@@ -4,7 +4,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ URL::asset('/img/avatar2.png') }}" class="img-circle" alt="User Image" />
+                <img src="{{ URL::asset('/img/user.png') }}" width="215px" height="215px" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
                 <p>{{$name}}</p>
@@ -80,11 +80,14 @@
                             <ul class="treeview-menu">
 
                                  <li><a href="{{ action('ReferentialControllers\PresentationController@index') }}"><i class="fa fa-circle-o"></i> Presentacion</a></li>
+                                @if(\App\Actions::canSeeMenu('line'))
                                 <li><a href="{{ action('ReferentialControllers\LineController@index') }}"><i class="fa fa-circle-o"></i> Lineas</a></li>
+                                @endif
                                 <li><a href="{{ action('ReferentialControllers\AromaController@index') }}"><i class="fa fa-circle-o"></i> Aromas</a></li>
                                 <li><a href="{{ action('ReferentialControllers\UnityController@index') }}"><i class="fa fa-circle-o"></i> Unidades de Medida</a></li>
                                  <li><a href="{{ action('ReferentialControllers\ProviderController@index') }}"><i class="fa fa-circle-o"></i> Proveedores</a></li>
                                 <li><a href="{{ action('ReferentialControllers\TaxController@index') }}"><i class="fa fa-circle-o"></i> Impuestos</a></li>
+                                <li><a href="{{ action('ReferentialControllers\DepositController@index') }}"><i class="fa fa-s-o"></i> Depositos</a></li>
 
                             </ul>
                         </li>
@@ -97,9 +100,9 @@
 
                             </a>
                             <ul class="treeview-menu">
-                             <li><a href="{{ action('LicenseController@index') }}"><i class="fa fa-user"></i> Permisos</a></li>
-
-
+                             <li><a href=""><i class="fa fa-users"></i> Usuarios</a></li>
+                             <li><a href="{{ action('RoleController@index') }}"><i class="fa fa-lock"></i> Roles</a></li>
+                             <li><a href="{{ action('LicenseController@index') }}"><i class="fa fa-key"></i> Permisos</a></li>
 
                             </ul>
                         </li>

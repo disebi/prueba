@@ -9,3 +9,7 @@
 	</div>
 </div>
 @endsection
+
+@section('javascripts')
+@include('partials.functionMsj')
+@stop

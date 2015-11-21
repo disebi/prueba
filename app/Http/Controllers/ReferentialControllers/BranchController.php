@@ -9,9 +9,8 @@ class BranchController extends Controller {
 
     public function index()
     {
-        $branches=Branch::all();
-        // dd($branchs);
 
+        $branches=Branch::all();
         return view ('branch.index',compact('branches'));
     }
 

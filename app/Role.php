@@ -7,8 +7,14 @@ class Role extends Model {
 	protected $fillable=['description'];
 
 
-    function  license(){
-
-        $this->belongsToMany('App/License');
+    public function  licenses(){
+       return $this->belongsToMany('App\License')->withTimestamps();
     }
+
+    public function  getLicenseListAttribute(){
+        return $this->licenses()->lists('id');
+    }
+
+
+
 }

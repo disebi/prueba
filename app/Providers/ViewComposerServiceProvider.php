@@ -1,6 +1,7 @@
 <?php namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\User;
 
 class ViewComposerServiceProvider extends ServiceProvider {
 
@@ -14,20 +15,20 @@ class ViewComposerServiceProvider extends ServiceProvider {
         view()->composer('partials.navbar',function ($view){
             $user=\Auth::user();
             $name=$user->name;
-            $role=$user->role;
+            $role=\Auth::user()->role()->first()->description;
             $view->with('name',$name)->with('role',$role);
         });
         view()->composer('partials.slide',function ($view){
             $user=\Auth::user();
             $name=$user->name;
-            $role=$user->role;
+            $role=\Auth::user()->role()->first()->description;
             $view->with('name',$name)->with('role',$role);
         });
 
         view()->composer('app2',function ($view){
             $user=\Auth::user();
             $name=$user->name;
-            $role=$user->role;
+            $role=\Auth::user()->role()->first()->description;
             $view->with('name',$name)->with('role',$role);
         });
 	}

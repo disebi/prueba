@@ -5,54 +5,55 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\ReferentialModels\Line;
 use Illuminate\Http\Request;
+use App\Actions;
 
 class LineController extends Controller {
 
 
 	public function index()
-	{   $url='lineas';
+
+	{
+        if((\Auth::user()->hasAccess('line.all'))|| (\Auth::user()->hasAccess('line.see'))){
+        $url='lineas';
         $tabla=Line::orderBy('id','desc')->get();
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('simpleRef.simple_referential_index',compact('url','tabla','referencial','independiente','controlador'));
-	}
+        }
+        return Actions::returnBack('No tiene permisos','error');
+
+
+    }
 
 
 	public function create()
 	{
-        $url='lineas';
-        list($referencial, $independiente, $controlador) = $this->sendInfo();
-        $submit='Guardar';
-        return view ('simpleRef.simple_referential_create',compact('url','referencial','independiente','controlador','submit'));
-
+        if((\Auth::user()->hasAccess('line.all'))|| (\Auth::user()->hasAccess('line.mod'))) {
+            $url = 'lineas';
+            list($referencial, $independiente, $controlador) = $this->sendInfo();
+            $submit = 'Guardar';
+            return view('simpleRef.simple_referential_create', compact('url', 'referencial', 'independiente', 'controlador', 'submit'));
+        }
+        return Actions::returnBack('No tiene permisos','error');
 	}
 
 
     public function store(Requests\CreateSimpleReffRequest $request)
     {
-
+        if((\Auth::user()->hasAccess('line.all'))|| (\Auth::user()->hasAccess('line.mod'))) {
         $row=$request->input('description');
         $rowcount= Line::where('description','=',$row)->get()->toArray();
-
         if ( Empty($rowcount)){
-
             Line::create($request->all());
             $params = ['message'=>'Se ha guardado con exito',
                 'alert'=>'success'];
             return Redirect::to('lineas')->with($params);
-
-
         }else{
-
-
             return redirect()->back()->with('message','El registro ya existe')
                 ->with('alert','error');
-
         }
 
-
-
-
-
+        }
+        return Actions::returnBack('No tiene permisos','error');
    }
 
 
@@ -127,4 +128,9 @@ class LineController extends Controller {
             return 0;
         }
     }
+
+    /**
+     * @return mixed
+     */
+
 }

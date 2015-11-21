@@ -22,12 +22,13 @@ Route::group(['middleware' => 'auth'],
         Route::post ('/aromasModal','ReferentialControllers\AromaController@storeModal');
         Route::resource ('proveedores','ReferentialControllers\ProviderController');
         Route::post ('/proveedoresModal','ReferentialControllers\ProviderController@storeModal');
-        Route::resource ('sucursales','ReferentialControllers\BranchController');
+        Route::resource ('/sucursales','ReferentialControllers\BranchController');
         Route::post ('/sucursalesModal','ReferentialControllers\BranchController@storeModal');
         Route::resource ('impuestos','ReferentialControllers\TaxController');
         Route::post ('/impuestosModal','ReferentialControllers\TaxController@storeModal');
         Route::resource ('productos','ReferentialControllers\ProductController');
         Route::post ('/productosModal','ReferentialControllers\ProductController@storeModal');
+        Route::resource ('/depositos','ReferentialControllers\DepositController');
 //rutas de referenciales simples de distribucion
         Route::resource ('ciudad','ReferentialControllers\CityController');
         Route::post ('/ciudadModal','ReferentialControllers\CityController@storeModal');

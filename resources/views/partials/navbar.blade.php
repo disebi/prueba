@@ -16,16 +16,16 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-                  <img src="{{ URL::asset('/img/avatar2.png') }}" class="user-image" alt="User Image"/>
+                  <img src="{{ URL::asset('/img/user.png') }}" width="215px" height="215px" class="user-image" alt="User Image"/>
                   <span class="hidden-xs">{{$name}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="{{ URL::asset('/img/avatar2.png') }}" class="img-circle" alt="User Image" />
+                    <img src="{{ URL::asset('/img/user.png') }}" width="215px" height="215px" class="img-circle" alt="User Image" />
                     <p>
                      {{$name}}
-                      <small>cargo</small>
+                      <small>{{$role}}</small>
                     </p>
                   </li>
                   <!-- Menu Body -->

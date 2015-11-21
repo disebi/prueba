@@ -26,6 +26,7 @@ class CreateRolesTable extends Migration {
             $table->timestamps();
             $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('license_id')->references('id')->on('licenses');
+            $table->primary('role_id','license_id');
         });
 	}
 
@@ -36,7 +37,7 @@ class CreateRolesTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('role_license');
 		Schema::drop('roles');
 	}
 
