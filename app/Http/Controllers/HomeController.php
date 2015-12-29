@@ -30,7 +30,16 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+		return view('dashboard.superDashboard');
 	}
+    public function indexSales()
+	{
+		return view('dashboard.superDashboard2');
+	}
+
+    public function salesmen()
+    {
+        return view('dashboard.salesmen');
+    }
 
 }

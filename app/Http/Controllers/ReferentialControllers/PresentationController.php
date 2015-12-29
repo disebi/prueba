@@ -14,7 +14,6 @@ class PresentationController extends Controller {
         $tabla=Presentation::all();
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('simpleRef.simple_referential_index',compact('url','tabla','referencial','independiente','controlador'));
-
     }
 
 
@@ -22,17 +21,14 @@ class PresentationController extends Controller {
 	{
         $url='presentaciones';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
-
         $submit='Guardar';
         return view ('simpleRef.simple_referential_create',compact('url','referencial','independiente','controlador','submit'));
-
     }
 
 
     public function store(Requests\CreateSimpleReffRequest $request)
     {
         Presentation::create($request->all());
-
         return (PresentationController::index());
     }
 
@@ -41,8 +37,6 @@ class PresentationController extends Controller {
 	{
         $submit='Guardar Cambios';
         $model = Presentation::find($id);
-
-
         $url='presentaciones';
         $action='ReferentialControllers\PresentationController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();

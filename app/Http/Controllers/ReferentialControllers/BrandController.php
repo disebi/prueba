@@ -42,13 +42,9 @@ class BrandController extends Controller {
                 'alert' => 'success'];
             return redirect()->to('marcas')->with($params);
 
-
         } else {
-
-
             return redirect()->back()->with('message', 'El registro ya existe')
                 ->with('alert', 'error');
-
         }
     }
 
@@ -57,16 +53,10 @@ class BrandController extends Controller {
 	{
         $submit='Guardar Cambios';
         $model = Brand::find($id);
-
-
         $url='rubros';
         $action='ReferentialControllers\BrandController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
-
-
-
         return view ('simpleRef.simple_referential_edit',compact('action','url','model','submit','referencial','independiente'));
-
     }
 
 
@@ -79,8 +69,6 @@ class BrandController extends Controller {
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return \Redirect::to('marcas')->with($params);
-
-
 	}
 
 
@@ -90,7 +78,6 @@ class BrandController extends Controller {
         Brand::destroy($id);
         return redirect()->back()->with('message','El registro se ha eliminado con exito')
             ->with('alert','success');
-
         }catch(QueryException $e){
         return redirect()->to('/marcas')->with('message','Su registro no ha podido ser eliminado, ya que se esta utilizando')->with('alert','error');
         }

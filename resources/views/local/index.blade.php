@@ -8,17 +8,11 @@
             <small>de {{$independiente}}      |
             <a class="btn btn-success" href="{{ action('ReferentialControllers\ClientController@create') }}"><i class="fa fa-plus"></i> Nuevo</a></small>
            </h1>
-
-
-
-
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> {{$referencial}}</a></li>
             <li><a href="#">{{$independiente}}</a></li>
-
           </ol>
  </section>
-
         <!-- Main content -->
 <section class="content animsition">
           <div class="row">

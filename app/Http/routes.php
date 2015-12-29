@@ -6,11 +6,23 @@ Route::controllers([
 ]);
 
 Route::group(['middleware' => 'auth'],
-    function(){ Route::get('home', 'HomeController@index');
+    function(){
+
+        Route::get('home', 'HomeController@index');
+        Route::get('home2', 'HomeController@indexSales');
+        Route::get('homeSalesmen/{id}', 'HomeController@salesmen');
+
+
+
 
 //rutas de usuarios y roles
+        Route::get ('perfil','UserController@edit');
+        Route::patch ('perfilUp/{id}',  array('as' => 'perfilUp',
+            'uses' => 'UserController@update'
+        ));
         Route::resource ('roles','RoleController');
         Route::resource('permisos','LicenseController');
+        Route::resource('usuarios','StaffController');
 //rutas de referenciales simples de stock
         Route::resource ('lineas','ReferentialControllers\LineController');
         Route::post ('/lineasModal','ReferentialControllers\LineController@storeModal');

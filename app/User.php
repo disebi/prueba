@@ -22,7 +22,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'email', 'password'];
+	protected $fillable = ['name',
+        'email',
+        'role_id',
+        'password'];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -34,6 +37,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function role(){
         return $this->belongsTo('App\Role');
     }
+
+    public function staff(){
+        return $this->hasOne('App\Staff');
+    }
+
+
+    public function getRoleListAttribute(){
+
+        return $this->role()->lists('id');
+    }
+
+
 
     public function hasAccess($name){
       $licenses=Role::find($this->role_id)->licenses()->lists('description');

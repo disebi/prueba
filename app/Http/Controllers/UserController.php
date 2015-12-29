@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller {
@@ -15,7 +16,7 @@ class UserController extends Controller {
 	public function index()
 	{
 		//
-	}
+}
 
 	/**
 	 * Show the form for creating a new resource.
@@ -54,9 +55,10 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit()
 	{
-		//
+		$user=\Auth::user();;
+        return view('auth.reset',compact('user'));
 	}
 
 	/**
@@ -65,9 +67,22 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Requests\EditUserRequest $request,$id)
 	{
-		//
+
+        $user=\Auth::user();;
+        $obj=$request->all();
+
+        $credentials = ['email'=>$obj['email'],
+            'password'=>$obj['password'],
+            'name'=>$obj['name']];
+
+        $credentials['password'] = \Hash::make($credentials['password']);
+        $user->update($credentials );
+
+        $params = ['message'=>'Se ha guardado con exito',
+            'alert'=>'success'];
+        return redirect()->to('/home')->with($params);
 	}
 
 	/**

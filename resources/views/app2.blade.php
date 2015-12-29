@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <title>2A ADMIN</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-  @include('partials.css')
+    @include('partials.css')
     @yield('css')
   </head>
 
 
-     <body class="skin-yellow">
+     <body class="sidebar-mini skin-yellow">
 
   </body>
         <div class="wrapper">
@@ -33,7 +33,7 @@
         @yield('sidebar')
 
             @include('partials.script')
-            @yield('javascripts')
+                @yield('javascripts')
             @yield('footer')
 
 </html>

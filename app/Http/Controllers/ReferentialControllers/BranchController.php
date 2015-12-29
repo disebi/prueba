@@ -3,13 +3,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\ReferentialModels\Branch;
+use App\Models\ReferentialModels\Deposit;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller {
 
     public function index()
     {
-
         $branches=Branch::all();
         return view ('branch.index',compact('branches'));
     }
@@ -17,7 +17,6 @@ class BranchController extends Controller {
 
     public function create()
     {
-
         return view ('branch.create');
     }
 
@@ -25,10 +24,14 @@ class BranchController extends Controller {
     public function store(Requests\CreateBranchRequest $request)
     {
         $input=$request->all();
-        Branch::create($request->all());
+        $branch=Branch::create($request->all());
+
+        $depositBranch=['description'=>$input['description'],
+                        'branch_id'=>$branch->id];
+
+        Deposit::create($depositBranch);
 
         return redirect()->to('/sucursales')->with('message','Su Sucursal se ha creado con exito')->with('alert','success');
-
     }
 
 

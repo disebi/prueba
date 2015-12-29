@@ -30,8 +30,8 @@
                     <i class="fa fa-dashboard"></i> <span>Reportes Rapidos</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                    <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                    <li><a href="/home"><i class="fa fa-circle-o"></i> General</a></li>
+                    <li><a href="/home2"><i class="fa fa-circle-o"></i> Vendedores</a></li>
                 </ul>
             </li>
                <li class="header">Modulos</li>
@@ -43,7 +43,8 @@
 
                             </a>
                             <ul class="treeview-menu">
-                             <li><a href="{{ action('ReferentialControllers\ProductController@index') }}"><i class="fa fa-circle-o"></i> Productos</a></li>
+                             <li><a href="{{ action('ReferentialControllers\ProductController@index') }}"><i class="fa fa-shopping-basket"></i> Productos</a></li>
+                             <li><a href="{{ action('ReferentialControllers\DepositController@index') }}"><i class="fa fa-cubes"></i> Depositos</a></li>
                             </ul>
                         </li>
             <li class="header">Referenciales</li>
@@ -100,7 +101,7 @@
 
                             </a>
                             <ul class="treeview-menu">
-                             <li><a href=""><i class="fa fa-users"></i> Usuarios</a></li>
+                             <li><a href="{{ action('StaffController@index') }}"><i class="fa fa-users"></i> Usuarios</a></li>
                              <li><a href="{{ action('RoleController@index') }}"><i class="fa fa-lock"></i> Roles</a></li>
                              <li><a href="{{ action('LicenseController@index') }}"><i class="fa fa-key"></i> Permisos</a></li>
 
