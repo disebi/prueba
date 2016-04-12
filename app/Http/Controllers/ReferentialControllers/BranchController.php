@@ -11,12 +11,14 @@ class BranchController extends Controller {
     public function index()
     {
         $branches=Branch::all();
-        return view ('branch.index',compact('branches'));
+        list($referencial, $independiente) = $this->getInfo();
+        return view ('branch.index',compact('branches','referencial','independiente'));
     }
 
 
     public function create()
     {
+        list($referencial, $independiente) = $this->getInfo();
         return view ('branch.create');
     }
 
@@ -30,7 +32,6 @@ class BranchController extends Controller {
                         'branch_id'=>$branch->id];
 
         Deposit::create($depositBranch);
-
         return redirect()->to('/sucursales')->with('message','Su Sucursal se ha creado con exito')->with('alert','success');
     }
 
@@ -38,40 +39,50 @@ class BranchController extends Controller {
     public function edit($id)
     {
         $submit='Guardar Cambios';
-        $model =Branch::find($id);
-
-
-        $url='sucursales';
-        $action='ReferentialControllers\BranchController@update';
-
-
-        return view ('branch.edit',compact('action','url','model','submit'));
-
+        list($referencial, $independiente) = $this->getInfo();
+        try{
+            $model =Branch::findOrFail($id);
+            $url='sucursales';
+            $action='ReferentialControllers\BranchController@update';
+            return view ('branch.edit',compact('action','url','model','submit'));
+        }catch (\Exception $e){
+            return redirect()->back()->with('message','No existe la sucursal requerida')->with('alert','error');
+        }
     }
 
 
     public function update(Requests\CreateBranchRequest $request, $id)
     {
         $input=$request->all();
-        $branch=Branch::findorFail($id);
-        $branch->update($input);
-
-        return redirect()->to('/sucursales')->with('message','Su sucursal se ha actualizado con exito')->with('alert','success');
-
+        try{
+            $branch=Branch::findOrFail($id);
+            $branch->update($input);
+            return redirect()->to('/sucursales')->with('message','Su sucursal se ha actualizado con exito')->with('alert','success');
+        }catch (\Exception $e){
+            return redirect()->back()->with('message','No existe la sucursal requerida')->with('alert','error');
+        }
     }
 
 
     public function destroy($id)
     {
-
         try{
         Branch::destroy($id);
         return redirect()->to('/sucursales')->with('message','Su sucursal se ha eliminado con exito')->with('alert','success');
         }
-
         catch(QueryException $e){
         return redirect()->to('/sucursales')->with('message','Su registro no ha podido ser eliminado, ya que se esta utilizando')->with('alert','error');
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getInfo()
+    {
+        $referencial = "Sucursal";
+        $independiente = "Empresa";
+        return array($referencial, $independiente);
     }
 
 }

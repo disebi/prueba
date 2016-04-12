@@ -64,4 +64,8 @@ class Product extends Model {
     public function getUnityListAttribute(){
         return $this->unity()->lists('id');
     }
+
+    public function  purchase(){
+        return $this->belongsToMany('App\Models\Stock\Purchase')->withTimestamps();
+    }
 }

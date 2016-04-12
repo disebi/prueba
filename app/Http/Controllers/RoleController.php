@@ -49,6 +49,7 @@ class RoleController extends Controller {
 	 */
 	public function store(Requests\CreateRoleRequest $request)
     {
+
         $obj = $request->all();
         $role = Role::create(['description' => $obj['description']]);
         $role->licenses()->attach($obj['license_list']);

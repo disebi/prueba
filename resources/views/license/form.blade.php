@@ -1,8 +1,5 @@
-
-
-                <div class="box-body">
-
-                    <div  class="form-group">
+<div class="box-body">
+    <div  class="form-group">
                     {!! Form:: label ('description','Descripcion:')!!}
                     <div class="row">
                     <div class="col-lg-4">
@@ -25,15 +22,15 @@
                          </div>
                         </div>
                 </div><!-- /.box-body -->
+    <div class="box-footer">
+         {!!Form:: submit($submit,['class'=>'btn btn-primary'])!!}
+    </div>
+</div>
 
-                <div class="box-footer">
-                    {!!Form:: submit($submit,['class'=>'btn btn-primary'])!!}
-
-                </div>
+@include('partials._select2')
 
 @section('javascripts')
-<script src="{{ URL::asset('/js/select2.full.min.js') }}"></script>
-<script type="text/javascript">
+    <script type="text/javascript">
 $("#partials").select2();
  </script>
 @append

@@ -45,6 +45,7 @@ class ZoneController extends Controller {
 
     public function edit($id)
     {
+        try{
         $submit='Guardar Cambios';
         $model = Zone::findOrFail($id);
         $url='zonas';
@@ -52,13 +53,17 @@ class ZoneController extends Controller {
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $cities=City::all()->lists('description','id');
         return view ('zone.edit',compact('cities','action','url','model','submit','referencial','independiente'));
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 
     public function update($id,Requests\CreateZoneRequest $request)
     {
-        $model = Zone::find($id);
+        try{
+        $model = Zone::findOrFail($id);
         $obj=$request->all();
         $obj['city_id'] = $obj['city_list'];
         unset($obj['city_list']);
@@ -66,6 +71,10 @@ class ZoneController extends Controller {
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return redirect()->to('/zonas')->with($params);
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
     public function destroy($id)

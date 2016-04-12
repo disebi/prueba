@@ -72,6 +72,7 @@ class DepositController extends Controller {
 	 */
 	public function edit($id)
 	{
+        try{
         $submit='Guardar Cambios';
         $model = Deposit::findOrFail($id);
         $url='depositos';
@@ -79,7 +80,10 @@ class DepositController extends Controller {
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $branches=Branch::all()->lists('description','id');
         return view ('deposit.edit',compact('branches','action','url','model','submit','referencial','independiente'));
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 	/**
@@ -90,7 +94,8 @@ class DepositController extends Controller {
 	 */
     public function update($id,Requests\CreateDepositRequest $request)
     {
-        $model = Deposit::find($id);
+        try{
+        $model = Deposit::findOrFail($id);
         $obj=$request->all();
         $obj['branch_id'] = $obj['branch_list'];
         unset($obj['branch_list']);
@@ -98,6 +103,10 @@ class DepositController extends Controller {
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return redirect()->to('/depositos')->with($params);
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
 	}
 
 	/**

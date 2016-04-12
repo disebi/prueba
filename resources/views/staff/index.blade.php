@@ -1,41 +1,20 @@
 @extends('app2')
+@include('partials.bread._index',['button'=>action('StaffController@create')])
 
 @section('content')
-
- <section class="content-header">
-          <h1>
-            {{$referencial}}
-            <small>de {{$independiente}}      |
-            <a class="btn btn-success" href="{{ action('StaffController@create') }}"><i class="fa fa-plus"></i> Nuevo</a></small>
-           </h1>
-
-
-
-
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> {{$referencial}}</a></li>
-            <li><a href="#">{{$independiente}}</a></li>
-
-          </ol>
- </section>
-
-        <!-- Main content -->
-<section class="content">
-          <div class="row">
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Listas de registros de Zonas</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="tablalista" class="table table-bordered table-striped">
+                  <table id="table" class="table table-bordered table-striped">
 
                     <thead>
                       <tr>
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Sucursal</th>
-
                           <th>CI</th>
                           <th>Edad</th>
                             <th>Tel</th>
@@ -48,7 +27,7 @@
                       @foreach($tables as $table)
 
                       <tr>
-                        <td> {{$table->id}}</td>
+                        <td> {{$table->id   }}</td>
                         <td>{{$table->name.' '. $table->last_name}}</td>
                          <td>{{$table->branch->description}}</td>
                          <td>{{number_format($table->ci, 0, '', '.')}} </td>
@@ -56,10 +35,22 @@
                          <td>{{$table->tel}}</td>
                          <td>{{$table->direcc}}</td>
                         <td>
-                        {!! Form::open(array('id'=>'formdelete'.$table->id,'method' => 'DELETE', 'route' => array('usuarios.destroy', $table->id))) !!}
-                           <a class="btn btn-default" href="/usuarios/{{$table->id}}/edit" ><i class="fa fa-edit"></i> </a>
-                           <a class="btn btn-default" onclick="askDelete({{$table->id}})"><i class="fa fa-trash text-danger"></i></a>
-                        {!! Form::close() !!}
+                             {!! Form::open(array('id'=>'formup'.$table->id,'method' => 'PATCH', 'route' => array('usuarios.activeUser', $table->id))) !!}
+                                                   <a class="btn btn-default" href="/usuarios/{{$table->id}}/edit" ><i class="fa fa-edit"></i> </a>
+                                                   <a class="btn btn-default" onclick="askActivate( {{$table->user_id}} )"
+                                                                                                      @if($table->user->active)
+                                                                                                      title="Deshabilitar"><i class="fa fa-thumbs-down text-danger"></i>
+                                                                                                      @else
+                                                                                                      title="Habilitar"><i class="fa fa-thumbs-up text-success"></i>
+                                                                                                      @endif
+                                                                                                       </a>
+
+                                                {!! Form::close() !!}
+
+                                                {{--{!! Form::open(array('id'=>'formup'.$table->id,'method' => 'PATCH', 'action'=>['UserController@activate',$table->id])) !!}--}}
+                                                {{--{!! Form::close() !!}--}}
+                                               {{--</td>--}}
+
 
                        </td>
                       </tr>
@@ -70,22 +61,48 @@
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-
-
             </div><!-- /.col -->
-          </div><!-- /.row -->
-@include('partials.msjdelete')
-</section><!-- /.content -->
-
-
-@stop
+@endsection
+@include('partials.help._custom_index', ['help'=>['create','edit','disabled']])
+@include('partials._paginate')
+@include('partials._functionMsj')
 
 @section('javascripts')
 <script type="text/javascript">
-  $(function () {
-         $("#tablalista").dataTable();
-       });
-</script>
-@include('partials.functionMsj')
+ function askActivate(nro){
 
-@stop
+             var form ='formup'+nro;
+             var n = noty({
+                                  text        : '<div class="activity-item">  ' +
+                                   '<div class="activity" style="font-size:15px; font-family: "Roboto", Helvetica, Arial, sans-serif">' +
+                                    ' Desea cambiar el estado de este usuario? </div> </div>',
+                                  type        : 'alert',
+                                  dismissQueue: true,
+                                  timeout     : 10000,
+                                  layout      : 'bottomRight',
+                                  theme       : 'relax',
+                                  maxVisible  : 3,
+                                  animation   : {
+                                                  open  : 'animated bounceInRight',
+                                                  close : 'animated bounceOutRight',
+                                                  easing: 'swing',
+                                                  speed : 500
+                                                 },
+                                  buttons     : [
+                                      {addClass: 'btn btn-primary', text: 'Si', onClick: function ($noty) {
+                                          $noty.close();
+
+                                          document.getElementById(form).submit(function() {
+
+                                              });
+
+                                         }
+                                      },
+                                      {addClass: 'btn btn-danger', text: 'Cancelar', onClick: function ($noty) {
+                                          $noty.close();
+                                            }
+                                      }
+                                  ]
+             });}
+</script>
+@append

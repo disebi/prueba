@@ -1,26 +1,16 @@
 @extends('app2')
 
+@section('bread')
+          <h1>Mi Perfil</h1>
+            <ol class="breadcrumb">
+                 <li><a href="#"><i class="fa fa-dashboard"></i>Perfil</a></li>
+            </ol>
+@endsection
 @section('content')
- <section class="content-header">
-          <h1>
-            Mi Perfil
-          </h1>
-
-
-
-
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Perfil</a></li>
-
-
-          </ol>
- </section>
-<section class="container-fluid">
-	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 
 			<div class="panel panel-success">
-				<div class="panel-heading">Reset Password</div>
+				<div class="panel-heading">Editar Perfil</div>
 				<div class="panel-body">
                     <div class=" image" style="text-align: center; padding-bottom: 30px">
                       <img src="http://2a.admin/img/user.png" class="img-circle" alt="User Image" height="70px" width="70px">
@@ -66,7 +56,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
- @include('partials.functionMsj')
 @endsection
+ @include('...partials._functionMsj')

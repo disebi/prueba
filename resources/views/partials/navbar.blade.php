@@ -1,5 +1,10 @@
  <header class="main-header">
-        <a href="../../index2.html" class="logo"><b>Admin</b>2A</a>
+        <a href="/" class="logo">
+              <!-- mini logo for sidebar mini 50x50 pixels -->
+              <span class="logo-mini"><b>2A</b></span>
+              <!-- logo for regular state and mobile devices -->
+              <span class="logo-lg"><b>2A</b>Admin</span>
+            </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
@@ -42,7 +47,7 @@
                 </ul>
               </li>
               <li>
-                <a href="#control-sidebar-home-tab" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                <a href="#control-sidebar-home-tab" data-toggle="control-sidebar"><i class="fa fa-question-circle"></i></a>
                             </li>
             </ul>
           </div>

@@ -16,6 +16,7 @@ class StaffController extends Controller {
     public function index()
     {
         $tables=Staff::all();
+        //dd($tables);
         //dd($tables[0]->staff()->id);
         $url='usuarios';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -54,7 +55,7 @@ class StaffController extends Controller {
 
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('message','Usuario ya existe')->with('type','error');
+            return redirect()->back()->with('message','Usuario ya existe')->with('alert','error');
         }
         $staffCredentials = ['user_id'=>$user->id,
             'branch_id'=>$obj['branch_list'],
@@ -69,7 +70,7 @@ class StaffController extends Controller {
             $staff = Staff::create($staffCredentials);
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('message','Empleado ya existe')->with('type','error');
+            return redirect()->back()->with('message','Empleado ya existe')->with('alert','error');
         }
 
         return redirect()->to('/usuarios')->with('message','El usuario se ha creado con exito')->with('alert','success');

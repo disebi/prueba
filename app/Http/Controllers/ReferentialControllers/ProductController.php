@@ -9,6 +9,7 @@ use App\Models\ReferentialModels\Product;
 use App\Models\ReferentialModels\Provider;
 use App\Models\ReferentialModels\Tax;
 use App\Models\ReferentialModels\Unity;
+use App\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\ReferentialModels\Line;
@@ -39,9 +40,7 @@ class ProductController extends Controller {
     public function store(Requests\CreateProductRequest $request)
     {
         $obj=$request->all();
-
         $obj = $this->setObjectToSave($obj);
-
         Product::create($obj);
         return redirect()->to('/productos')->with('message','Su producto se ha creado con exito')->with('alert','success');
     }
@@ -50,6 +49,7 @@ class ProductController extends Controller {
 
     public function edit($id)
     {
+        try{
         $submit='Guardar Cambios';
         $model = Product::findOrFail($id);
         $url='productos';
@@ -60,19 +60,27 @@ class ProductController extends Controller {
         return view ('product.edit',compact('edit','url','referencial','independiente',
             'controlador','submit','taxes','providers',
             'unities','presentations','lines','aromas','model','action'));
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 
     public function update($id,Requests\CreateProductRequest $request)
     {
-        $model = Product::find($id);
+        try{
+        $model = Product::findOrFail($id);
         $obj=$request->all();
         $obj = $this->setObjectToSave($obj);
         $model->update($obj);
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return redirect()->to('/productos')->with($params);
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
     public function destroy($id)
@@ -109,6 +117,7 @@ class ProductController extends Controller {
      */
     public function getSelectBox()
     {
+
         $taxes = Tax::all()->lists('valor', 'id');
         $providers = Provider::all()->lists('description', 'id');
         $unities = Unity::all()->lists('description', 'id');

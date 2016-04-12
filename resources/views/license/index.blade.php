@@ -1,34 +1,13 @@
 @extends('app2')
-
+@include('partials.bread._index',['button'=>action($controlador.'Controller@create')])
 @section('content')
-
-  <section class="content-header">
-           <h1>
-             {{$referencial}}
-             <small>de {{$independiente}}       |
-             <a class="btn btn-success" href="{{ action($controlador.'Controller@create') }}"><i class="fa fa-plus"></i> Nuevo</a></small>
-            </h1>
-
-
-
-
-           <ol class="breadcrumb">
-             <li><a href="#"><i class="fa fa-dashboard"></i> {{$independiente}}</a></li>
-             <li><a href="#">{{$referencial}}</a></li>
-
-           </ol>
-  </section>
-
-         <!-- Main content -->
- <section class="content animsition">
-           <div class="row">
              <div class="col-xs-12">
                <div class="box">
                  <div class="box-header">
                    <h3 class="box-title">Listas de registros de {{$referencial}}</h3>
                  </div><!-- /.box-header -->
                  <div class="box-body">
-                   <table id="tablalista" class="table table-bordered table-striped">
+                   <table id="table" class="table table-bordered table-striped">
 
                      <thead>
                        <tr>
@@ -65,23 +44,9 @@
 
 
              </div><!-- /.col -->
-           </div><!-- /.row -->
- @include('partials.msjdelete')
- </section><!-- /.content -->
-
 @stop
 
-@section('javascripts')
-<script type="text/javascript">
-      $(function () {
-        $("#tablalista").dataTable();
-
-      });
-    </script>
-
-
-@include('partials.functionMsj')
-
-
-@stop
-
+@include('partials.help._ref_index')
+@include('partials._paginate')
+@include('partials._functionMsj')
+@include('partials.msjdelete')

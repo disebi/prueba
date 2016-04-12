@@ -11,7 +11,7 @@
 
                  </div>
                 <div class="modal-footer">
-                <button type="button" onclick="sendZone()" class="btn btn-primary pull-right" data-dismiss="modal">Guardar</button>
+                <button type="button" onclick="sendZone()"  style="padding-right: 20px" class="btn btn-primary" data-dismiss="modal">Guardar</button>
                 <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancelar</button>
                   </div>
                </div>

@@ -1,34 +1,14 @@
 @extends('app2')
+@include('partials.bread._index',['button'=>action('ReferentialControllers\ProviderController@create')])
 
 @section('content')
-
- <section class="content-header">
-          <h1>
-            Proveedores
-            <small>de Productos       |
-            <a class="btn btn-success" href="{{ action('ReferentialControllers\ProviderController@create') }}"><i class="fa fa-plus"></i> Nuevo</a></small>
-           </h1>
-
-
-
-
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Productos</a></li>
-            <li><a href="#">Proveedor</a></li>
-
-          </ol>
- </section>
-
-        <!-- Main content -->
-<section class="content animsition">
-          <div class="row">
-            <div class="col-xs-12">
+  <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Listas de registros de Proveedores</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="tablalista" class="table table-bordered table-striped">
+                  <table id="table" class="table table-bordered table-striped">
 
                     <thead>
                       <tr>
@@ -79,7 +59,7 @@
 
                            {{--<button onclick='return btnClick();' type="submit" class="btn btn-default" title="Eliminar"><i class="fa fa-trash text-danger"></i></button>{!! Form::close() !!}--}}
                             <a class="btn btn-default" onclick="askDelete({{$provider->id}})"><i class="fa fa-trash text-danger"></i></a>
-
+                            <a class="btn btn-defoult"></a>
                         {!! Form::close() !!}
 
                        </td>
@@ -94,8 +74,6 @@
 
 
             </div><!-- /.col -->
-          </div><!-- /.row -->
-@include('partials.msjdelete')
 </section><!-- /.content -->
 
 
@@ -104,11 +82,10 @@
 @section('javascripts')
 <script type="text/javascript">
    function modal (id){
-
    $("#"+id).modal('show');
    }
-    </script>
+</script>
 
-@include('partials.functionMsj')
-
+@include('...partials._functionMsj')
+@include('partials.msjdelete')
 @stop

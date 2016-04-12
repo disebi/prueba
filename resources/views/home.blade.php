@@ -11,5 +11,5 @@
 @endsection
 
 @section('javascripts')
-@include('partials.functionMsj')
+@include('partials._functionMsj')
 @stop

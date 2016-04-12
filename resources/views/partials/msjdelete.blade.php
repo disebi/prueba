@@ -1,6 +1,5 @@
-
+@section('javascripts')
  <script type="text/javascript">
-
  function askDelete(nro){
 
       var form ='formdelete'+nro;
@@ -37,7 +36,5 @@
       });
 
  }
-
-
-
  </script>
+ @append

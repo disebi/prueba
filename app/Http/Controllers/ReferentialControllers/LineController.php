@@ -59,31 +59,34 @@ class LineController extends Controller {
 
 	public function edit($id)
 	{
-        $submit='Guardar Cambios';
-        $model = Line::find($id);
-
-
-        $url='aromas';
-        $action='ReferentialControllers\LineController@update';
+        try{
+         $submit='Guardar Cambios';
+         $model = Line::findOrFail($id);
+         $url='aromas';
+         $action='ReferentialControllers\LineController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
-
-
-
-        return view ('simpleRef.simple_referential_edit',compact('action','url','model','submit','referencial','independiente'));
-
+         return view ('simpleRef.simple_referential_edit',compact('action','url','model','submit','referencial','independiente'));
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 
 	public function update($id, Requests\CreateSimpleReffRequest $request)
 	{
-        $model = Line::find($id);
+        try{
+        $model = Line::findOrFail($id);
         $input=$request->all();
         $model->description=$input['description'];
         $model->save();
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return \Redirect::to('lineas')->with($params);
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
 	}
 
 

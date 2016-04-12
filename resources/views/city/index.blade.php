@@ -1,38 +1,20 @@
+@extends('app2')
 
+@include('partials.bread._index',['button'=>action('ReferentialControllers\CityController@create')])
 
- <section class="content-header">
-          <h1>
-            {{$referencial}}
-            <small>de {{$independiente}}       |
-            <a class="btn btn-success" href="{{ action('ReferentialControllers'.$controlador.'Controller@create') }}"><i class="fa fa-plus"></i> Nuevo</a></small>
-           </h1>
-
-
-
-
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> {{$independiente}}</a></li>
-            <li><a href="#">{{$referencial}}</a></li>
-
-          </ol>
- </section>
-
-        <!-- Main content -->
-<section class="content animsition">
-          <div class="row">
+@section('content')
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Listas de registros de {{$referencial}}</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="tablalista" class="table table-bordered table-striped">
-
+                  <table id="table" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>#</th>
                         <th>Descripcion</th>
-                        <th>Monto</th>
+                        <th>Sucursal</th>
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -42,7 +24,7 @@
                       <tr>
                         <td> {{$tabla->id}}</td>
                         <td>{{$tabla->description}}</td>
-                        <td>{{$tabla->valor}} %</td>
+                        <td>{{$tabla->branch->description}}</td>
 
                         <td>
                         {!! Form::open(array('id'=>'formdelete'.$tabla->id,'method' => 'DELETE', 'route' => array($url.'.destroy', $tabla->id))) !!}
@@ -55,19 +37,15 @@
                        </td>
                       </tr>
                       @endforeach
-
                     </tbody>
-
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-
-
             </div><!-- /.col -->
-          </div><!-- /.row -->
+@stop
+@include('partials._paginate')
+@include('partials.help._ref_index')
+@include('...partials._functionMsj')
 @include('partials.msjdelete')
-</section><!-- /.content -->
-
-
 
 

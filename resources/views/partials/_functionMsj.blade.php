@@ -1,14 +1,15 @@
+@section('javascripts')
   <script type="text/javascript">
            function mensajito (type,textm) {
                var n = noty({
                    text        : '<div class="activity-item">  <div class="activity" style="font-size:15px; font-family: "Roboto", Helvetica, Arial, sans-serif">'+textm+' </div> </div>',
                    type        : type,
                    dismissQueue: true,
-                   timeout     : 10000,
+                   timeout     : 5000,
                    closeWith   : ['click'],
                    layout      : 'bottomRight',
                    theme       : 'bootstrapTheme',
-                   maxVisible  : 3,
+                   maxVisible  : 5,
                    animation   : {
                        open  : 'animated bounceInRight',
                        close : 'animated bounceOutRight',
@@ -36,3 +37,4 @@
      @endif
 
      </script>
+@append

@@ -42,17 +42,14 @@ class ClientController extends Controller {
         unset($obj['business_list']);
 
         Client::create($obj);
-
         return redirect()->to('/clientes')->with('message','Su local cliente se ha creado con exito')->with('alert','success');
-
-
-
     }
 
 
 
     public function edit($id)
     {
+        try{
         $submit='Guardar Cambios';
         $model = Client::findOrFail($id);
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -62,12 +59,16 @@ class ClientController extends Controller {
         $cities = City::all()->lists('description', 'id');
         $action='ReferentialControllers\ClientController@update';
         return view ('local.edit',compact('zones','action','url','model','submit','cities','edit','referencial','independiente','controlador','business'));
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
     public function update($id,Requests\CreateLocalRequest $request)
     {
-        $model = Client::find($id);
+        try{
+        $model = Client::findOrFail($id);
 
         $obj=$request->all();
         $this->cleanStore($obj);
@@ -79,7 +80,10 @@ class ClientController extends Controller {
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return redirect()->to('/clientes')->with($params);
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 

@@ -12,9 +12,6 @@ Route::group(['middleware' => 'auth'],
         Route::get('home2', 'HomeController@indexSales');
         Route::get('homeSalesmen/{id}', 'HomeController@salesmen');
 
-
-
-
 //rutas de usuarios y roles
         Route::get ('perfil','UserController@edit');
         Route::patch ('perfilUp/{id}',  array('as' => 'perfilUp',
@@ -23,7 +20,16 @@ Route::group(['middleware' => 'auth'],
         Route::resource ('roles','RoleController');
         Route::resource('permisos','LicenseController');
         Route::resource('usuarios','StaffController');
-//rutas de referenciales simples de stock
+        Route::patch('activar/{id}',array('as' => 'usuarios.activeUser',
+            'uses' => 'UserController@activate'
+        ));
+
+//STOCK
+        Route::resource('compras','StockControllers\PurchaseController');
+        Route::post ('/returnProducts','StockControllers\PurchaseController@getProviderProduct');
+        Route::post ('/returnProductPrice','StockControllers\PurchaseController@getProductPrice');
+
+//rutas de referenciales simples de purchase
         Route::resource ('lineas','ReferentialControllers\LineController');
         Route::post ('/lineasModal','ReferentialControllers\LineController@storeModal');
         Route::resource ('presentaciones','ReferentialControllers\PresentationController');
@@ -54,4 +60,9 @@ Route::group(['middleware' => 'auth'],
         Route::resource('clientes','ReferentialControllers\ClientController');
         Route::resource('vehiculos','ReferentialControllers\DriveController');
 
+
+
+//rutas de reportes
+        Route::get('/reporting', ['uses' =>'ReportController@index', 'as' => 'Report']);
+        Route::post('/reporting', ['uses' =>'ReportController@post']);
     });

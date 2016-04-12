@@ -8,7 +8,8 @@
       <link href="{{ URL::asset('/plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
       <!-- Theme style -->
       <link href="{{ asset('/css/AdminLTE.css') }}" rel="stylesheet" type="text/css" />
-       <link href="{{ asset('/css/animsition.css') }}" rel="stylesheet" type="text/css" />
+      <link href="{{ asset('/css/custom.css') }}" rel="stylesheet" type="text/css" />
+
       <!-- AdminLTE Skins. Choose a skin from the css/skins
            folder instead of downloading all of them to reduce the load. -->
       <link href="{{ URL::asset('/css/skins/_all-skins.min.css') }}" rel="stylesheet" type="text/css" />
@@ -20,5 +21,6 @@
           <script src="{{ URL::asset('https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js') }}"></script>
       <![endif]-->
     <script src="{{ URL::asset('/plugins/jQuery/jQuery-2.1.3.min.js') }}"></script>
+     @yield('css')
 
 

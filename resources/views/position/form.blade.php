@@ -31,22 +31,13 @@
   <p class="help-block">Periodo de cobro</p>
   </div>
 </div>
-
 <!-- Text input-->
-
-
 </div>
-
-
-
 </div>
 
 <div class="box-footer">
 <div class="control-group">
-
-
     {!!Form:: submit($submit,['class'=>'btn btn-primary'])!!}
-
 </div>
 
 </div>

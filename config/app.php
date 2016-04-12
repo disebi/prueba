@@ -138,6 +138,7 @@ return [
         'Illuminate\Html\HtmlServiceProvider',
         'App\Providers\ViewComposerServiceProvider',
         'Gvb\Whoops\ServiceProvider',
+        'JasperPHP\JasperPHPServiceProvider',
 		/*
 		 * Application Service Providers...
 		 */

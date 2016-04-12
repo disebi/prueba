@@ -51,24 +51,35 @@ class BrandController extends Controller {
 
 	public function edit($id)
 	{
+        try{
         $submit='Guardar Cambios';
-        $model = Brand::find($id);
+        $model = Brand::findOrFail($id);
         $url='rubros';
         $action='ReferentialControllers\BrandController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('simpleRef.simple_referential_edit',compact('action','url','model','submit','referencial','independiente'));
+
+        }catch(\Exception $e){
+        return redirect()->back()->with('message','El registro no existe')
+        ->with('alert','error');
+        }
     }
 
 
 	public function update($id, Requests\CreateSimpleReffRequest $request)
 	{
-        $model = Brand::find($id);
+      try{
+        $model = Brand::findOrFail($id);
         $input=$request->all();
         $model->description=$input['description'];
         $model->save();
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return \Redirect::to('marcas')->with($params);
+      }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+            ->with('alert','error');
+      }
 	}
 
 

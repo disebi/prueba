@@ -1337,7 +1337,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				for ( i1 = 0; i1 < groups.length; i1++ ) {
 					var group = groups[ i1 ];
 					var isLegend = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-legend-div", 1 );
-					var isPanel = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-stock-panel-div" );
+					var isPanel = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-purchase-panel-div" );
 					var isScrollbar = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-scrollbar-chart-div" );
 
 					// STOCK CHART; SVG OFFSET;; SVG OFFSET

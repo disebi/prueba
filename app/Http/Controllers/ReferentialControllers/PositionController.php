@@ -5,28 +5,21 @@ use App\Http\Controllers\Controller;
 use App\Models\ReferentialModels\Position;
 use Illuminate\Http\Request;
 
-class PositionController extends Controller {
+class PositionController extends Controller
+{
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
     public function index()
     {
-        $positions=Position::all();
+        $positions = Position::all();
         // dd($Positions);
-
-        return view ('position.index',compact('positions'));
+        list($referencial, $independiente) = $this->getInfo();
+        return view('position.index', compact('positions', 'referencial', 'independiente'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
+
     public function create()
     {
+        list($referencial, $independiente) = $this->getInfo();
         $edit=0;
         $array=['Semanal'=>'Semanal','Quincenal'=>'Quincenal','Mensual'=>'Mensual'];
         return view ('position.create',compact('array','edit'));
@@ -49,8 +42,9 @@ class PositionController extends Controller {
 
     public function edit($id)
     {
+        try{
         $submit='Guardar Cambios';
-        $model =Position::find($id);
+        $model =Position::findOrFail($id);
 
 
         $url='cargos';
@@ -59,18 +53,25 @@ class PositionController extends Controller {
 
         $array=['Semanal'=>'Semanal','Quincenal'=>'Quincenal','Mensual'=>'Mensual'];
         return view ('Position.edit',compact('action','url','model','submit','array','edit'));
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 
     public function update(Requests\CreatePositionRequest $request, $id)
     {
+        try{
         $input=$request->all();
         $Position=Position::findorFail($id);
         $Position->update($input);
 
         return redirect()->to('/cargos')->with('message','Su cargo se ha actualizado con exito')->with('alert','success');
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
     /**
@@ -89,6 +90,16 @@ class PositionController extends Controller {
         }catch(QueryException $e){
         return redirect()->to('/marcas')->with('message','Su registro no ha podido ser eliminado, ya que se esta utilizando')->with('alert','error');
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getInfo()
+    {
+        $referencial = "Cargo";
+        $independiente = "Empleados";
+        return array($referencial, $independiente);
     }
 
 }

@@ -16,7 +16,12 @@ class CreateCitiesTable extends Migration {
 		{
             $table->increments('id');
             $table->string('description');
+            $table->integer('branch_id')->unsigned();
             $table->timestamps();
+
+
+
+            $table->foreign('branch_id')->references('id')->on('branches');
 		});
 	}
 

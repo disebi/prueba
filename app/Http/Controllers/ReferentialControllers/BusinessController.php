@@ -37,25 +37,34 @@ class BusinessController extends Controller {
 
 	public function edit($id)
 	{
+       try{
         $submit='Guardar Cambios';
-        $model = Business::find($id);
+        $model = Business::findOrFail($id);
         $url='rubros';
         $action='ReferentialControllers\BusinessController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('simpleRef.simple_referential_edit',compact('action','url','model','submit','referencial','independiente'));
-
+       }catch(\Exception $e){
+           return redirect()->back()->with('message','El registro no existe')
+               ->with('alert','error');
+       }
     }
 
 
 	public function update ($id, Requests\CreateSimpleReffRequest $request) {
-        $model = Business::find($id);
-        $input=$request->all();
-        $model->description=$input['description'];
-        $model->save();
-        $params = ['message'=>'Se ha guardado con exito',
-            'alert'=>'success'];
-        return \Redirect::to('rubros')->with($params);
-	}
+        try{
+            $model = Business::findOrFail($id);
+            $input=$request->all();
+            $model->description=$input['description'];
+            $model->save();
+            $params = ['message'=>'Se ha guardado con exito',
+                'alert'=>'success'];
+            return \Redirect::to('rubros')->with($params);
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
+}
 
 
 	public function destroy($id)

@@ -33,7 +33,6 @@ class DriveController extends Controller {
     public function store(Requests\CreateDriveRequest $request)
     {
         $obj=$request->all();
-        dd($obj);
         $obj['brand_id'] = $obj['brand_list'];
         unset($obj['brand_list']);
         Drive::create($obj);
@@ -43,6 +42,7 @@ class DriveController extends Controller {
 
     public function edit($id)
     {
+        try{
         $submit='Guardar Cambios';
         $model = Drive::findOrFail($id);
         $url='vehiculos';
@@ -50,12 +50,16 @@ class DriveController extends Controller {
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $brands=Brand::all()->lists('description','id');
         return view ('drive.edit',compact('brands','action','url','model','submit','referencial','independiente'));
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
-
 
     public function update($id,Requests\CreateDriveRequest $request)
     {
-        $model = Drive::find($id);
+        try{
+        $model = Drive::findOrFail($id);
         $obj=$request->all();
         $obj['brand_id'] = $obj['brand_list'];
         unset($obj['brand_list']);
@@ -63,8 +67,11 @@ class DriveController extends Controller {
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return redirect()->to('/vehiculos')->with($params);
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
-
 
     public function destroy($id)
     {
@@ -82,7 +89,7 @@ class DriveController extends Controller {
     public function sendInfo()
     {
         $referencial = 'Vehiculos';
-        $independiente = 'Orden De Trabajo';
+        $independiente = 'Empresa';
         $controlador = '\Drive';
         return array($referencial, $independiente, $controlador);
     }

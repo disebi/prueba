@@ -30,9 +30,9 @@
                 {!! Form:: select ('zone_list',$zones,null,['class'=>'input-medium form-control'])!!}
                  <p class="help-block">Zona a la que pertenece el local</p>
                  </div>
-                 <div class="col-lg-6" style="padding-bottom: 40px">
-                    <a class="btn btn-sm btn-success" onclick="nuevaZona()"><i class="fa fa-plus"></i></a>
-                    </div>
+                 {{--<div class="col-lg-6" style="padding-bottom: 40px">--}}
+                    {{--<a class="btn btn-sm btn-success" onclick="nuevaZona()"><i class="fa fa-plus"></i></a>--}}
+                    {{--</div>--}}
                  </div>
                  </div>
         </div>
@@ -106,15 +106,13 @@
  </div>
  </div>
 </div>
-
-@include('zone.modals')
-<script type="text/javascript">
-function nuevaZona (){
-   $("#dialogZone").modal('show');
-   }
-</script>
-
+@include('partials._select2')
 @section('javascripts')
-@include('simpleRef.simple_referential_popout',['comboBox'=>'business_list','urlmodal'=>'/rubros','idpop'=>'rubropop','controllermodal'=>'\Business'])
-@include('simpleRef.simple_referential_popout',['comboBox'=>'city_list','urlmodal'=>'/ciudad','idpop'=>'citypop','controllermodal'=>'\City'])
+<script type="text/javascript">
+$("#city_list").select2({ width: '100%' });
+$("#business_list").select2();
+$("#zone_list").select2();
+</script>
 @append
+@include('partials._popout')
+@include('simpleRef.simple_referential_popout',['comboBox'=>'business_list','urlmodal'=>'/rubros','idpop'=>'rubropop','controllermodal'=>'\Business'])

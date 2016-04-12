@@ -37,44 +37,43 @@ class UnityController extends Controller {
             $params = ['message' => 'Se ha guardado con exito',
                 'alert' => 'success'];
             return redirect()->to('unidades')->with($params);
-
-
         } else {
-
             return redirect()->back()->with('message', 'El registro ya existe')
                 ->with('alert', 'error');
-
         } }
 
 
 
 	public function edit($id)
 	{
+        try{
         $submit='Guardar Cambios';
-        $model = Unity::find($id);
-
-
+        $model = Unity::findOrFail($id);
         $url='unidades';
         $action='ReferentialControllers\UnityController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
-
-
-
         return view ('simpleRef.simple_referential_edit',compact('action','url','model','submit','referencial','independiente'));
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 
 	public function update($id,Requests\CreateSimpleReffRequest $request)
 	{
-        $model = Unity::find($id);
+        try{
+        $model = Unity::findOrFail($id);
         $input=$request->all();
         $model->description=$input['description'];
         $model->save();
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return redirect()->to('unidades')->with($params);
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 

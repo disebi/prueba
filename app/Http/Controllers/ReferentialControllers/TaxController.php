@@ -37,19 +37,24 @@ class TaxController extends Controller {
 
     public function edit($id)
     {
+        try{
         $submit='Guardar Cambios';
-        $model = Tax::find($id);
+        $model = Tax::findOrFail($id);
         $url='impuestos';
         $action='ReferentialControllers\TaxController@update';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('taxes.edit',compact('action','url','model','submit','referencial','independiente'));
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 
     public function update($id, Requests\CreateTaxesRequest $request)
     {
-        $model = Tax::find($id);
+        try{
+        $model = Tax::findOrFail($id);
         $input=$request->all();
         $model->description=$input['description'];
         $model->valor=$input['valor'];
@@ -57,7 +62,10 @@ class TaxController extends Controller {
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
         return \Redirect::to('impuestos')->with($params);
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 

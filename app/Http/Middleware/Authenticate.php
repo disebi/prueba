@@ -42,7 +42,12 @@ class Authenticate {
 			{
 				return redirect()->guest('auth/login');
 			}
-		}
+		}else{
+            if(!\Auth::user()->active &&  \Auth::logout()){
+
+
+            }
+        }
 
 		return $next($request);
 	}

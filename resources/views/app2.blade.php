@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <title>2A ADMIN</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    @include('partials.css')
-    @yield('css')
-  </head>
+    @include('partials._css')
+   </head>
 
-
-     <body class="sidebar-mini skin-yellow">
-
-  </body>
-        <div class="wrapper">
+<body class="sidebar-mini skin-yellow">
+<div class="wrapper">
              @include('partials.navbar')
 
                   <!-- Left side column. contains the logo and sidebar -->
@@ -20,20 +16,32 @@
 
           <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-                         @yield('content')
+                <div class="row animated fadeIn">
+                    <div class="col-md-12">
+                        <!-- Content Header (Page header) -->
+                        <section class="content-header">
+                        @yield('bread')
+
+                        </section>
+                        <section class="content animsition">
+                         <div class="row animated fade-in">
+                             @yield('content')
+                          </div>
+                        </section>
+                  </div><!-- /.content-wrapper -->
+                </div><!-- /.content-wrapper -->
             </div><!-- /.content-wrapper -->
          <footer class="main-footer">
                  <div class="pull-right hidden-xs">
                    <b>Version</b> 2.0
                  </div>
                  <strong>DS 2015 <a href="http://almsaeedstudio.com"></a>.</strong> All rights reserved.
-               </footer>
+         </footer>
         </div><!-- ./wrapper -->
-        @yield('sidebar')
+  </body>
 
-            @include('partials.script')
-                @yield('javascripts')
-            @yield('footer')
+        @include('partials.rightslide')
+        @include('partials.script')
+        @yield('footer')
 
 </html>

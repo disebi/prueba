@@ -1,22 +1,21 @@
 @extends('app2')
 
-@section('content')
-
- <section class="content-header">
+@section('bread')
           <h1>
             Cargos
             <small>de Emplados    |
             <a class="btn btn-success" href="{{ action('ReferentialControllers\PositionController@create') }}"><i class="fa fa-plus"></i> Nuevo</a></small>
            </h1>
-
-
-
-
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Empleados</a></li>
             <li><a href="#">Cargo</a></li>
 
           </ol>
+@endsection
+@section('content')
+
+ <section class="content-header">
+
  </section>
 
         <!-- Main content -->
@@ -28,7 +27,7 @@
                   <h3 class="box-title">Listas de registros de Cargos</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="tablalista" class="table table-bordered table-striped">
+                  <table id="table" class="table table-bordered table-striped">
 
                     <thead>
                       <tr>
@@ -70,16 +69,10 @@
 
             </div><!-- /.col -->
           </div><!-- /.row -->
-@include('partials.msjdelete')
+
 </section><!-- /.content -->
 @stop
-
-@section('javascripts')
-<script type="text/javascript">
-      $(function () {
-        $("#tablalista").dataTable();
-
-      });
-    </script>
-  @include('partials.functionMsj')
-@stop
+@include('partials.help._ref_index')
+@include('partials._paginate')
+@include('partials._functionMsj')
+@include('partials.msjdelete')

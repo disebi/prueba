@@ -16,8 +16,7 @@ class Staff extends Model {
         'birth_date',
     ];
     public function user(){
-
-        return $this->belongsTo('App\Staff');
+        return $this->belongsTo('App\User');
     }
 
     public function getUserListAttribute(){

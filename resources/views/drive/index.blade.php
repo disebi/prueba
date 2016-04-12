@@ -1,32 +1,16 @@
 @extends('app2')
 
+@include('partials.bread._index',['button'=>action('ReferentialControllers\DriveController@create')])
+
+
 @section('content')
-
- <section class="content-header">
-          <h1>
-            Vehiculos
-            <small>de la Empresa    |
-            <a class="btn btn-success" href="{{ action('ReferentialControllers\DriveController@create') }}"><i class="fa fa-plus"></i> Nuevo</a></small>
-           </h1>
-
-
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> de la Empresa</a></li>
-            <li><a href="#">Vehiculos</a></li>
-
-          </ol>
- </section>
-
-        <!-- Main content -->
-<section class="content animsition">
-          <div class="row">
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Listas de registros de Vehiculos</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="tablalista" class="table table-bordered table-striped">
+                  <table id="table" class="table table-bordered table-striped">
 
                     <thead>
                       <tr>
@@ -40,9 +24,7 @@
                       </tr>
                     </thead>
                     <tbody>
-
                       @foreach($drives as $drive)
-
                       <tr>
                         <td> {{$drive->id}}</td>
                          <td>{{$drive->brand->description}}</td>
@@ -72,17 +54,8 @@
 
 
             </div><!-- /.col -->
-          </div><!-- /.row -->
+@stop
+@include('partials.help._ref_index')
+@include('partials._paginate')
+@include('...partials._functionMsj')
 @include('partials.msjdelete')
-</section><!-- /.content -->
-@stop
-
-@section('javascripts')
-<script type="text/javascript">
-      $(function () {
-        $("#tablalista").dataTable();
-
-      });
-    </script>
-   @include('partials.functionMsj')
-@stop

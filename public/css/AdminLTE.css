@@ -2277,8 +2277,13 @@ a:focus {
 .callout.callout-warning {
   border-color: #c87f0a;
 }
+.callout.callout-sutil {
+    background-color: #d6f6d1;
+    border-color : #329187 !important;
+}
+
 .callout.callout-info {
-  border-color: #0097bc;
+    border-color: #0097bc;
 }
 .callout.callout-success {
   border-color: #00733e;

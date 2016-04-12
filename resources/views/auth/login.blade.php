@@ -26,7 +26,7 @@
         <a href="../../index2.html"><b>Admin</b>2A</a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Sign in to start your session </p>
         @if (count($errors) > 0)
         						<div class="alert alert-danger">
         							<strong>Whoops!</strong> There were some problems with your input.<br><br>

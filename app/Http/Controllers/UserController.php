@@ -96,4 +96,22 @@ class UserController extends Controller {
 		//
 	}
 
+    public function activate($id)
+	{
+        $user=User::find($id);
+        $active=false;
+        if(!$user->active){
+            $active=true;
+        }
+
+        $user->active =$active;
+
+        $user->save();
+
+
+        return redirect()->to('/usuarios')->with('message','se cambio')->with('alert','success');
+
+
+	}
+
 }

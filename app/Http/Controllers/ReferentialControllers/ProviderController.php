@@ -14,14 +14,12 @@ class ProviderController extends Controller {
 	{
 		$providers=Provider::all();
        // dd($providers);
-
         return view ('provider.index',compact('providers'));
 	}
 
 
 	public function create()
 	{
-
 		return view ('provider.create');
 	}
 
@@ -39,27 +37,30 @@ class ProviderController extends Controller {
 
 	public function edit($id)
 	{
+        try{
         $submit='Guardar Cambios';
-        $model =Provider::find($id);
-
-
+        $model =Provider::findOrFail($id);
         $url='proveedores';
         $action='ReferentialControllers\ProviderController@update';
-
-
         return view ('provider.edit',compact('action','url','model','submit'));
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 
 	public function update(CreateProviderRequest $request, $id)
 	{
+        try{
         $input=$request->all();
         $provider=Provider::findorFail($id);
         $provider->update($input);
-
         return redirect()->to('/proveedores')->with('message','Su proveedor se ha actualizado con exito')->with('alert','success');
-
+        }catch(\Exception $e){
+            return redirect()->back()->with('message','El registro no existe')
+                ->with('alert','error');
+        }
     }
 
 
@@ -68,9 +69,8 @@ class ProviderController extends Controller {
         try{
             Provider::destroy($id);
             return redirect()->to('/proveedores')->with('message','Su proveedor se ha eliminado con exito')->with('alert','success');
-
-
         }
+
         catch(QueryException $e){
 
              return redirect()->to('/proveedores')->with('message','Su proveedor no ha podido ser eliminado, ya que se esta utilizando')->with('alert','error');

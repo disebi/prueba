@@ -1,22 +1,14 @@
 @extends('app2')
 
-
-@section('css')
- <link href="{{ asset('/css/select2.css') }}" rel="stylesheet" type="text/css" />
-
-@stop
-@section('content')
-                <section class="content-header">
-                         <h1>Nuevo Vehiculo</h1>
+@section('bread')
+        <h1>Nuevo Vehiculo</h1>
                    <ol class="breadcrumb">
                            <li><a href="#"><i class="fa fa-dashboard"></i>{{$independiente}}</a></li>
                            <li><a href="#">{{$referencial}}r</a></li>
                   </ol>
-                </section>
-                   <!-- Main content -->
-                <section class="content animsition">
-                             <div class="row">
-                               <div class="col-xs-12">
+@endsection
+@section('content')
+      <div class="col-xs-12">
                                  <div class="box box-primary">
                                    <div class="box-header" >
                                      <h3 class="box-title">Crear un nuevo registro de Vehiculo</h3>
@@ -26,9 +18,7 @@
                                            {!!Form::close()!!}
                              </div><!-- /.col -->
                                </div><!-- /.col -->
-                            </div><!-- /.row -->
-                   </section><!-- /.content -->
-@include('partials.functionMsj')
+       @include('...partials._functionMsj')
 @endsection
 
 @section('javascripts')
