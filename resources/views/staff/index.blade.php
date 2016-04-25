@@ -35,13 +35,13 @@
                          <td>{{$table->tel}}</td>
                          <td>{{$table->direcc}}</td>
                         <td>
-                             {!! Form::open(array('id'=>'formup'.$table->id,'method' => 'PATCH', 'route' => array('usuarios.activeUser', $table->id))) !!}
-                                                   <a class="btn btn-default" href="/usuarios/{{$table->id}}/edit" ><i class="fa fa-edit"></i> </a>
+                             {!! Form::open(array('id'=>'formup'.$table->user_id,'method' => 'PATCH', 'route' => array('usuarios.activeUser', $table->user_id))) !!}
+                                                   <a class="btn btn-default" href="/usuarios/{{$table->user_id}}/edit" ><i class="fa fa-edit"></i> </a>
                                                    <a class="btn btn-default" onclick="askActivate( {{$table->user_id}} )"
                                                                                                       @if($table->user->active)
-                                                                                                      title="Deshabilitar"><i class="fa fa-thumbs-down text-danger"></i>
+                                                                                                       title="Deshabilitar"><i class="fa fa-thumbs-down text-danger"></i>
                                                                                                       @else
-                                                                                                      title="Habilitar"><i class="fa fa-thumbs-up text-success"></i>
+                                                                                                       title="Habilitar"><i class="fa fa-thumbs-up text-success"></i>
                                                                                                       @endif
                                                                                                        </a>
 
@@ -69,9 +69,11 @@
 
 @section('javascripts')
 <script type="text/javascript">
+ var form='';
  function askActivate(nro){
 
-             var form ='formup'+nro;
+             form ='formup'+nro;
+             console.log(form);
              var n = noty({
                                   text        : '<div class="activity-item">  ' +
                                    '<div class="activity" style="font-size:15px; font-family: "Roboto", Helvetica, Arial, sans-serif">' +

@@ -94,29 +94,4 @@ class DriveController extends Controller {
         return array($referencial, $independiente, $controlador);
     }
 
-    /**
-     * @param $input
-     */
-
-    public function storeModal()
-    {
-        $input=\Input::all();
-        $description=$input['value'];
-        $input['description']=$description;
-        unset($input['pk']);
-        unset($input['name']);
-        unset($input['value']);
-        unset($input['_token']);
-        $number=Drive::where('description','=',$input['description'])->count();
-
-        if($number==0){
-            Drive::create($input);
-            $html=Drive::select('id','description')->get();
-            return $html;
-        }else{
-            return 0;
-        }
-    }
-
-
 }

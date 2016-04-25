@@ -1,12 +1,7 @@
 @extends('app2')
 
-           @section('bread')
-             <h1>Nuevo proveedor<small>de productos</small> </h1>
-                 <ol class="breadcrumb">
-                                      <li><a href="#"><i class="fa fa-dashboard"></i> Productos</a></li>
-                                      <li><a href="#">Proveedor</a></li>
-                             </ol>
-           @endsection
+           @include('partials.bread._create')
+           @include('partials.help._ref_create')
            @section('content')
              <div class="col-xs-12">
                 <div class="box box-primary">

@@ -13,15 +13,11 @@
                       <tr>
                         <th>#</th>
                         <th>Descripcion</th>
-                        <th>Proveedor</th>
                         <th>Linea</th>
-                        <th>Presentacion</th>
-                        <th>Aroma</th>
-                        <th>Contenido</th>
                         <th>Medida</th>
                         <th>Compra</th>
                         <th>Venta</th>
-                        <th>IVA</th>
+
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -30,15 +26,10 @@
                       <tr>
                         <td> {{$table->id}}</td>
                         <td>{{$table->description}}</td>
-                        <td>{{$table->provider->description}}</td>
-                        <td>{{$table->line->description}}</td>
-                        <td>{{$table->presentation->description}}</td>
-                        <td>{{$table->aroma->description}}</td>
-                        <td>{{$table->contenido}}</td>
-                        <td>{{$table->unity->description}}</td>
+                        <td>{{$table->line->description}} en {{$table->presentation->description}}</td>
+                        <td>{{$table->aroma->description}} {{$table->contenido}} {{$table->unity->description}}</td>
                         <td>{{$table->compra}} Gs.</td>
                         <td>{{$table->venta}} Gs.</td>
-                        <td>{{$table->tax->valor}} %</td>
 
                         <td>
                         {!! Form::open(array('id'=>'formdelete'.$table->id,'method' => 'DELETE', 'route' => array('productos.destroy', $table->id))) !!}

@@ -11,7 +11,6 @@
                                              <div class="row">
                                                  <div class="col-xs-12">
                                                                 <div class="control-group">
-
                                                                   <div class="controls">
                                                                     {!! Form:: label ('provider_list','Elija un Proveedor:')!!}
                                                                     {!! Form:: select ('provider_list',$providers,null,isset($model)?['class'=>'form-control input-lg','id'=>'providers','disabled'=>'']:['class'=>'form-control input-lg','id'=>'providers'])!!}
@@ -32,7 +31,7 @@
             </div>
         </div><!-- /.col -->
         <div class="col-xs-3">
-           @include('partials_invoice.dateTime')
+           @include('partials_invoice.dateTime',['stamping'=> true])
         </div><!-- /.col -->
         <div class="col-xs-3">
         @include('partials_invoice.userInfo')
@@ -73,7 +72,6 @@
 
                                                 </div>
                                                 </div>
-
                                                 <div class="col-xs-2">
                                                 <div class="form-group">
                                                     <label for="price">Precio</label>
@@ -137,9 +135,9 @@
              <div class="panel-heading">Informacion</div>
              <div class="panel-body">
                 <div class="form-group">
-                                                      <label for="comment">Observaciones</label>
-                                                         <textarea id="msj" class="form-control"  style="resize: none" rows="5" id="comment"></textarea>
-                                                       <div class="controls">
+                                                      <label for="coment">Observaciones</label>
+                                                                                                           {!!Form::textarea('coment',null,['class'=>'form-control', 'style'=>'resize: none','rows'=>'5']) !!}
+                                                                                                            <div class="controls">
                                                        <p>Notas acerca de la factura</p>
                                                        </div>
                                                  </div>
@@ -217,7 +215,7 @@ makeProviders();
 /*********************************************************************************************/
 function makeProviders(){
 
-if($("#providers")!=0){
+if($("#providers").val()!='0'){
 spin('providerInfo'); spin('spinner');
      makeSpinner(); $("#products").html("");
       disable(true);

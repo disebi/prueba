@@ -13,25 +13,22 @@ class ProviderController extends Controller {
 	public function index()
 	{
 		$providers=Provider::all();
-       // dd($providers);
-        return view ('provider.index',compact('providers'));
+        list($referencial, $independiente) = $this->getInfo();
+        return view ('provider.index',compact('providers','referencial','independiente'));
 	}
 
 
 	public function create()
 	{
-		return view ('provider.create');
+        list($referencial, $independiente) = $this->getInfo();
+        return view ('provider.create',compact('referencial','independiente'));
 	}
 
 
 	public function store(CreateProviderRequest $request)
 	{
-        $input=$request->all();
-
         Provider::create($request->all());
-
         return redirect()->to('/proveedores')->with('message','Su proveedor se ha creado con exito')->with('alert','success');
-
 	}
 
 
@@ -40,9 +37,10 @@ class ProviderController extends Controller {
         try{
         $submit='Guardar Cambios';
         $model =Provider::findOrFail($id);
+        list($referencial, $independiente) = $this->getInfo();
         $url='proveedores';
         $action='ReferentialControllers\ProviderController@update';
-        return view ('provider.edit',compact('action','url','model','submit'));
+        return view ('provider.edit',compact('action','url','model','submit','referencial','independiente'));
         }catch(\Exception $e){
             return redirect()->back()->with('message','El registro no existe')
                 ->with('alert','error');
@@ -77,6 +75,16 @@ class ProviderController extends Controller {
 
         }
 
+    }
+
+    /**
+     * @return array
+     */
+    public function getInfo()
+    {
+        $referencial = 'Proveedor';
+        $independiente = "Productos";
+        return array($referencial, $independiente);
     }
 
 

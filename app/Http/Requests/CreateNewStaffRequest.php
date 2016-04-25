@@ -14,11 +14,7 @@ class CreateNewStaffRequest extends Request {
 		return true;
 	}
 
-	/**
-	 * Get the validation rules that apply to the request.
-	 *
-	 * @return array
-	 */
+
     public function rules()
     {
         if ($this->method() == 'PATCH')

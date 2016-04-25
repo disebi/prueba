@@ -4,7 +4,7 @@ $(document).ready(function() {
                     $("#"+"{{$idpop}}").editable({display:false,
                         name:'description',
                         type: 'text',
-                        url: '{{ action("ReferentialControllers".$controllermodal."Controller@storeModal") }}',
+                        url: '{{ action("ModalController@".$controller) }}',
                         pk: 1,
                         title: 'Enter username',
                         ajaxOptions: {

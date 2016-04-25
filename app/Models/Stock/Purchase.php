@@ -14,7 +14,7 @@ class Purchase extends Model {
                         'total',
                         'state',
                         'stamping',
-                        'comments'];
+                        'coment'];
 
     public function  products(){
         return $this->belongsToMany('App\Models\ReferentialModels\Product','purchase_details','purchase_id','product_id','id')->withTimestamps();

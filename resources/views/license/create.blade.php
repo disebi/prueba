@@ -1,11 +1,6 @@
 @extends('app2')
-@section('bread')
-  <h1>Nuevo Permiso<small>de Rol</small> </h1>
-     <ol class="breadcrumb">
-                           <li><a href="#"><i class="fa fa-dashboard"></i> {{$independiente}}</a></li>
-                           <li><a href="#">{{$referencial}}</a></li>
-                  </ol>
-@endsection
+           @include('partials.bread._create')
+           @include('partials.help._ref_create')
 @section('content')
     <div class="col-xs-12">
          <div class="box">

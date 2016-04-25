@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Zone extends \Eloquent {
 
-	protected $fillable=['id','description','comision','km','city_id'];
+	protected $fillable=['id','description','comision','km','city_id','obj'];
 
 
     public function city(){
@@ -17,14 +17,14 @@ class Zone extends \Eloquent {
     return $this->city()->lists('id');
     }
 
-
-
     public function local(){
 
-        return $this->hasMany('App\Models\ReferentialModels\Client');
+        return $this->hasMany('App\Models\ReferentialModels\Client','zona_id');
     }
 
+    public function assign(){
 
-
+        return $this->hasOne('App\Models\Distribution\ZoneAssign');
+    }
 
 }

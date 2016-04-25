@@ -3,13 +3,13 @@
 
                                          <div class="panel-body">
                                             @if(isset($model))
-                                                <p><b>Nombre:</b> {{\App\Staff::find($model->staff_id)->name}}</p>
-                                                <p><b>Sucursal:</b> {{\App\Staff::find($model->staff_id)->last_name}}</p>
-                                                <p><b>Cargo:</b> {{\App\Staff::find($model->staff_id)->position->description}}</p>
+                                                <p><b>Nombre:</b> {{$model->staff->name}} {{$model->staff->last_name}}</p>
+                                                <p><b>Sucursal:</b> {{$model->staff->branch->description}}</p>
+                                                <p><b>Cargo:</b> {{$model->staff->position->description}}</p>
                                              @else
-                                                <p><b>Nombre:</b> {{\Auth::user()->getFullName(\Auth::user()->id)}}</p>
-                                                <p><b>Sucursal:</b> {{\Auth::user()->getBranch(\Auth::user()->id)}}</p>
-                                                <p><b>Cargo:</b> {{\Auth::user()->getPosition(\Auth::user()->id)}}</p>
+                                                <p><b>Nombre:</b> {{\Auth::user()->staff->name}}</p>
+                                                <p><b>Sucursal:</b> {{\Auth::user()->staff->branch->description}}</p>
+                                                <p><b>Cargo:</b> {{\Auth::user()->staff->position->description}}</p>
                                              @endif
                                           </div>
                                   </div>

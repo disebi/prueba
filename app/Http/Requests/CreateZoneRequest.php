@@ -18,7 +18,8 @@ class CreateZoneRequest extends Request {
                 'description'=> "required|unique:zones,description,". $this->get('id'),
                 "km" =>"required|numeric",
                 "comision" => "required|integer",
-                "city_list" => "exists:cities,id"
+                "city_list" => "exists:cities,id",
+                "obj" => "required|numeric"
 
 
             ];
@@ -29,7 +30,8 @@ class CreateZoneRequest extends Request {
                 'description'=> "required|unique:zones,description",
                 "km" =>"required|numeric",
                 "comision" => "required|integer",
-                "city_list" => "exists:cities,id"
+                "city_list" => "exists:cities,id",
+                "obj" => "required|numeric"
             ];
         }
 
@@ -44,6 +46,8 @@ class CreateZoneRequest extends Request {
             "comision.integer" => 'El dato de comision que ingreso no es correcto, favor ingresar de vuelta',
             "comision.required" => 'Favor completar el campo comision',
             "city_list.exists" => 'Favor seleccionar una ciudad',
+            "obj.required" =>'Favor completar el campo Objetivo Mensual',
+            "obj.numeric" => 'El dato de Objetivo que ingreso no es correcto, favor ingresar de vuelta'
 
         ];
     }

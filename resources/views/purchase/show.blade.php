@@ -89,7 +89,7 @@
                       <div class="panel-heading">Comentarios</div>
                       <div class="panel-body">
                             <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                                                              {{$model->comments}}
+                                                                              {{$model->coment}}
                       </p>
                      </div>
            </div>

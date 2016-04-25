@@ -38,14 +38,14 @@
                         <td> {{$order->id}}</td>
                         <td>{{$order->provider->description}}</td>
                         <td>{{number_format($order->total,0,'','.')}}</td>
-                        <td>{{$order->staff->name}} {{$order->staff->description}}</td>
+                        <td>{{$order->staff->name}} {{$order->staff->last_name}}</td>
                         <td> {{date_format($order->created_at,"d/m/Y")}}</td>
                         <td>
                          {!! Form::open(array('id'=>'formdelete'.$order->id,'method' => 'DELETE', 'route' => array('compras.destroy', $order->id))) !!}
                          {!! Form::close() !!}
 
                            <a class="btn btn-default" href="/compras/{{$order->id}}" ><i class="fa fa-search"></i> </a>
-                           <a class="btn btn-default" href="/compras/{{$order->id}}/edit" ><i class="fa fa-edit"></i> </a>
+                           {{--<a class="btn btn-default" href="/compras/{{$order->id}}/edit" ><i class="fa fa-edit"></i> </a>--}}
                            {{--<button onclick='return btnClick();' type="submit" class="btn btn-default" title="Eliminar"><i class="fa fa-trash text-danger"></i></button>{!! Form::close() !!}--}}
                             <a class="btn btn-default" onclick="askDelete({{$order->id}})"><i class="fa fa-trash text-danger"></i></a>
                         </td>

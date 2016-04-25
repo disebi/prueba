@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Distribution\Order;
+
 class WelcomeController extends Controller {
 
 	/*
@@ -24,6 +26,7 @@ class WelcomeController extends Controller {
 	}
 	public function index()
 	{
+
         return view('dashboard.superDashboard');
 	}
     public function login()

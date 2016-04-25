@@ -31,4 +31,18 @@ class CreateNewPurchaseRequest extends Request {
                         'total'=>'required'];
 	}
 
+    public function messages()
+    {
+        return [
+            'stamping.required' => 'Favor completar el campo timbrado',
+            "result.required" => 'Favor inserte productos a su detalle de Factura',
+            "provider_list.required" => 'Favor seleccione un proveedor',
+            "provider_list.exists" => 'Favor seleccione un proveedor existente',
+            "iva_10.required" =>'Favor compruebe si la pagina esta recargada correctamente',
+            "iva_5.required" => 'Favor compruebe si la pagina esta recargada correctamente',
+            "excento.required" => 'Favor compruebe si la pagina esta recargada correctamente',
+            "total.required" => 'Favor compruebe si la pagina esta recargada correctamente'
+        ];
+    }
+
 }

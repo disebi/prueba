@@ -1,14 +1,7 @@
 @extends('app2')
 
-@section('bread')
-  <section class="content-header">
-              <h1>Editar proveedor<small>de Productos</small> </h1>
-        <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Productos</a></li>
-                <li><a href="#">Proveedor</a></li>
-       </ol>
-     </section>
-@endsection
+@include('partials.bread._edit')
+@include('partials.help._ref_edit')
 @section('content')
 
                     <div class="col-xs-12">

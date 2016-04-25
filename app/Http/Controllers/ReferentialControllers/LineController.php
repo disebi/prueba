@@ -103,7 +103,6 @@ class LineController extends Controller {
 
 	}
 
-
     public function sendInfo()
     {
         $referencial = 'Linea';
@@ -111,29 +110,5 @@ class LineController extends Controller {
         $controlador = '\Line';
         return array($referencial, $independiente, $controlador);
     }
-
-    public function storeModal()
-    {
-        $input=\Input::all();
-        $description=$input['value'];
-        $input['description']=$description;
-        unset($input['pk']);
-        unset($input['name']);
-        unset($input['value']);
-        unset($input['_token']);
-        $number=Line::where('description','=',$input['description'])->count();
-
-        if($number==0){
-            Line::create($input);
-            $html=Line::select('id','description')->get();
-            return $html;
-        }else{
-            return 0;
-        }
-    }
-
-    /**
-     * @return mixed
-     */
 
 }

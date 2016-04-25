@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Staff extends Model {
+class Staff extends \Eloquent {
 
     protected  $fillable = [
         'user_id',
@@ -20,16 +20,12 @@ class Staff extends Model {
     }
 
     public function getUserListAttribute(){
-
         return $this->user()->lists('id');
     }
 
     public function branch(){
-
         return $this->belongsTo('App\Models\ReferentialModels\Branch');
     }
-
-
 
     public function getBranchListAttribute(){
 
@@ -47,4 +43,17 @@ class Staff extends Model {
     }
 
 
+    public function zones(){
+        return $this->belongsToMany('App\Models\ReferentialModels\Zone','zone_assigns','staff_id','zone_id','id')->withTimestamps();
+    }
+
+    public function  getZonesListAttribute(){
+        return $this->zones()->lists('id');
+    }
+
+    public function scopeBranching($query)
+    {
+        $user=\Auth::user();
+        return $query->where('branch_id','=',$user->staff->branch_id);
+    }
 }

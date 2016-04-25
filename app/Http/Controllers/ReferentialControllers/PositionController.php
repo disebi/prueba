@@ -22,7 +22,7 @@ class PositionController extends Controller
         list($referencial, $independiente) = $this->getInfo();
         $edit=0;
         $array=['Semanal'=>'Semanal','Quincenal'=>'Quincenal','Mensual'=>'Mensual'];
-        return view ('position.create',compact('array','edit'));
+        return view ('position.create',compact('array','edit','referencial','independiente'));
     }
 
     /**

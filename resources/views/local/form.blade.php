@@ -115,4 +115,4 @@ $("#zone_list").select2();
 </script>
 @append
 @include('partials._popout')
-@include('simpleRef.simple_referential_popout',['comboBox'=>'business_list','urlmodal'=>'/rubros','idpop'=>'rubropop','controllermodal'=>'\Business'])
+@include('simpleRef.simple_referential_popout',['comboBox'=>'business_list','urlmodal'=>'/rubrosModal','idpop'=>'rubropop','controller'=>'buss'])

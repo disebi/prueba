@@ -1,12 +1,7 @@
 @extends('app2')
 
-@section('bread')
-        <h1>Nuevo Vehiculo</h1>
-                   <ol class="breadcrumb">
-                           <li><a href="#"><i class="fa fa-dashboard"></i>{{$independiente}}</a></li>
-                           <li><a href="#">{{$referencial}}r</a></li>
-                  </ol>
-@endsection
+@include('partials.bread._create')
+@include('partials.help._ref_create',['help'=>['plus']])
 @section('content')
       <div class="col-xs-12">
                                  <div class="box box-primary">
@@ -21,7 +16,4 @@
        @include('...partials._functionMsj')
 @endsection
 
-@section('javascripts')
-    @include('simpleRef.simple_referential_popout',['comboBox'=>'brand_list','urlmodal'=>'/marcasModal','idpop'=>'brandpop','controllermodal'=>'\Brand'])
-@append
 

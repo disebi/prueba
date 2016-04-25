@@ -20,14 +20,14 @@
              <!-- small box -->
              <div class="small-box bg-aqua">
                <div class="inner">
-                 <h3>150</h3>
+                 <h3>{{$order_count}}</h3>
 
-                 <p>New Orders</p>
+                 <p>Ordenes en el Mes</p>
                </div>
                <div class="icon">
                  <i class="ion ion-bag"></i>
                </div>
-               <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               <a href="/ordenes" class="small-box-footer">Mas <i class="fa fa-arrow-circle-right"></i></a>
              </div>
            </div>
            <!-- ./col -->
@@ -35,14 +35,14 @@
              <!-- small box -->
              <div class="small-box bg-green">
                <div class="inner">
-                 <h3>53<sup style="font-size: 20px">%</sup></h3>
+                 <h3>{{$visit_count}} </h3>
 
-                 <p>Bounce Rate</p>
+                 <p>Visitas del Mes</p>
                </div>
                <div class="icon">
                  <i class="ion ion-stats-bars"></i>
                </div>
-               <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+               <a href="/visitas" class="small-box-footer">Mas <i class="fa fa-arrow-circle-right"></i></a>
              </div>
            </div>
            <!-- ./col -->
@@ -193,61 +193,32 @@
       			<div class="col-md-12">
       			<div class="panel panel-success">
                             <div class="panel-heading ">
-                              Recently Added Products
+                              Compras hechas
 
 
                             </div>
                             <!-- /.box-header -->
                             <div style="display: block;" class="panel-body">
                               <ul class="products-list ">
+                              @foreach($buys as $buy)
                                 <li class="item">
-
                                   <div class="">
-                                    <a href="javascript::;" class="product-title">Samsung TV
-                                      <span class="label label-warning pull-right">$1800</span></a>
+                                    <a href="/compras/{{$buy->id}}" class="product-title">{{$buy->provider->description}}
+                                      <span class="label label-warning pull-right">{{number_format($buy->total,0,',','.')}} Gs.</span></a>
                                         <span class="product-description">
-                                          Samsung 32" 1080p 60Hz LED Smart HDTV.
-                                        </span>
+                                         {{$buy->products()->sum('cant')}} Productos Adquiridos
+                                         </span>
                                   </div>
                                 </li>
-                                <!-- /.item -->
-                                <li class="item">
 
-                                  <div class="">
-                                    <a href="javascript::;" class="product-title">Bicycle
-                                      <span class="label label-info pull-right">$700</span></a>
-                                        <span class="product-description">
-                                          26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                                        </span>
-                                  </div>
-                                </li>
-                                <!-- /.item -->
-                                <li class="item">
+                                @endforeach
 
-                                  <div class="">
-                                    <a href="javascript::;" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
-                                        <span class="product-description">
-                                          Xbox One Console Bundle with Halo Master Chief Collection.
-                                        </span>
-                                  </div>
-                                </li>
-                                <!-- /.item -->
-                                <li class="item">
-
-                                  <div class="">
-                                    <a href="javascript::;" class="product-title">PlayStation 4
-                                      <span class="label label-success pull-right">$399</span></a>
-                                        <span class="product-description">
-                                          PlayStation 4 500GB Console (PS4)
-                                        </span>
-                                  </div>
-                                </li>
                                 <!-- /.item -->
                               </ul>
                             </div>
                             <!-- /.box-body -->
                             <div style="display: block;" class="box-footer text-center">
-                              <a href="javascript::;" class="uppercase">View All Products</a>
+                              <a href="/compras" class="uppercase">Ver Todas las Compras</a>
                             </div>
                             <!-- /.box-footer -->
                           </div>

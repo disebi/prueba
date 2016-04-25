@@ -7,7 +7,6 @@ Route::controllers([
 
 Route::group(['middleware' => 'auth'],
     function(){
-
         Route::get('home', 'HomeController@index');
         Route::get('home2', 'HomeController@indexSales');
         Route::get('homeSalesmen/{id}', 'HomeController@salesmen');
@@ -17,52 +16,73 @@ Route::group(['middleware' => 'auth'],
         Route::patch ('perfilUp/{id}',  array('as' => 'perfilUp',
             'uses' => 'UserController@update'
         ));
+
         Route::resource ('roles','RoleController');
         Route::resource('permisos','LicenseController');
         Route::resource('usuarios','StaffController');
         Route::patch('activar/{id}',array('as' => 'usuarios.activeUser',
             'uses' => 'UserController@activate'
         ));
+        //rutas de reportes
+        Route::get('/comisiones', 'ReportController@commission');
+        Route::post('/comisiones', 'ReportController@commission');
+                //Distribucion
+        Route::post('/asignaciones/searchAssign','DistributionControllers\ZoneAssignController@index');
+        Route::resource('asignaciones','DistributionControllers\ZoneAssignController');
+        Route::get('ordenes_visitas','DistributionControllers\OrderController@search');
+        Route::get('makeOrder/{id}','DistributionControllers\OrderController@makeOrder');
+        Route::resource('ordenes','DistributionControllers\OrderController');
+        Route::get('makeWorkOrder/{id}','DistributionControllers\WorkController@makeOrder');
+        Route::get('makeSale/{id}','DistributionControllers\SaleController@makeSale');
+        Route::get('venta_ordenes','DistributionControllers\SaleController@search');
+        Route::post('zones_info','DistributionControllers\VisitController@getZone');
+        Route::get('ordenesTrabajo_visita','DistributionControllers\WorkController@search');
+        Route::resource('ordenes_trabajo','DistributionControllers\WorkController');
+        Route::resource('visitas','DistributionControllers\VisitController');
+        Route::resource('ventas','DistributionControllers\SaleController');
 
-//STOCK
+        //STOCK
+        Route::get('credito_ventas','StockControllers\CreditController@search');
+        Route::resource('credito','StockControllers\CreditController');
+        Route::get('makeCredit/{id}','StockControllers\CreditController@makeCredit');
+        Route::get('existencias','StockControllers\AdjustController@download');
+        Route::resource('ajustes','StockControllers\AdjustController');
+        Route::resource('devoluciones','StockControllers\ReturnNoteController');
+        Route::post ('/returnClient','StockControllers\ReturnNoteController@getClient');
         Route::resource('compras','StockControllers\PurchaseController');
         Route::post ('/returnProducts','StockControllers\PurchaseController@getProviderProduct');
         Route::post ('/returnProductPrice','StockControllers\PurchaseController@getProductPrice');
 
 //rutas de referenciales simples de purchase
         Route::resource ('lineas','ReferentialControllers\LineController');
-        Route::post ('/lineasModal','ReferentialControllers\LineController@storeModal');
         Route::resource ('presentaciones','ReferentialControllers\PresentationController');
-        Route::post ('/presentacionesModal','ReferentialControllers\PresentationController@storeModal');
         Route::resource ('unidades','ReferentialControllers\UnityController');
-        Route::post ('/unidadesModal','ReferentialControllers\UnityController@storeModal');
         Route::resource ('aromas','ReferentialControllers\AromaController');
-        Route::post ('/aromasModal','ReferentialControllers\AromaController@storeModal');
         Route::resource ('proveedores','ReferentialControllers\ProviderController');
-        Route::post ('/proveedoresModal','ReferentialControllers\ProviderController@storeModal');
         Route::resource ('/sucursales','ReferentialControllers\BranchController');
-        Route::post ('/sucursalesModal','ReferentialControllers\BranchController@storeModal');
         Route::resource ('impuestos','ReferentialControllers\TaxController');
-        Route::post ('/impuestosModal','ReferentialControllers\TaxController@storeModal');
         Route::resource ('productos','ReferentialControllers\ProductController');
-        Route::post ('/productosModal','ReferentialControllers\ProductController@storeModal');
         Route::resource ('/depositos','ReferentialControllers\DepositController');
 //rutas de referenciales simples de distribucion
         Route::resource ('ciudad','ReferentialControllers\CityController');
-        Route::post ('/ciudadModal','ReferentialControllers\CityController@storeModal');
         Route::resource ('marcas','ReferentialControllers\BrandController');
-        Route::post ('/marcasModal','ReferentialControllers\BrandController@storeModal');
         Route::resource ('rubros','ReferentialControllers\BusinessController');
-        Route::post ('rubros','ReferentialControllers\BusinessController@storeModal');
         Route::resource ('cargos','ReferentialControllers\PositionController');
         Route::resource('zonas','ReferentialControllers\ZoneController');
-        Route::post ('/zonasModal','ReferentialControllers\ZoneController@storeModal');
         Route::resource('clientes','ReferentialControllers\ClientController');
         Route::resource('vehiculos','ReferentialControllers\DriveController');
+        Route::resource('timbrados','ReferentialControllers\StampingController');
 
 
 
-//rutas de reportes
-        Route::get('/reporting', ['uses' =>'ReportController@index', 'as' => 'Report']);
-        Route::post('/reporting', ['uses' =>'ReportController@post']);
+//rutas de modales
+        Route::post ('/marcasModal','ModalController@brand');
+        Route::post ('/rubrosModal','ModalController@buss');
+        Route::post ('/lineasModal','ModalController@line');
+        Route::post ('/proveedoresModal','ModalController@provider');
+        Route::post ('/presentacionesModal','ModalController@presentation');
+        Route::post ('/unidadesModal','ModalController@unity');
+        Route::post ('/aromasModal','ModalController@aroma');
+
+
     });

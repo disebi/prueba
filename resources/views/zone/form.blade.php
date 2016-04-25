@@ -42,6 +42,14 @@
   </div>
 </div>
 
+<div class="control-group">
+{!! Form:: label ('obj','Objetivo Mensual:')!!}
+  <div class="controls">
+   {!! Form:: text ('obj',null,['placeholder'=>'20000000', 'class'=>'input-medium', 'class'=>'form-control'])!!}
+
+    <p class="help-block">Km de recorrido aproximado</p>
+  </div>
+</div>
 </div>
 </div>
 

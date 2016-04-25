@@ -3,115 +3,38 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\Distribution\Sale;
+use App\Staff;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use JasperPHP\JasperPHP;
 
 class ReportController extends Controller {
 
 
-    public function index()
-    {
-        return view('report');
-    }
+  public function commission()
+  {
+     $staff = Staff::select(\DB::raw("staff.id, (staff.name || ' ' || staff.last_name) as description"))->branching()->lists('description', 'id');
+     $input=\Input::all();
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+     if(isset($input['date_start'])){
+            if($input['date_start']=="")
+                $input['date_start'] = Carbon::today()->hour(0)->minute(0)->second(0)->toDateString();
+         if($input['date_end']=="")
+                $input['date_end'] = Carbon::tomorrow()->hour(0)->minute(0)->second(0)->toDateString();
+         $date_to=Carbon::createFromFormat('Y-m-d', $input['date_end'])->addDay(1)->hour(0)->minute(0)->second(0);
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
+         $model=Sale::branching()->active()->where('salesman_id','=',$input['staff_list'])
+              ->where('created_at', '>=',$input['date_start'])
+              ->where('created_at', '<=',$date_to->toDateString())
+              ->paginate(10);
+          $total_commission=0;
+         foreach ($model as $sale){
+             $total_commission = $total_commission + $sale->commission();
+         }
+         return view('reports.commission',compact('staff','model','total_commission'));
+     }
+     return view('reports.commission',compact('staff'));
+  }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
-
-
-
-
-    public function post()
-    {
-
-        $database = \Config::get('database.connections.mysql');
-        $output = public_path() . '/reports/'.time().'_codelution';
-
-        $ext = "pdf";
-
-        \JasperPHP::process(
-            public_path() . '/reports/Users.jasper',
-            $output,
-            array($ext),
-            array(),
-            $database,
-            false,
-            false
-        )->execute();
-
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename='.time().'_codelution.'.$ext);
-        header('Content-Transfer-Encoding: binary');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($output.'.'.$ext));
-        flush();
-        readfile($output.'.'.$ext);
-        unlink($output.'.'.$ext); // deletes the temporary file
-
-        return \Redirect::to('/reporting');
-    }
 }

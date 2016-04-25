@@ -3,12 +3,12 @@
 use Illuminate\Database\Eloquent\Model;
 
 class PurchaseDetails extends Model {
-
-	protected $fillable=[   'purchase_id',
-                            'product_id',
-                            'cant',
-                            'price'
-                            ];
+    protected $fillable=[
+        'adjust_id',
+        'product_id',
+        'cant',
+        'price'
+    ];
 
     public function product(){
         return $this->belongsTo('App\Models\ReferentialModels\Product');

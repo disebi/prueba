@@ -97,7 +97,7 @@ class UserController extends Controller {
 	}
 
     public function activate($id)
-	{
+    {
         $user=User::find($id);
         $active=false;
         if(!$user->active){

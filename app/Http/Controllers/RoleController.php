@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\Input;
 
 class RoleController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+
     public function index()
     {
         $tables=Role::all();
@@ -49,7 +45,6 @@ class RoleController extends Controller {
 	 */
 	public function store(Requests\CreateRoleRequest $request)
     {
-
         $obj = $request->all();
         $role = Role::create(['description' => $obj['description']]);
         $role->licenses()->attach($obj['license_list']);

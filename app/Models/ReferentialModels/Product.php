@@ -8,6 +8,7 @@ class Product extends Model {
       'id',
       'description',
       'compra',
+      'min',
       'venta',
       'contenido',
       'aroma_id',

@@ -7,7 +7,7 @@
     @include('partials._css')
    </head>
 
-<body class="sidebar-mini skin-yellow">
+<body class="sidebar skin-yellow">
 <div class="wrapper">
              @include('partials.navbar')
 

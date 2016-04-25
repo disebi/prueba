@@ -1,5 +1,10 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Distribution\Order;
+use App\Models\Distribution\Visit;
+use App\Models\Stock\Purchase;
+use Carbon\Carbon;
+
 class HomeController extends Controller {
 
 	/*
@@ -30,7 +35,24 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('dashboard.superDashboard');
+        $user=\Auth::user();
+        $order_count=Order::join('visits','visits.id','=','orders.visit_id')
+            ->where('visits.branch_id','=',$user->staff->branch_id)
+            ->where('orders.state','=',true)
+            ->where('orders.created_at', '>=', Carbon::now()->startOfMonth())
+            ->count();
+        $visit_count=Visit::where('visits.branch_id','=',$user->staff->branch_id)
+            ->where('visits.created_at', '>=', Carbon::now()->startOfMonth())
+            ->where('visits.state','=',true)
+            ->count();
+
+        $buys=Purchase::where('purchases.created_at', '>=', Carbon::today())
+            ->where('purchases.created_at', '<', Carbon::tomorrow())
+            ->where('purchases.branch_id','=',$user->staff->branch_id)
+            ->where('purchases.state','=',true)
+            ->orderBy('purchases.id', 'desc')
+            ->take(5)->get();
+		return view('dashboard.superDashboard',compact('order_count','visit_count','buys'));
 	}
     public function indexSales()
 	{

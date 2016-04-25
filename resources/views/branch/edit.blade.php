@@ -1,12 +1,7 @@
 @extends('app2')
 
-@section('bread')
-      <h1>Editar sucursal<small>de Empresas</small> </h1>
-        <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Sucursal</a></li>
-                <li><a href="#">Empresa</a></li>
-       </ol>
-@endsection
+@include('partials.bread._edit')
+@include('partials.help._ref_edit')
 @section('content')
     <div class="col-xs-12">
                       <div class="box">

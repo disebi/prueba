@@ -66,7 +66,8 @@
 </div>
 
 @include('...partials._popout')
-@include('simpleRef.simple_referential_popout',['comboBox'=>'brand_list','urlmodal'=>'/marcasModal','idpop'=>'brandpop','controllermodal'=>'\Brand'])
+
+@include('simpleRef.simple_referential_popout',['controller'=>'brand','comboBox'=>'brand_list','urlmodal'=>'/marcasModal','idpop'=>'brandpop'])
 @include('partials._select2')
 @section('javascripts')
     <script type="text/javascript">

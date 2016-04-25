@@ -3,7 +3,7 @@
 
  <div class="row">
  <div class="col-lg-12">
-    <p> En esta pagina podra visualizar toda la lista de registrosde {{$referencial}} de  {{$independiente}}</p>
+    <p> En esta pagina podra visualizar toda la lista de registros de {{$referencial}} de  {{$independiente}}</p>
  </div>
  </div>
   <ul class="control-sidebar-menu">

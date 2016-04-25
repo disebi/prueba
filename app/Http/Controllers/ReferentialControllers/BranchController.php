@@ -15,11 +15,10 @@ class BranchController extends Controller {
         return view ('branch.index',compact('branches','referencial','independiente'));
     }
 
-
     public function create()
     {
         list($referencial, $independiente) = $this->getInfo();
-        return view ('branch.create');
+        return view ('branch.create',compact('referencial','independiente'));
     }
 
 
@@ -44,7 +43,7 @@ class BranchController extends Controller {
             $model =Branch::findOrFail($id);
             $url='sucursales';
             $action='ReferentialControllers\BranchController@update';
-            return view ('branch.edit',compact('action','url','model','submit'));
+            return view ('branch.edit',compact('action','url','model','submit','referencial','independiente'));
         }catch (\Exception $e){
             return redirect()->back()->with('message','No existe la sucursal requerida')->with('alert','error');
         }

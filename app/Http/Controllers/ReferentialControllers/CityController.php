@@ -102,9 +102,7 @@ class CityController extends Controller {
         return array($referencial, $independiente, $controlador);
     }
 
-    /**
-     * @param $input
-     */
+
 
     public function storeModal()
     {
@@ -129,10 +127,7 @@ class CityController extends Controller {
         }
     }
 
-    /**
-     * @param Requests\CreateSimpleReffRequest $request
-     * @return array
-     */
+
     public function makeCredentials(Requests\CreateSimpleReffRequest $request)
     {
         $credentials = ['description' => $request->description,

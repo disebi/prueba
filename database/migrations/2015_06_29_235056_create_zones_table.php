@@ -18,6 +18,7 @@ class CreateZonesTable extends Migration {
             $table->string('description');
             $table->integer('comision');
             $table->decimal('km');
+            $table->decimal('obj');
             $table->integer('city_id')->unsigned();
 			$table->timestamps();
 

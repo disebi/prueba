@@ -25,13 +25,13 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu animsition">
 {{--
-1.	Asignar vendedor a zona
 2.	Generar visita
 3.	Registrar Pedido
 4.	Asignar e imprimir orden de trabajo
 5.	Registrar control de salida
 6.	Registrar control de entrada
 7.	Generar comisión a los vendedores
+8.  Comision
 9.	Elaborar informes varios del módulo.
 
 
@@ -57,14 +57,14 @@ d--}}
 
                                            </a>
                                            <ul class="treeview-menu">
-                                            <li><a href=""><i class="fa fa-shopping-basket"></i> Asignar Zona</a></li>
-                                            <li><a href=""><i class="fa fa-shopping-basket"></i> Generar Visita</a></li>
-                                            <li><a href=""><i class="fa fa-shopping-basket"></i> Pedidos</a></li>
-                                            <li><a href=""><i class="fa fa-shopping-basket"></i> Orden de Trabajo</a></li>
+                                            <li><a href="{{ action('DistributionControllers\ZoneAssignController@index') }}"><i class="fa fa-shopping-basket"></i> Asignar Zona</a></li>
+                                            <li><a href="{{ action('DistributionControllers\VisitController@index') }}"><i class="fa fa-shopping-basket"></i> Generar Visita</a></li>
+                                            <li><a href="{{ action('DistributionControllers\OrderController@index') }}"><i class="fa fa-shopping-basket"></i> Pedidos</a></li>
+                                            <li><a href="{{ action('DistributionControllers\WorkController@index') }}"><i class="fa fa-shopping-basket"></i> Orden de Trabajo</a></li>
                                             <li><a href=""><i class="fa fa-shopping-basket"></i> Salidas</a></li>
                                             <li><a href=""><i class="fa fa-shopping-basket"></i> Entradas</a></li>
-                                            <li><a href=""><i class="fa fa-shopping-basket"></i>Comisionesk</a></li>
-                                            <li><a href=""><i class="fa fa-cubes"></i> Compras</a></li>
+                                            <li><a href="{{action('ReportController@commission')}}"><i class="fa fa-shopping-basket"></i>Comisiones</a></li>
+                                            <li><a href="{{ action('DistributionControllers\SaleController@index') }}"><i class="fa fa-cubes"></i> Ventas</a></li>
 
                                            </ul>
                                        </li>
@@ -76,9 +76,9 @@ d--}}
 
                             </a>
                             <ul class="treeview-menu">
-                             <li><a href=""><i class="fa fa-shopping-basket"></i> Nota de Credito</a></li>
-                             <li><a href=""><i class="fa fa-shopping-basket"></i> Nota de Devolucion</a></li>
-                             <li><a href=""><i class="fa fa-shopping-basket"></i> Ajuste de Stock</a></li>
+                             <li><a href="{{ action('StockControllers\CreditController@index') }}"><i class="fa fa-shopping-basket"></i> Nota de Credito</a></li>
+                             <li><a href="{{ action('StockControllers\ReturnNoteController@index') }}"><i class="fa fa-shopping-basket"></i> Nota de Devolucion</a></li>
+                             <li><a href="{{ action('StockControllers\AdjustController@index') }}"><i class="fa fa-shopping-basket"></i> Ajuste de Stock</a></li>
                              <li><a href=""><i class="fa fa-shopping-basket"></i>Valorizacion de Stock</a></li>
                              <li><a href="{{ action('StockControllers\PurchaseController@index') }}"><i class="fa fa-cubes"></i> Compras</a></li>
 
@@ -100,6 +100,7 @@ d--}}
                     <li><a href="{{ action('ReferentialControllers\ClientController@index') }}"><i class="fa fa-circle-o"></i> Locales</a></li>
                     <li><a href="{{ action('ReferentialControllers\ZoneController@index') }}"><i class="fa fa-circle-o"></i> Zonas</a></li>
                     <li><a href="{{ action('ReferentialControllers\CityController@index') }}"><i class="fa fa-building"></i> Ciudades</a></li>
+                    <li><a href="{{ action('ReferentialControllers\StampingController@index') }}"><i class="fa fa-building"></i> Timbrados</a></li>
 
                 </ul>
             </li>

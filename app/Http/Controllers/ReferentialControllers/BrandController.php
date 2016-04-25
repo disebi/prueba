@@ -104,24 +104,4 @@ class BrandController extends Controller {
     }
 
 
-    public function storeModal()
-    {
-        $input=\Input::all();
-        $description=$input['value'];
-        $input['description']=$description;
-        unset($input['pk']);
-        unset($input['name']);
-        unset($input['value']);
-        unset($input['_token']);
-        $number=Brand::where('description','=',$input['description'])->count();
-
-        if($number==0){
-            Brand::create($input);
-            $html=Brand::select('id','description')->get();
-            return $html;
-        }else{
-            return 0;
-        }
-    }
-
-}
+   }

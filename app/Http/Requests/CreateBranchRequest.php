@@ -44,13 +44,14 @@ class CreateBranchRequest extends Request {
         }
 
     }
-    public function messages()
+        public function messages()
     {
         return [
             'description.required' => 'Favor completar el campo descripcion',
             "description.unique" => 'La descripcion que ingreso ya es utilizada por otra sucursal',
             "tel.required" =>'Favor complete el campo telefono',
             "mail.email" => 'El email ingresado no es valido, ingreselo de vuelta'
-        ];}
+        ];
+    }
 
 }

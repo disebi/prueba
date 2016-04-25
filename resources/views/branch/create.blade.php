@@ -1,12 +1,7 @@
 @extends('app2')
 
-           @section('bread')
-                 <h1>Nueva sucursal<small>de Empresa</small> </h1>
-                              <ol class="breadcrumb">
-                                      <li><a href="#"><i class="fa fa-dashboard"></i> Empresa</a></li>
-                                      <li><a href="#">Sucursales</a></li>
-                             </ol>
-           @endsection
+           @include('partials.bread._create')
+           @include('partials.help._ref_create')
 
            @section('content')
                                <div class="col-xs-12">
