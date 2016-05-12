@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 class PresentationController extends Controller {
 
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('presentation.all');
+    }
 	public function index()
 	{
         $url='presentaciones';

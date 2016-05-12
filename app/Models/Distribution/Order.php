@@ -58,4 +58,14 @@ class Order extends \Eloquent {
         $user=\Auth::user();
         return $query->where('process','=',2);
     }
+
+    public function getWeit()
+    {
+        $total = 0;
+
+        foreach($this->details as $detail){
+              $total=$total+($detail->cant *$detail->product->peso);
+        }
+        return $total;
+    }
 }

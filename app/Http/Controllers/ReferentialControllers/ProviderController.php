@@ -8,11 +8,17 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class ProviderController extends Controller {
-
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('provider.all');
+    }
 
 	public function index()
 	{
-		$providers=Provider::all();
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $providers=Provider::all();
         list($referencial, $independiente) = $this->getInfo();
         return view ('provider.index',compact('providers','referencial','independiente'));
 	}
@@ -20,6 +26,9 @@ class ProviderController extends Controller {
 
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente) = $this->getInfo();
         return view ('provider.create',compact('referencial','independiente'));
 	}
@@ -27,6 +36,9 @@ class ProviderController extends Controller {
 
 	public function store(CreateProviderRequest $request)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         Provider::create($request->all());
         return redirect()->to('/proveedores')->with('message','Su proveedor se ha creado con exito')->with('alert','success');
 	}
@@ -34,6 +46,9 @@ class ProviderController extends Controller {
 
 	public function edit($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $submit='Guardar Cambios';
         $model =Provider::findOrFail($id);
@@ -50,6 +65,9 @@ class ProviderController extends Controller {
 
 	public function update(CreateProviderRequest $request, $id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $input=$request->all();
         $provider=Provider::findorFail($id);
@@ -64,6 +82,9 @@ class ProviderController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             Provider::destroy($id);
             return redirect()->to('/proveedores')->with('message','Su proveedor se ha eliminado con exito')->with('alert','success');
@@ -72,14 +93,9 @@ class ProviderController extends Controller {
         catch(QueryException $e){
 
              return redirect()->to('/proveedores')->with('message','Su proveedor no ha podido ser eliminado, ya que se esta utilizando')->with('alert','error');
-
         }
-
     }
 
-    /**
-     * @return array
-     */
     public function getInfo()
     {
         $referencial = 'Proveedor';

@@ -1,7 +1,14 @@
 @extends('app2')
 
+@section('bread')
+          <h1>
+            Comisiones
+            <small>Reporte </small>
+           </h1>
 
+@endsection
 @section('content')
+
  <div class="col-md-12">
          <div class="box box-widget">
                      <div class="box-header with-border">
@@ -17,11 +24,11 @@
                      </div>
                      <!-- /.box-header -->
                      <div style="display: block;" class="box-body">
-                      {!! Form:: open(['url'=>'/comisiones','method'=>'POST'])!!}
+                      {!! Form:: open(['url'=>'/comisiones','method'=>'GET'])!!}
                          <div class="col-md-4">
                          <div class="form-group">
                         {!! Form:: label ('staff_list','Empleados')!!}
-                        {!! Form:: select ('staff_list',$staff,null,['class'=>'form-control input-lg','id'=>'staff_list'])!!}
+                        {!! Form:: select ('staff_list',$staff, isset($salesman) ? $salesman : null,['class'=>'form-control input-lg','id'=>'staff_list'])!!}
                     </div>
                      </div>
                      <div class="col-md-4">
@@ -31,8 +38,8 @@
                                                               style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                                              <i class="fa fa-calendar"></i>
                                                              <span></span> <b class="caret"></b>
-                                                             <input name="date_start" id="date_start" type="hidden" value="{{ (isset($date_start) ? $date_start : null) }}"/>
-                                                             <input name="date_end" id="date_end" type="hidden" value="{{ (isset($date_end) ? $date_end : null) }}"/>
+                                                             <input name="date_start" id="date_start" type="hidden" value="{{ (isset($start) ? $start : null) }}"/>
+                                                             <input name="date_end" id="date_end" type="hidden" value="{{ (isset($end) ? $end : null) }}"/>
                                                          </div>
                                                      </div>
                          <div class="col-md-4">
@@ -40,6 +47,7 @@
                       {!! Form:: label ('actions','Acciones')!!}
                       <div class="form-actions">
                       {!!Form:: submit('Buscar',['class'=>'btn btn-success','id'=>'submit'])!!}
+                      <input type="submit" class="btn btn-primary" value="Descargar" name="download"/>
                       </div>
                       </div>
                      </div>
@@ -49,13 +57,14 @@
                    </div>
          </div>
 
-           <div class="col-xs-12">
+<div class="col-xs-12">
+ @if(!empty($model) && isset($model))
                        <div class="box">
                          <div class="box-header">
                            <h3 class="box-title">Listas de registros de Ventas</h3>
                          </div><!-- /.box-header -->
                          <div class="box-body">
-                         @if(!empty($model) && isset($model))
+
                            <table id="tablalista" class="table table-bordered table-striped">
 
                              <thead>
@@ -97,14 +106,16 @@
                              <div class="row" style="text-align: center">
                            {!! $model->render() !!}
                              </div>
-                         @endif
-                       </div><!-- /.box -->
 
+                       </div><!-- /.box -->
+                          @else
+                          <p class="text-center"> No existen datos para mostrar</p>
+                          @endif
 
                      </div><!-- /.col -->
 
-                 @if(!empty($model) && isset($model))
-                     <div class="col-xs-12">
+@if(!empty($model) && isset($model))
+<div class="col-xs-12">
                              <div class="col-md-3 col-sm-6 col-xs-12">
                                <div class="info-box">
                                  <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
@@ -144,22 +155,10 @@
                                <!-- /.info-box -->
                              </div>
                              <!-- /.col -->
-                             <div class="col-md-3 col-sm-6 col-xs-12">
-                               <div class="info-box">
-                                 <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
 
-                                 <div class="info-box-content">
-                                   <span class="info-box-text">Notas de Credito</span>
-                                   <span class="info-box-number"></span>
-                                 </div>
-                                 <!-- /.info-box-content -->
-                               </div>
-                               <!-- /.info-box -->
-                             </div>
                              <!-- /.col -->
                            </div>
-
-                           @endif
+ @endif
 @endsection
 
 @include('partials._range')

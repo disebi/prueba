@@ -9,37 +9,40 @@ use App\Actions;
 
 class LineController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('line.all');
+    }
 
 	public function index()
 
 	{
-        if((\Auth::user()->hasAccess('line.all'))|| (\Auth::user()->hasAccess('line.see'))){
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $url='lineas';
         $tabla=Line::orderBy('id','desc')->get();
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('simpleRef.simple_referential_index',compact('url','tabla','referencial','independiente','controlador'));
-        }
-        return Actions::returnBack('No tiene permisos','error');
-
-
     }
 
 
 	public function create()
 	{
-        if((\Auth::user()->hasAccess('line.all'))|| (\Auth::user()->hasAccess('line.mod'))) {
-            $url = 'lineas';
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+        $url = 'lineas';
             list($referencial, $independiente, $controlador) = $this->sendInfo();
             $submit = 'Guardar';
             return view('simpleRef.simple_referential_create', compact('url', 'referencial', 'independiente', 'controlador', 'submit'));
-        }
-        return Actions::returnBack('No tiene permisos','error');
+
 	}
 
 
     public function store(Requests\CreateSimpleReffRequest $request)
     {
-        if((\Auth::user()->hasAccess('line.all'))|| (\Auth::user()->hasAccess('line.mod'))) {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
         $row=$request->input('description');
         $rowcount= Line::where('description','=',$row)->get()->toArray();
         if ( Empty($rowcount)){
@@ -51,14 +54,14 @@ class LineController extends Controller {
             return redirect()->back()->with('message','El registro ya existe')
                 ->with('alert','error');
         }
-
-        }
-        return Actions::returnBack('No tiene permisos','error');
    }
 
 
 	public function edit($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
          $submit='Guardar Cambios';
          $model = Line::findOrFail($id);
@@ -75,6 +78,9 @@ class LineController extends Controller {
 
 	public function update($id, Requests\CreateSimpleReffRequest $request)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $model = Line::findOrFail($id);
         $input=$request->all();
@@ -92,7 +98,10 @@ class LineController extends Controller {
 
 	public function destroy($id)
 	{
-       try{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        try{
        Line::destroy($id);
         return redirect()->back()->with('message','El registro se ha eliminado con exito')
             ->with('alert','success');

@@ -8,8 +8,16 @@ use Illuminate\Http\Request;
 class PositionController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('position.all');
+    }
+
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $positions = Position::all();
         // dd($Positions);
         list($referencial, $independiente) = $this->getInfo();
@@ -19,29 +27,29 @@ class PositionController extends Controller
 
     public function create()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente) = $this->getInfo();
         $edit=0;
         $array=['Semanal'=>'Semanal','Quincenal'=>'Quincenal','Mensual'=>'Mensual'];
         return view ('position.create',compact('array','edit','referencial','independiente'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
+
     public function store(Requests\CreatePositionRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
         $input=$request->all();
         Position::create($request->all());
-
         return redirect()->to('/cargos')->with('message','Su cargo se ha creado con exito')->with('alert','success');
-
     }
-
 
     public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
         try{
         $submit='Guardar Cambios';
         $model =Position::findOrFail($id);
@@ -62,6 +70,9 @@ class PositionController extends Controller
 
     public function update(Requests\CreatePositionRequest $request, $id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $input=$request->all();
         $Position=Position::findorFail($id);
@@ -74,14 +85,12 @@ class PositionController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+
+
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         try{
         Position::destroy($id);

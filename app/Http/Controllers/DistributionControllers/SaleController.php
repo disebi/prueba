@@ -14,9 +14,14 @@ use Illuminate\Http\Request;
 
 class SaleController extends Controller {
 
-
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('sale.all');
+    }
 	public function index()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $model=Sale::orderBy('updated_at','desc')->active()->branching()->paginate(10);
         list($referencial, $independiente) = $this->getInfo();
@@ -25,6 +30,9 @@ class SaleController extends Controller {
 
     public function search()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $model=Order::orderBy('updated_at','desc')
             ->branching()
             ->pendent()
@@ -41,7 +49,10 @@ class SaleController extends Controller {
 
     public function makeSale($id)
     {
-      try{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        try{
             $user=\Auth::user();
             $model=Order::find($id);
             list($products) = $this->getCombos();
@@ -56,6 +67,9 @@ class SaleController extends Controller {
 
     public function store(SaleRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $stamping= $this->getStamping();
         if($stamping == false)
             return redirect()->to('/ventas')->with('message','No existe un timbrado habilitado para realizar facturas')
@@ -73,6 +87,9 @@ class SaleController extends Controller {
 
     public function show($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $model=Sale::findOrFail($id);
         return view('sales.show',compact('model'));
     }
@@ -85,7 +102,7 @@ class SaleController extends Controller {
     }
 
 
-    public function update(OrderRequest $request,$id)
+    public function update( $request,$id)
     {
 
     }
@@ -93,7 +110,10 @@ class SaleController extends Controller {
 
     public function destroy($id)
     {
-     $purchase=Sale::findOrFail($id);
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $purchase=Sale::findOrFail($id);
         $state=false;
 
         $purchase->state =$state;
@@ -107,6 +127,9 @@ class SaleController extends Controller {
 
     public function getInvoiceHeader(SaleRequest $request, $user, $invoice,$stamping)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $order=Order::find($request['order_id']);
         $input = \Input::all();
         $invoice->order_id = $request['order_id'];

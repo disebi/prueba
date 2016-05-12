@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class BusinessController extends Controller {
 
-
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('business.all');
+    }
 	public function index()
 	{
+        if(!$this->permission)
+        return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tabla=Business::all();
         $url='rubros';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -20,6 +26,9 @@ class BusinessController extends Controller {
 
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $submit='Guardar';
         $url='rubros';
@@ -29,6 +38,9 @@ class BusinessController extends Controller {
 
     public function store(Requests\CreateSimpleReffRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         Business::create($request->all());
         return (BusinessController::index());
     }
@@ -37,7 +49,10 @@ class BusinessController extends Controller {
 
 	public function edit($id)
 	{
-       try{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        try{
         $submit='Guardar Cambios';
         $model = Business::findOrFail($id);
         $url='rubros';
@@ -52,6 +67,9 @@ class BusinessController extends Controller {
 
 
 	public function update ($id, Requests\CreateSimpleReffRequest $request) {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             $model = Business::findOrFail($id);
             $input=$request->all();
@@ -69,6 +87,9 @@ class BusinessController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         Business::destroy($id);
         return redirect()->back()->with('message','El registro se ha eliminado con exito')

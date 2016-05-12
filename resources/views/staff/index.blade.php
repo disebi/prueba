@@ -36,8 +36,8 @@
                          <td>{{$table->direcc}}</td>
                         <td>
                              {!! Form::open(array('id'=>'formup'.$table->user_id,'method' => 'PATCH', 'route' => array('usuarios.activeUser', $table->user_id))) !!}
-                                                   <a class="btn btn-default" href="/usuarios/{{$table->user_id}}/edit" ><i class="fa fa-edit"></i> </a>
-                                                   <a class="btn btn-default" onclick="askActivate( {{$table->user_id}} )"
+                                                   <a class="btn btn-default" href="/usuarios/{{$table->id}}/edit" ><i class="fa fa-edit"></i> </a>
+                                                   <a class="btn btn-default" onclick="askActivate( {{$table->id}} )"
                                                                                                       @if($table->user->active)
                                                                                                        title="Deshabilitar"><i class="fa fa-thumbs-down text-danger"></i>
                                                                                                       @else

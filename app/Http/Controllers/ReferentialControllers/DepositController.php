@@ -9,13 +9,15 @@ use Illuminate\Http\Request;
 
 class DepositController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('deposit.all');
+    }
 	public function index()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tables=Deposit::all();
         $url='depositos';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -23,13 +25,12 @@ class DepositController extends Controller {
 
     }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
+
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='depositos';
         $submit='Guardar';
@@ -39,13 +40,12 @@ class DepositController extends Controller {
 
     }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
+
     public function store(Requests\CreateDepositRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj=$request->all();
         $obj['branch_id'] = $obj['branch_list'];
         unset($obj['branch_list']);
@@ -53,25 +53,18 @@ class DepositController extends Controller {
         return redirect()->to('/depositos')->with('message','Su registro se ha creado con exito')->with('alert','success');
     }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function show($id)
 	{
 		//
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function edit($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $submit='Guardar Cambios';
         $model = Deposit::findOrFail($id);
@@ -86,14 +79,12 @@ class DepositController extends Controller {
         }
     }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
     public function update($id,Requests\CreateDepositRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $model = Deposit::findOrFail($id);
         $obj=$request->all();
@@ -109,14 +100,12 @@ class DepositController extends Controller {
         }
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             Deposit::destroy($id);
             return redirect()->back()->with('message', 'El registro se ha eliminado con exito')

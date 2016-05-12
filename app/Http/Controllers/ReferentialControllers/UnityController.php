@@ -6,8 +6,16 @@ use Illuminate\Http\Request;
 
 class UnityController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('unity.all');
+    }
+
 	public function index()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tabla=Unity::all();
         $url='unidades';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -18,6 +26,9 @@ class UnityController extends Controller {
 
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='unidades';
         $submit='Guardar';
@@ -28,6 +39,9 @@ class UnityController extends Controller {
 
     public function store(Requests\CreateSimpleReffRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $row = $request->input('description');
         $rowcount = Unity::where('description', '=', $row)->get()->toArray();
 
@@ -46,6 +60,9 @@ class UnityController extends Controller {
 
 	public function edit($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $submit='Guardar Cambios';
         $model = Unity::findOrFail($id);
@@ -62,6 +79,9 @@ class UnityController extends Controller {
 
 	public function update($id,Requests\CreateSimpleReffRequest $request)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $model = Unity::findOrFail($id);
         $input=$request->all();
@@ -79,6 +99,9 @@ class UnityController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         Unity::destroy($id);
         return redirect()->back()->with('message','El registro se ha eliminado con exito')
             ->with('alert','success');

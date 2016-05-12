@@ -65,14 +65,15 @@ class Sale extends \Eloquent {
         while(strlen($stamp)!=8 && strlen($stamp)<8 ){
             $stamp= '0'.$stamp;
         }
-
         $stamp= $this->branch_id.'-01-'.$stamp;
         return $stamp;
+    }
+    public function  credit(){
+        return $this->hasMany('App\Models\Stock\Credit','sales_id');
     }
 
     public function commission()
     {
-        //TODO SET CREDIT NOTE FOR THE COMMISSION
        return ($this->total * $this->order->visits->zone->comision)/100;
     }
 }

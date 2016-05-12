@@ -24,8 +24,11 @@ Route::group(['middleware' => 'auth'],
             'uses' => 'UserController@activate'
         ));
         //rutas de reportes
+        Route::get('/reporte_visitas', 'ReportController@visits');
+        Route::get('/reporte_ordenes', 'ReportController@orders');
         Route::get('/comisiones', 'ReportController@commission');
-        Route::post('/comisiones', 'ReportController@commission');
+        Route::get('/reporte_vendedores', 'ReportController@salesman');
+
                 //Distribucion
         Route::post('/asignaciones/searchAssign','DistributionControllers\ZoneAssignController@index');
         Route::resource('asignaciones','DistributionControllers\ZoneAssignController');
@@ -40,6 +43,9 @@ Route::group(['middleware' => 'auth'],
         Route::resource('ordenes_trabajo','DistributionControllers\WorkController');
         Route::resource('visitas','DistributionControllers\VisitController');
         Route::resource('ventas','DistributionControllers\SaleController');
+        Route::get('makeBack/{id}','DistributionControllers\BackController@makeBack');
+        Route::get('buscarSalidas','DistributionControllers\BackController@search');
+        Route::resource('entradas','DistributionControllers\BackController');
 
         //STOCK
         Route::get('credito_ventas','StockControllers\CreditController@search');

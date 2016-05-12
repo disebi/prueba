@@ -9,9 +9,15 @@ use Illuminate\Http\Request;
 
 class WorkController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('workorder.all');
+    }
 
 	public function index()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $model=WorkOrder::orderBy('updated_at','desc')
             ->branching()->active()->paginate(10);
@@ -21,6 +27,9 @@ class WorkController extends Controller {
 
     public function search()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $model=Visit::orderBy('updated_at','desc')
             ->branching()
             ->where('state','=',true)->paginate(10);
@@ -36,6 +45,9 @@ class WorkController extends Controller {
 
     public function makeOrder($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             $user=\Auth::user();
             $model=Visit::find($id);
@@ -51,45 +63,23 @@ class WorkController extends Controller {
 		//
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function show($id)
 	{
 		//
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function edit($id)
 	{
 		//
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function update($id)
 	{
 		//
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function destroy($id)
 	{
 		//

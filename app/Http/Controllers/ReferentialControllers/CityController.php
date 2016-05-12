@@ -11,9 +11,16 @@ use Log;
 
 class CityController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('city.all');
+    }
 
 	public function index()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tabla=City::all();
         $url='ciudad';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -23,6 +30,8 @@ class CityController extends Controller {
 
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $url='ciudad';
         $branches=Branch::all()->lists('description','id');
@@ -34,6 +43,8 @@ class CityController extends Controller {
 
     public function store(Requests\CreateSimpleReffRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $params = ['message'=>'La ciudad se ha guardado con exito',
             'alert'=>'success'];
@@ -47,6 +58,9 @@ class CityController extends Controller {
 
 	public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             $submit='Guardar Cambios';
             $model =City::findOrFail($id);
@@ -64,6 +78,9 @@ class CityController extends Controller {
 
 	public function update($id,Requests\CreateSimpleReffRequest $request)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $model = City::findOrFail($id);
         $input=$request->all();
@@ -82,6 +99,9 @@ class CityController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             City::destroy($id);
             return redirect()->back()->with('message','El registro se ha eliminado con exito')
@@ -101,32 +121,6 @@ class CityController extends Controller {
         $controlador = '\City';
         return array($referencial, $independiente, $controlador);
     }
-
-
-
-    public function storeModal()
-    {
-        $user=Auth::getUser();
-        $input=\Input::all();
-        $description=$input['value'];
-        $input['description']=$description;
-        $input['branch_id']=$user->staff->branch_id;
-        unset($input['pk']);
-        unset($input['name']);
-        unset($input['value']);
-        unset($input['_token']);
-        $number=City::where('description','=',$input['description'])->count();
-
-        if($number==0){
-
-            City::create($input);
-            $html=City::select('id','description')->get();
-            return $html;
-        }else{
-            return 0;
-        }
-    }
-
 
     public function makeCredentials(Requests\CreateSimpleReffRequest $request)
     {

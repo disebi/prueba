@@ -10,8 +10,15 @@ use Illuminate\Http\Request;
 
 class ZoneController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('zone.all');
+    }
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tables=Zone::all();
         $url='zonas';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -22,6 +29,9 @@ class ZoneController extends Controller {
 
     public function create()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='zonas';
         $submit='Guardar';
@@ -34,7 +44,10 @@ class ZoneController extends Controller {
 
     public function store(Requests\CreateZoneRequest $request)
     {
-       $obj=$request->all();
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $obj=$request->all();
        $obj['city_id'] = $obj['city_list'];
        unset($obj['city_list']);
        Zone::create($obj);
@@ -45,6 +58,9 @@ class ZoneController extends Controller {
 
     public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $submit='Guardar Cambios';
         $model = Zone::findOrFail($id);
@@ -62,6 +78,9 @@ class ZoneController extends Controller {
 
     public function update($id,Requests\CreateZoneRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $model = Zone::findOrFail($id);
         $obj=$request->all();
@@ -79,6 +98,9 @@ class ZoneController extends Controller {
 
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         Zone::destroy($id);
         return redirect()->back()->with('message', 'El registro se ha eliminado con exito')
@@ -95,16 +117,5 @@ class ZoneController extends Controller {
         $independiente = 'Locales';
         $controlador = '\Zone';
         return array($referencial, $independiente, $controlador);
-    }
-
-    public function storeModal(Requests\CreateZoneRequest $request)
-    {
-        $input=$request->all();
-        unset($input['_token']);
-        $input['city_id'] = $input['city_list'];
-        unset($input['city_list']);
-        Zone::create($input);
-        $html=Zone::select('id','description')->get();
-        return $html;
     }
 }

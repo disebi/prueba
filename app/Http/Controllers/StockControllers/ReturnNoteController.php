@@ -13,9 +13,16 @@ use Illuminate\Http\Request;
 
 class ReturnNoteController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('return.all');
+    }
 
 	public function index()
 	{
+        if(!$this->permission)
+        return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user=\Auth::user();
         $model=ReturnNote::orderBy('updated_at','desc')
             ->where('branch_id','=', $user->staff->branch_id)
@@ -27,6 +34,9 @@ class ReturnNoteController extends Controller {
 
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user=\Auth::user();
         $clients = Client::all()->lists('description', 'id');
         list($referencial, $independiente) = $this->getInfo();
@@ -39,8 +49,10 @@ class ReturnNoteController extends Controller {
 
 	public function store(CreateReturnRequest $request)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
-       $user=\Auth::user();
+        $user=\Auth::user();
        $invoice =  new ReturnNote();
        $this->getInvoiceHeader($request, $user, $invoice);
        foreach($request['result'] as $detail){
@@ -54,6 +66,9 @@ class ReturnNoteController extends Controller {
 
 	public function show($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $model=ReturnNote::findOrFail($id);
         return view('returnNote.show',compact('model'));
 	}
@@ -74,6 +89,9 @@ class ReturnNoteController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $returnNote=ReturnNote::findOrFail($id);
         $state=false;
         if(!$returnNote->state)
@@ -103,9 +121,7 @@ class ReturnNoteController extends Controller {
         $invoice->save();
     }
 
-    /**
-     * @return array
-     */
+
     public function getInfo()
     {
         $referencial = "Devoluciones";

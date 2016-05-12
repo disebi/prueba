@@ -15,9 +15,16 @@ use Illuminate\Support\Facades\Input;
 
 class VisitController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('visit.all');
+    }
 
 	public function index()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user=\Auth::user();
         $model=Visit::orderBy('updated_at','desc')
             ->branching()->active()->paginate(10);
@@ -28,6 +35,9 @@ class VisitController extends Controller {
 
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $taken_zones = ZoneAssign::select('zone_id')->lists('zone_id');
         $products = Product::all()->lists('description','id');
         $branch_id = \Auth::user()->staff->branch_id;
@@ -45,7 +55,10 @@ class VisitController extends Controller {
 
 	public function store()
 	{
-		$input= \Input::all();
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $input= \Input::all();
 		$input= $input['zone'];
         $visit =  new Visit();
         $this->getVisitHeader($input, $visit);
@@ -63,7 +76,10 @@ class VisitController extends Controller {
 
 	public function show($id)
 	{
-		$model= Visit::find($id);
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $model= Visit::find($id);
         return view('visits.show',compact('model'));
 	}
 
@@ -82,6 +98,9 @@ class VisitController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $purchase=Visit::findOrFail($id);
 
         if($purchase->orders()->active()->count()>0){
@@ -101,6 +120,9 @@ class VisitController extends Controller {
 
     public function getInfo()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $referencial = "Visitas";
         $independiente = "Clientes";
         return array($referencial, $independiente);
@@ -108,15 +130,9 @@ class VisitController extends Controller {
     public function getZone()
     {
         $input= \Input::all();
-
         $zone= Zone::find($input['zone']);
-
-
         $clients=Client::select('id','description')->where('zona_id','=',$input['zone'])->get();
-
         return [['description'=>$zone->description,'salesman'=>$zone->assign->staff->name.' '.$zone->assign->staff->last_name,'city'=>$zone->city->description],$clients];
-
-
     }
 
     public function getVisitHeader( $request, $visit)

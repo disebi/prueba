@@ -72,10 +72,6 @@ class ModalController extends Controller {
             return 0;
         }
     }
-	public function provider(){
-
-    }
-
 
     public function presentation()
     {

@@ -8,8 +8,17 @@ use Redirect;
 
 class TaxController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('tax.all');
+    }
+
     public function index()
-    {   $url='impuestos';
+    {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $url='impuestos';
         $tabla=Tax::orderBy('id','desc')->get();
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('taxes.index',compact('url','tabla','referencial','independiente','controlador'));
@@ -18,16 +27,21 @@ class TaxController extends Controller {
 
     public function create()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $url='impuestos';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $submit='Guardar';
         return view ('taxes.create',compact('url','referencial','independiente','controlador','submit'));
-
     }
 
 
     public function store(Requests\CreateTaxesRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         Tax::create($request->all());
         $params = ['message'=>'Se ha guardado con exito',
             'alert'=>'success'];
@@ -37,6 +51,9 @@ class TaxController extends Controller {
 
     public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $submit='Guardar Cambios';
         $model = Tax::findOrFail($id);
@@ -53,6 +70,9 @@ class TaxController extends Controller {
 
     public function update($id, Requests\CreateTaxesRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $model = Tax::findOrFail($id);
         $input=$request->all();
@@ -71,6 +91,9 @@ class TaxController extends Controller {
 
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             Tax::destroy($id);
             return redirect()->back()->with('message','El registro se ha eliminado con exito')
@@ -79,36 +102,19 @@ class TaxController extends Controller {
         }catch(QueryException $e){
             return redirect()->to('/impuestos')->with('message','Su registro no ha podido ser eliminado, ya que se esta utilizando')->with('alert','error');
         }
-
     }
 
 
     public function sendInfo()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $referencial = 'Impuestos';
         $independiente = 'Productos';
         $controlador = '\Tax';
         return array($referencial, $independiente, $controlador);
     }
 
-    public function storeModal()
-    {
-        $input=\Input::all();
-        $description=$input['value'];
-        $input['description']=$description;
-        unset($input['pk']);
-        unset($input['name']);
-        unset($input['value']);
-        unset($input['_token']);
-        $number=Tax::where('description','=',$input['description'])->count();
-
-        if($number==0){
-            Tax::create($input);
-            $html=Tax::select('id','description')->get();
-            return $html;
-        }else{
-            return 0;
-        }
-    }
 
 }

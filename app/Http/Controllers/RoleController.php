@@ -12,9 +12,16 @@ use Illuminate\Support\Facades\Input;
 
 class RoleController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('role.all');
+    }
 
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tables=Role::all();
         $url='roles';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -22,13 +29,11 @@ class RoleController extends Controller {
 
     }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='roles';
         $submit='Guardar';
@@ -38,38 +43,31 @@ class RoleController extends Controller {
 
     }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
+
 	public function store(Requests\CreateRoleRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj = $request->all();
         $role = Role::create(['description' => $obj['description']]);
         $role->licenses()->attach($obj['license_list']);
         return redirect()->to('/roles')->with('message', 'Su registro se ha creado con exito')->with('alert', 'success');
     }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function show($id)
 	{
-		//
-	}
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+    }
+
+
 	public function edit($id)
-	{   //dd( \Auth::user()->hasAccess('presentacion.all'));
+	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $submit='Guardar Cambios';
         $model = Role::findOrFail($id);
@@ -80,34 +78,25 @@ class RoleController extends Controller {
         return view ('role.edit',compact('licenses','action','url','model','submit','referencial','independiente'));
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function update($id)
 	{
-        //      $obj=$request->all();
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj=\Input::all();
-        //$obj['branch_id'] = $obj['branch_list'];
-        //unset($obj['branch_list']);
         $role=Role::find($id);
         $role->licenses()->sync($obj['license_list']);
         $role->update(['description'=>$obj['description']]);
 
         return redirect()->to('/roles')->with('message','Su registro se ha creado con exito')->with('alert','success');
-        //
-	}
+ 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             $role=Role::find($id);
             $role->licenses()->detach();

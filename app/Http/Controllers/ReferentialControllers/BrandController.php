@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class BrandController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('brand.all');
+    }
 
 	public function index()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $url='marcas';
         $tabla=Brand::all();
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -21,6 +28,9 @@ class BrandController extends Controller {
 
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
 
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $submit='Guardar';
@@ -32,6 +42,9 @@ class BrandController extends Controller {
 
     public function store(Requests\CreateSimpleReffRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $row = $request->input('description');
         $rowcount = Brand::where('description', '=', $row)->get()->toArray();
 
@@ -51,6 +64,9 @@ class BrandController extends Controller {
 
 	public function edit($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $submit='Guardar Cambios';
         $model = Brand::findOrFail($id);
@@ -68,7 +84,10 @@ class BrandController extends Controller {
 
 	public function update($id, Requests\CreateSimpleReffRequest $request)
 	{
-      try{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        try{
         $model = Brand::findOrFail($id);
         $input=$request->all();
         $model->description=$input['description'];
@@ -85,6 +104,9 @@ class BrandController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         Brand::destroy($id);
         return redirect()->back()->with('message','El registro se ha eliminado con exito')

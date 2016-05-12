@@ -8,8 +8,15 @@ use Illuminate\Http\Request;
 
 class BranchController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('branch.all');
+    }
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $branches=Branch::all();
         list($referencial, $independiente) = $this->getInfo();
         return view ('branch.index',compact('branches','referencial','independiente'));
@@ -17,6 +24,9 @@ class BranchController extends Controller {
 
     public function create()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente) = $this->getInfo();
         return view ('branch.create',compact('referencial','independiente'));
     }
@@ -24,6 +34,9 @@ class BranchController extends Controller {
 
     public function store(Requests\CreateBranchRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $input=$request->all();
         $branch=Branch::create($request->all());
 
@@ -37,6 +50,9 @@ class BranchController extends Controller {
 
     public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $submit='Guardar Cambios';
         list($referencial, $independiente) = $this->getInfo();
         try{
@@ -52,6 +68,9 @@ class BranchController extends Controller {
 
     public function update(Requests\CreateBranchRequest $request, $id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $input=$request->all();
         try{
             $branch=Branch::findOrFail($id);
@@ -65,6 +84,9 @@ class BranchController extends Controller {
 
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         Branch::destroy($id);
         return redirect()->to('/sucursales')->with('message','Su sucursal se ha eliminado con exito')->with('alert','success');
@@ -74,9 +96,6 @@ class BranchController extends Controller {
         }
     }
 
-    /**
-     * @return array
-     */
     public function getInfo()
     {
         $referencial = "Sucursal";

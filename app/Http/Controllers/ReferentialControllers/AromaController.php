@@ -7,8 +7,16 @@ use App\Http\Controllers\Controller;
 
 class AromaController extends Controller {
 
-	public function index()
+    public function __construct()
+    {
+      $this->permission = \Auth::user()->hasAccess('aroma.all');
+    }
+
+    public function index()
 	{
+        if(!$this->permission)
+          return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tabla=Aroma::all();
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url = 'aromas';
@@ -17,6 +25,9 @@ class AromaController extends Controller {
 
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $submit='Guardar';
         $url = 'aromas';
@@ -25,6 +36,9 @@ class AromaController extends Controller {
 
 	public function store(Requests\CreateSimpleReffRequest $request)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $row=$request->input('description');
         $rowcount= Aroma::where('description','=',$row)->get()->toArray();
         if ( Empty($rowcount)){
@@ -40,6 +54,9 @@ class AromaController extends Controller {
 
 	public function edit($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             $submit='Guardar Cambios';
             $model = Aroma::findOrFail($id);
@@ -57,7 +74,10 @@ class AromaController extends Controller {
 
 	public function update($id, Requests\CreateSimpleReffRequest $request)
 	{
-    try{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        try{
         $model = Aroma::findOrFail($id);
         $input=$request->all();
         $model->description=$input['description'];
@@ -75,6 +95,9 @@ class AromaController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
 		Aroma::destroy($id);
         return redirect()->back()->with('message','El registro se ha eliminado con exito')

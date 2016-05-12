@@ -13,11 +13,16 @@ use Illuminate\Http\Request;
 
 class StaffController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('user.all');
+    }
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tables=Staff::all();
-        //dd($tables);
-        //dd($tables[0]->staff()->id);
         $url='usuarios';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('staff.index',compact('url','tables','referencial','independiente','controlador'));
@@ -27,6 +32,9 @@ class StaffController extends Controller {
 
     public function create()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='usuarios';
         $submit='Guardar';
@@ -40,6 +48,9 @@ class StaffController extends Controller {
 
     public function store( Requests\CreateNewStaffRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj=$request->all();
 
         $credentials = ['email'=>$obj['email'],
@@ -80,6 +91,9 @@ class StaffController extends Controller {
 
     public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $submit='Guardar Cambios';
 
         $staff = Staff::findOrFail($id);
@@ -97,11 +111,14 @@ class StaffController extends Controller {
 
     public function update($id,Requests\CreateNewStaffRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj=$request->all();
         $staff = Staff::findOrFail($id);
         $user = User::findOrFail($staff->user_id);
 
-        /////
+
         $credentials = ['email'=>$user['email'],
             'name'=>$obj['nick'],
             'role_id'=>$obj['role_list']];
@@ -124,6 +141,9 @@ class StaffController extends Controller {
 
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             User::destroy($id);
             return redirect()->back()->with('message', 'El registro se ha eliminado con exito')

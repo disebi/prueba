@@ -78,7 +78,6 @@
           </div>
 @stop
 
-@include('partials.help._ref_index')
 @include('partials._select2')
 @section('javascripts')
 <script type="text/javascript">

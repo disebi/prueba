@@ -9,10 +9,16 @@ use Illuminate\Http\Request;
 
 class DriveController extends Controller {
 
-
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('drive.all');
+    }
 
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $drives=Drive::all();
         $url='vehiculos';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -21,7 +27,10 @@ class DriveController extends Controller {
 
 
     public function create()
-    {   list($referencial, $independiente, $controlador) = $this->sendInfo();
+    {   if(!$this->permission)
+        return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='vehiculos';
         $submit='Guardar';
         $brands=Brand::all()->lists('description','id');
@@ -32,6 +41,9 @@ class DriveController extends Controller {
 
     public function store(Requests\CreateDriveRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj=$request->all();
         $obj['brand_id'] = $obj['brand_list'];
         unset($obj['brand_list']);
@@ -42,6 +54,9 @@ class DriveController extends Controller {
 
     public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $submit='Guardar Cambios';
         $model = Drive::findOrFail($id);
@@ -58,6 +73,9 @@ class DriveController extends Controller {
 
     public function update($id,Requests\CreateDriveRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $model = Drive::findOrFail($id);
         $obj=$request->all();
@@ -75,6 +93,9 @@ class DriveController extends Controller {
 
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             Drive::destroy($id);
             return redirect()->back()->with('message', 'El registro se ha eliminado con exito')

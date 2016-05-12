@@ -7,8 +7,15 @@ use Illuminate\Http\Request;
 
 class LicenseController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('license.all');
+    }
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $url='permisos';
         $tabla=License::all();
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -17,6 +24,9 @@ class LicenseController extends Controller {
 
     public function create()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $submit='Guardar';
         $partials = $this->getPartials();
@@ -28,6 +38,8 @@ class LicenseController extends Controller {
 
     public function store(Requests\CreateLicenseRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $partials = $this->getPartials();
         $description=$request->input('description');
@@ -45,7 +57,11 @@ class LicenseController extends Controller {
 
 
     public function edit($id)
-    {   $submit='Guardar Cambios';
+    {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $submit='Guardar Cambios';
         $model = License::find($id);
         $partials = $this->getPartials();
         $description=$model->description;
@@ -81,6 +97,9 @@ class LicenseController extends Controller {
 
     public function update($id, Requests\CreateSimpleReffRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $model = License::find($id);
 
         $partials = $this->getPartials();
@@ -97,6 +116,9 @@ class LicenseController extends Controller {
 
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             License::destroy($id);
             return redirect()->back()->with('message','El registro se ha eliminado con exito')
@@ -117,29 +139,6 @@ class LicenseController extends Controller {
     }
 
 
-    public function storeModal()
-    {
-        $input=\Input::all();
-        $description=$input['value'];
-        $input['description']=$description;
-        unset($input['pk']);
-        unset($input['name']);
-        unset($input['value']);
-        unset($input['_token']);
-        $number=License::where('description','=',$input['description'])->count();
-
-        if($number==0){
-            License::create($input);
-            $html=License::select('id','description')->get();
-            return $html;
-        }else{
-            return 0;
-        }
-    }
-
-    /**
-     * @return array
-     */
     public function getPartials()
     {
         $partials = [0 => '.all', 1 => '.see', 2 => '.mod', 3 => '.del', 4 => '.rep'];

@@ -11,8 +11,16 @@ use Illuminate\Http\Request;
 
 class StampingController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('stamping.all');
+    }
+
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tabla=Stamping::all();
         $url='timbrados';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -22,6 +30,8 @@ class StampingController extends Controller {
 
     public function create()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $url='timbrados';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -32,6 +42,8 @@ class StampingController extends Controller {
 
     public function store(StampingRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $params = ['message'=>'La timbrados se ha guardado con exito',
             'alert'=>'success'];
@@ -44,6 +56,9 @@ class StampingController extends Controller {
 
     public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             $submit='Guardar Cambios';
             $model =Stamping::findOrFail($id);
@@ -61,6 +76,9 @@ class StampingController extends Controller {
 
     public function update($id,StampingRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
            $this->makeCredentials($request,Stamping::findOrFail($id));
             $params = ['message'=> 'Se ha guardado con exito',
@@ -75,6 +93,9 @@ class StampingController extends Controller {
 
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             Stamping::destroy($id);
             return redirect()->back()->with('message','El registro se ha eliminado con exito')

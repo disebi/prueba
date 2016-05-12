@@ -11,9 +11,14 @@ use Illuminate\Http\Request;
 
 class CreditController extends Controller {
 
-
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('credit.all');
+    }
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $model=Credit::orderBy('updated_at','desc')->active()->branching()->paginate(10);
         list($referencial, $independiente) = $this->getInfo();
@@ -22,6 +27,9 @@ class CreditController extends Controller {
 
     public function search()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $model=Sale::orderBy('updated_at','desc')
             ->branching()->active()->paginate(10);
 
@@ -36,6 +44,9 @@ class CreditController extends Controller {
 
     public function makeCredit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             $user=\Auth::user();
             $model=Sale::find($id);
@@ -51,6 +62,9 @@ class CreditController extends Controller {
 
     public function store(CreditRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user=\Auth::user();
         $invoice =  new Credit();
         $this->getInvoiceHeader($request, $user, $invoice);
@@ -64,6 +78,9 @@ class CreditController extends Controller {
 
     public function show($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $model=Credit::findOrFail($id);
         return view('credit.show',compact('model'));
     }
@@ -84,12 +101,13 @@ class CreditController extends Controller {
 
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $purchase=Credit::findOrFail($id);
         $state=false;
-
         $purchase->state =$state;
         $purchase->save();
-
         return redirect()->to('credito')->with('message','Se ha cambiado de estado con exito')->with('alert','success');
     }
 

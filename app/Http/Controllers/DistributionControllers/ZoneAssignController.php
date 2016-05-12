@@ -14,9 +14,17 @@ use Illuminate\Http\Request;
 
 class ZoneAssignController extends Controller {
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('assign.all');
+    }
+
 	public function index()
     {
-       $branch_id = \Auth::user()->staff->branch_id;
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $branch_id = \Auth::user()->staff->branch_id;
        $taken_staff = ZoneAssign::select('staff_id')->lists('staff_id');
        $staff= Staff::select(\DB::raw("staff.id, (staff.name || ' ' || staff.last_name) as description"))
                 ->join('users', 'staff.user_id', '=', 'users.id')
@@ -28,7 +36,7 @@ class ZoneAssignController extends Controller {
         }else{
             $tables=Staff::where('branch_id','=',$branch_id)
                 ->whereIn('id',$taken_staff)
-                ->paginate(10);
+                ->paginate(9);
         }
         list($referencial, $independiente) = $this->sendInfo();
         return view ('zoneAssign.index',compact('url','staff','tables','referencial','independiente','controlador'));
@@ -37,6 +45,9 @@ class ZoneAssignController extends Controller {
 
     public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($zones, $staff) = $this->getZonesInfo();
         list($referencial, $independiente) = $this->sendInfo();
         $url='asignaciones';
@@ -48,6 +59,9 @@ class ZoneAssignController extends Controller {
 
 	public function store(ZoneAssignRequest $request)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj = $request->all();
         $staff = Staff::find($obj['staff_list']);
         $staff->zones()->attach($obj['zones_list']);
@@ -62,6 +76,9 @@ class ZoneAssignController extends Controller {
 
 	public function edit($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $submit='Guardar Cambios';
         $model = Staff::findOrFail($id);
         $url='roles';
@@ -74,6 +91,9 @@ class ZoneAssignController extends Controller {
 
 	public function update($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj=\Input::all();
         $staff=Staff::find($id);
         $staff->zones()->sync($obj['zones_list']);
@@ -83,6 +103,9 @@ class ZoneAssignController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj=\Input::all();
         $staff=Staff::find($id);
         $staff->zones()->detach();
@@ -91,6 +114,9 @@ class ZoneAssignController extends Controller {
 
     public function sendInfo()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $referencial = 'Asignacion de Zona';
         $independiente = 'Empleados';
         return array($referencial, $independiente);

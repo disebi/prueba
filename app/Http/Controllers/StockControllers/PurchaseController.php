@@ -15,9 +15,15 @@ use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller {
 
-
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('purchase.all');
+    }
 	public function index()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user=\Auth::user();
 		$model=Purchase::orderBy('updated_at','desc')
             ->where('branch_id','=',$user->staff->branch_id)
@@ -29,6 +35,9 @@ class PurchaseController extends Controller {
 
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user=\Auth::user();
         $providers = Provider::all()->lists('description', 'id');
         $providers[0] = 'Favor seleccione un proveedor';
@@ -41,7 +50,10 @@ class PurchaseController extends Controller {
 
 	public function store(CreateNewPurchaseRequest $request)
 	{
-       $user=\Auth::user();
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $user=\Auth::user();
        $invoice =  new Purchase;
        $this->getInvoiceHeader($request, $user, $invoice);
        foreach($request['result'] as $detail){
@@ -53,6 +65,9 @@ class PurchaseController extends Controller {
 
 	public function show($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $model=Purchase::findOrFail($id);
         return view('purchase.show',compact('model'));
 	}
@@ -61,6 +76,9 @@ class PurchaseController extends Controller {
 
 	public function edit($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $user=\Auth::user();
         $providers = Provider::all()->lists('description', 'id');
@@ -76,6 +94,9 @@ class PurchaseController extends Controller {
 
 	public function update(CreateNewPurchaseRequest $request,$id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $user=\Auth::user();
         $invoice =  Purchase::findOrFail($id);
@@ -95,6 +116,9 @@ class PurchaseController extends Controller {
 
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $purchase=Purchase::findOrFail($id);
         $state=false;
         if(!$purchase->state){
@@ -102,7 +126,6 @@ class PurchaseController extends Controller {
         }
         $purchase->state =$state;
         $purchase->save();
-
         return redirect()->to('compras')->with('message','Se h  a cambiado de estado con exito')->with('alert','success');
 	}
 
@@ -119,6 +142,7 @@ class PurchaseController extends Controller {
 
     public function getProductPrice()
     {
+
         $input=\Input::all();
                 if($product=Product::find($input['id'])){
                     return [$product->compra,$product->tax->valor,substr($product->tax->description,0,3)];

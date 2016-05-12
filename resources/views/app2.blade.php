@@ -35,7 +35,7 @@
                  <div class="pull-right hidden-xs">
                    <b>Version</b> 2.0
                  </div>
-                 <strong>DS 2015 <a href="http://almsaeedstudio.com"></a>.</strong> All rights reserved.
+                 <strong>DS 2016 </strong> All rights reserved.
          </footer>
         </div><!-- ./wrapper -->
   </body>

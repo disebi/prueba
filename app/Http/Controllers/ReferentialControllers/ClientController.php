@@ -12,8 +12,15 @@ use Illuminate\Http\Request;
 class ClientController extends Controller {
 
 
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('client.all');
+    }
     public function index()
-    {   $tables=Client::all();
+    {    if(!$this->permission)
+        return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        $tables=Client::all();
         $url='clientes';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         return view ('local.index',compact('url','tables','referencial','independiente','controlador'));
@@ -22,6 +29,9 @@ class ClientController extends Controller {
 
     public function create()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='clientes';
         $submit='Guardar';
@@ -34,6 +44,9 @@ class ClientController extends Controller {
 
     public function store(Requests\CreateLocalRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj=$request->all();
         $this->cleanStore($obj);
         $obj['zona_id'] = $obj['zone_list'];
@@ -49,6 +62,9 @@ class ClientController extends Controller {
 
     public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $submit='Guardar Cambios';
         $model = Client::findOrFail($id);
@@ -67,6 +83,9 @@ class ClientController extends Controller {
 
     public function update($id,Requests\CreateLocalRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $model = Client::findOrFail($id);
 
@@ -89,7 +108,10 @@ class ClientController extends Controller {
 
     public function destroy($id)
     {
-       Client::destroy($id);
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
+        Client::destroy($id);
         return redirect()->back()->with('message','El registro se ha eliminado con exito')
             ->with('alert','success');
     }
@@ -103,19 +125,15 @@ class ClientController extends Controller {
         return array($referencial, $independiente, $controlador);
     }
 
-    /**
-     * @return array
-     */
+
     public function getCombos()
     {
+
         $zones = Zone::all()->lists('description', 'id');
         $business = Business::all()->lists('description', 'id');
         return array($zones, $business);
     }
 
-    /**
-     * @param $obj
-     */
     public function cleanStore($obj)
     {
         unset($obj['city_list']);

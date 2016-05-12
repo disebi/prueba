@@ -35,6 +35,7 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
+
         $user=\Auth::user();
         $order_count=Order::join('visits','visits.id','=','orders.visit_id')
             ->where('visits.branch_id','=',$user->staff->branch_id)

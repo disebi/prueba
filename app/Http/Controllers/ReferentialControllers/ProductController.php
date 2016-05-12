@@ -15,8 +15,15 @@ use Illuminate\Http\Request;
 use App\Models\ReferentialModels\Line;
 
 class ProductController extends Controller {
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('product.all');
+    }
     public function index()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $tables=Product::all();
         $url='productos';
         list($referencial, $independiente, $controlador) = $this->sendInfo();
@@ -25,6 +32,9 @@ class ProductController extends Controller {
 
     public function create()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         list($referencial, $independiente, $controlador) = $this->sendInfo();
         $url='productos';
         $submit='Guardar';
@@ -39,6 +49,9 @@ class ProductController extends Controller {
 
     public function store(Requests\CreateProductRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $obj=$request->all();
         $obj = $this->setObjectToSave($obj);
         Product::create($obj);
@@ -49,6 +62,9 @@ class ProductController extends Controller {
 
     public function edit($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $submit='Guardar Cambios';
         $model = Product::findOrFail($id);
@@ -69,6 +85,9 @@ class ProductController extends Controller {
 
     public function update($id,Requests\CreateProductRequest $request)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
         $model = Product::findOrFail($id);
         $obj=$request->all();
@@ -85,6 +104,9 @@ class ProductController extends Controller {
 
     public function destroy($id)
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         try{
             Product::destroy($id);
             return redirect()->back()->with('message', 'El registro se ha eliminado con exito')
@@ -103,21 +125,9 @@ class ProductController extends Controller {
         return array($referencial, $independiente, $controlador);
     }
 
-    public function storeModal(Requests\CreateProductRequest $request)
-    {
-        $input=$request->all();
-        unset($input['_token']);
-        Product::create($input);
-        $html=Product::select('id','description')->get();
-        return $html;
-    }
 
-    /**
-     * @return array
-     */
     public function getSelectBox()
     {
-
         $taxes = Tax::all()->lists('valor', 'id');
         $providers = Provider::all()->lists('description', 'id');
         $unities = Unity::all()->lists('description', 'id');
@@ -127,10 +137,6 @@ class ProductController extends Controller {
         return array($taxes, $providers, $unities, $presentations, $lines, $aromas);
     }
 
-    /**
-     * @param $obj
-     * @return mixed
-     */
     public function setObjectToSave($obj)
     {
         $obj['aroma_id'] = $obj['aroma_list'];

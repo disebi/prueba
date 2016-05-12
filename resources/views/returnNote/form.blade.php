@@ -1,6 +1,5 @@
 
     {{--head--}}
-
         <div class="col-xs-6">
             <div class="panel panel-success">
                 <div class="panel-heading">Devolucion</div>
@@ -93,20 +92,20 @@
 
     {{--subtotals--}}
  <div class="col-xs-12">
-    <div class="col-xs-6">
-        <div class="panel panel-default">
-             <div class="panel-heading">Informacion</div>
-             <div class="panel-body">
-                <div class="form-group">
-                                                      <label for="comment">Observaciones</label>
-                                                        {!!Form::textarea('comments',null,['class'=>'form-control', 'style'=>'resize: none','rows'=>'5']) !!}
-                                                       <div class="controls">
-                                                       <p>Notas acerca de la factura</p>
-                                                       </div>
-                                                 </div>
-             </div>
-        </div>
-    </div>
+    {{--<div class="col-xs-6">--}}
+        {{--<div class="panel panel-default">--}}
+             {{--<div class="panel-heading">Informacion</div>--}}
+             {{--<div class="panel-body">--}}
+                {{--<div class="form-group">--}}
+                                                      {{--<label for="comment">Observaciones</label>--}}
+                                                        {{--{!!Form::textarea('comments',null,['class'=>'form-control', 'style'=>'resize: none','rows'=>'5']) !!}--}}
+                                                       {{--<div class="controls">--}}
+                                                       {{--<p>Notas acerca de la factura</p>--}}
+                                                       {{--</div>--}}
+                                                 {{--</div>--}}
+             {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
     <div class="col-xs-6">
 
         {!!Form:: submit('Guardar',['class'=>'btn btn-success','id'=>'submit'])!!}

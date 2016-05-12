@@ -15,9 +15,15 @@ use Illuminate\Http\Request;
 
 class AdjustController extends Controller {
 
-
+    public function __construct()
+    {
+        $this->permission = \Auth::user()->hasAccess('adjust.all');
+    }
 	public function index()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user=\Auth::user();
         $model=Adjust::orderBy('updated_at','desc')
             ->where('branch_id','=', $user->staff->branch_id)
@@ -29,17 +35,24 @@ class AdjustController extends Controller {
 
     public function download()
     {
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user = \Auth::user();
         $deposit_id=$user->staff->branch->deposit->id;
         $sql=\DB::table('stocks')->select('products.description','stocks.deposit_id','stocks.cant','stocks.min')
                 ->join('products','stocks.product_id', '=','products.id')
                 ->where('deposit_id','=',$deposit_id)->get();
-        $report=new Reports();
+        $report=new Reports([]);
         $report->spread($sql,'Existenci',"producto;deposito;cantidad;quiebre");
 
     }
+
 	public function create()
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user=\Auth::user();
         list($referencial, $independiente) = $this->getInfo();
         $activity=['Sumar'=>'Sumar','Restar'=>'Restar'];
@@ -47,13 +60,12 @@ class AdjustController extends Controller {
         return view('adjust.create',compact('referencial','independiente','user','products','activity'));
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
+
 	public function store( AdjustRequest $request)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $user=\Auth::user();
         $invoice =  new Adjust();
         $this->getInvoiceHeader($request, $user, $invoice);
@@ -70,14 +82,12 @@ class AdjustController extends Controller {
         return redirect()->to('/devoluciones')->with('message','Se ha guardado con exito')->with('alert','success');
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function show($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $model=Adjust::findOrFail($id);
         return view('adjust.show',compact('model'));
 	}
@@ -112,6 +122,9 @@ class AdjustController extends Controller {
 	 */
 	public function destroy($id)
 	{
+        if(!$this->permission)
+            return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
+
         $returnNote=Adjust::findOrFail($id);
         $state=false;
         if(!$returnNote->state)
