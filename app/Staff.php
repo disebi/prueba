@@ -54,6 +54,11 @@ class Staff extends \Eloquent {
     public function scopeBranching($query)
     {
         $user=\Auth::user();
-        return $query->where('branch_id','=',$user->staff->branch_id);
+        return $query->where('staff.branch_id','=',$user->staff->branch_id);
+    }
+
+    public function objective()
+    {
+        return $this->zones->sum('obj');
     }
 }

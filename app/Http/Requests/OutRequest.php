@@ -11,7 +11,7 @@ class OutRequest extends Request {
 	 */
 	public function authorize()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -19,11 +19,25 @@ class OutRequest extends Request {
 	 *
 	 * @return array
 	 */
-	public function rules()
-	{
-		return [
-			//
-		];
-	}
+    public function rules()
+    {
+        return [
+            'km'=>'required',
+            'comments'=>'required',
+            'tanque'=>'required',
+            'drive_id'=>'required',
+            'driver_id'=>'required'];
+    }
+
+    public function messages()
+    {
+        return [
+            "km.required" => 'Favor vuelva a cargar la pagina',
+            "comments.required" => 'Favor inserte comentarios acerca del estado del vehiculo',
+            "drive.required" => 'Favor inserte el vehiculo',
+            "driver_.required" => 'Favor inserte el conductor',
+            "tanque.required" => 'Favor inserte el tanque'
+        ];
+    }
 
 }

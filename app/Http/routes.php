@@ -8,7 +8,6 @@ Route::controllers([
 Route::group(['middleware' => 'auth'],
     function(){
         Route::get('home', 'HomeController@index');
-        Route::get('home2', 'HomeController@indexSales');
         Route::get('homeSalesmen/{id}', 'HomeController@salesmen');
 
 //rutas de usuarios y roles
@@ -28,6 +27,7 @@ Route::group(['middleware' => 'auth'],
         Route::get('/reporte_ordenes', 'ReportController@orders');
         Route::get('/comisiones', 'ReportController@commission');
         Route::get('/reporte_vendedores', 'ReportController@salesman');
+        Route::get('/reporte_remisiones', 'ReportController@remissions');
 
                 //Distribucion
         Route::post('/asignaciones/searchAssign','DistributionControllers\ZoneAssignController@index');
@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth'],
         Route::get('makeBack/{id}','DistributionControllers\BackController@makeBack');
         Route::get('buscarSalidas','DistributionControllers\BackController@search');
         Route::resource('entradas','DistributionControllers\BackController');
+        Route::resource('salidas','DistributionControllers\OutController');
+        Route::post('/getRazons','DistributionControllers\OutController@getRazons');
 
         //STOCK
         Route::get('credito_ventas','StockControllers\CreditController@search');

@@ -28,6 +28,7 @@ class Back extends Model {
     {
         return $query->where('state','=',true);
     }
+
     public function scopeBranch($query)
     {
         $user=\Auth::user();

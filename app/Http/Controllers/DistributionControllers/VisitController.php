@@ -59,7 +59,7 @@ class VisitController extends Controller {
             return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
         $input= \Input::all();
-		$input= $input['zone'];
+        $input= $input['zone'];
         $visit =  new Visit();
         $this->getVisitHeader($input, $visit);
         $user=\Auth::user();
@@ -67,9 +67,9 @@ class VisitController extends Controller {
         foreach($input['sending'] as $order){
             $invoice =  new Order();
             $this->getInvoiceHeader($order, $user, $invoice,$visit->id);
-        foreach($order['products'] as $detail){
-            $invoice->products()->attach([$detail[0]], array('cant' => $detail[1],'price' => $detail[2]));
-        }}
+            foreach($order['products'] as $detail){
+                $invoice->products()->attach([$detail[0]], array('cant' => $detail[1],'price' => $detail[2]));
+            }}
         return ['state'=>true,'id'=>$visit->id];
 	}
 

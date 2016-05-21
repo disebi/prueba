@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <div class="col-xs-12">
+
        <div class="box">
                         <div class="box-header">
                           <h3 class="box-title">Editar un registro de {{$referencial}}</h3>
@@ -18,7 +18,7 @@
                                     @include('simpleRef.simple_referential_form',['submit'=>$submit])
                                 {!!Form::close()!!}
                      </div><!-- /.box -->
-    </div><!-- /.col -->
+
 @endsection
 
 @section('javascripts')

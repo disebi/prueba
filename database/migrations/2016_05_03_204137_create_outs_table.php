@@ -26,6 +26,7 @@ class CreateOutsTable extends Migration {
             $table->float('tanque');
             $table->text('comments');
             $table->boolean('state');
+            $table->process('state')->default(0);
             $table->timestamps();
             $table->foreign('work_id')  ->references('id')->on('work_orders');
             $table->foreign('drive_id') ->references('id')->on('drives');

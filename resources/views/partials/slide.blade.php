@@ -25,14 +25,20 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu animsition">
 
+            @if(\Auth::user()->hasAccess('dash_main.all') || \Auth::user()->hasAccess('dash_main.all'))
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Reportes Rapidos</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/home"><i class="fa fa-circle-o"></i> General</a></li>
+                 @if(\Auth::user()->hasAccess('dash_main.all'))
+                    <li><a href="/home"><i class="fa fa-circle-o"></i> Reportes</a></li>
+                 @elseif(\Auth::user()->hasAccess('dash_salesman.all'))
+                     <li><a href="/home/{{\Auth::user()->staff->id}}"><i class="fa fa-circle-o"></i> Reportes</a></li>
+                 @endif
                 </ul>
             </li>
+            @endif
             <li class="header">Departamentos</li>
             <li class="treeview">
                   <a href="#">
@@ -42,6 +48,7 @@
 
                                            </a>
                     <ul class="treeview-menu">
+
                         @if(\Auth::user()->hasAccess('assign.all'))
                         <li><a href="{{ action('DistributionControllers\ZoneAssignController@index') }}"><i class="fa fa-shopping-basket"></i> Asignar Zona</a></li>
                         @endif
@@ -55,10 +62,10 @@
                         <li><a href="{{ action('DistributionControllers\WorkController@index') }}"><i class="fa fa-shopping-basket"></i> Orden de Trabajo</a></li>
                         @endif
                         @if(\Auth::user()->hasAccess('out.all'))
-                        <li><a href=""><i class="fa fa-shopping-basket"></i> Salidas</a></li>
+                        <li><a href="{{ action('DistributionControllers\OutController@index') }}"><i class="fa fa-shopping-basket"></i> Salidas</a></li>
                         @endif
                         @if(\Auth::user()->hasAccess('back.all'))
-                        <li><a href=""><i class="fa fa-shopping-basket"></i> Entradas</a></li>
+                        <li><a href="{{ action('DistributionControllers\BackController@index') }}"><i class="fa fa-shopping-basket"></i> Entradas</a></li>
                         @endif
                          @if(\Auth::user()->hasAccess('sale.all'))
                         <li><a href="{{ action('DistributionControllers\SaleController@index') }}"><i class="fa fa-cubes"></i> Ventas</a></li>
@@ -205,7 +212,7 @@
                                                     </a>
                                                     <ul class="treeview-menu">
                                                     @if(\Auth::user()->hasAccess('report_remission.all'))
-                                                     <li><a href=""><i class="fa fa-cubes"></i> Reportes de remision</a></li>
+                                                     <li><a href="{{ action('ReportController@remissions') }}"><i class="fa fa-cubes"></i> Reportes de remision</a></li>
                                                      @endif
                                                     @if(\Auth::user()->hasAccess('report_mov.all'))
                                                      <li><a href=""><i class="fa fa-shopping-basket"></i> Reportes de Movimientos</a></li>

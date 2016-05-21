@@ -32,7 +32,8 @@ class BackController extends Controller {
             return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
         $user=\Auth::user();
         $model=Out::orderBy('updated_at','desc')
-            ->where('branch_id','=',$user->staff->branch_id)
+            ->branch()
+            ->pendent()
             ->where('state','=',true)->paginate(10);
          list($referencial, $independiente) = $this->getInfo();
         return view('backs.search',compact('model','referencial','independiente'));
@@ -71,8 +72,8 @@ class BackController extends Controller {
         if(!$this->permission)
             return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
-        $model=Order::findOrFail($id);
-        return view('orders.show',compact('model'));
+        $back=Back::findOrFail($id);
+        return view('backs.show',compact('back'));
     }
 
 
@@ -80,36 +81,27 @@ class BackController extends Controller {
     {
         if(!$this->permission)
             return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
-
         try{
             $user=\Auth::user();
-            $model=Order::find($id);
-            list($clients, $products) = $this->getCombos($model->visit_id);
-            $visit=$model->visit_id;
+            $model=Back::find($id);
+            $out=Out::find($model->out_id);
             list($referencial, $independiente) = $this->getInfo();
-            return view('orders.edit',compact('model','visit','clients','products','user','referencial','independiente'));
+            return view('backs.edit',compact('model','out','clients','products','user','referencial','independiente'));
         }catch(\Exception $e){
             return redirect()->back()->with('message','El registro no existe')
                 ->with('alert','error');
         }
     }
 
-
-    public function update(OrderRequest $request,$id)
+    public function update(Requests\BackRequest $request,$id)
     {
         if(!$this->permission)
             return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
-
         try{
             $user=\Auth::user();
-            $invoice =  Order::findOrFail($id);
+            $invoice =  Back::find($id);
             $this->getInvoiceHeader($request, $user, $invoice);
-            $invoice->products()->detach();
-            foreach($request['result'] as $detail){
-                $pieces = explode(",", $detail);
-                $invoice->products()->attach([$pieces[0]], array('cant' => $pieces[1],'price' => $pieces[2]));
-            }
-            return redirect()->to('/ordenes')->with('message','Se ha guardado con exito')->with('alert','success');
+            return redirect()->to('/entradas')->with('message','Se ha guardado con exito')->with('alert','success');
         }catch(\Exception $e){
             return redirect()->back()->with('message','El registro no existe')
                 ->with('alert','error');
@@ -122,14 +114,19 @@ class BackController extends Controller {
         if(!$this->permission)
             return redirect()->back()->with('message','No tiene los permisos asignados para acceder')->with('alert','error');
 
-        $purchase=Order::findOrFail($id);
+        $back=Back::findOrFail($id);
         $state=false;
-        if(!$purchase->state){
+        if(!$back->state){
             $state=true;
         }
-        $purchase->state =$state;
-        $purchase->save();
-        return redirect()->to('ordenes')->with('message','Se h  a cambiado de estado con exito')->with('alert','success');
+        $back->state =$state;
+        $back->save();
+        if(!$back->sate){
+           $out = Out::find($back->out_id);
+            $out->process = 0;
+            $out->save();
+        }
+        return redirect()->to('entradas')->with('message','Se h  a cambiado de estado con exito')->with('alert','success');
     }
 
     public function getInvoiceHeader(Requests\BackRequest $request, $user, $invoice)
@@ -143,6 +140,9 @@ class BackController extends Controller {
         $invoice->state = true;
         $invoice->comments = $input['comments'];
         $invoice->save();
+        $out = Out::find($request['out_id']);
+        $out->process = 1;
+        $out->save();
     }
 
     public function getInfo()

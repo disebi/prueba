@@ -24,7 +24,7 @@
 
                         </section>
                         <section class="content animsition">
-                         <div class="row animated fade-in">
+                         <div class="row-fluid animated fade-in">
                              @yield('content')
                           </div>
                         </section>

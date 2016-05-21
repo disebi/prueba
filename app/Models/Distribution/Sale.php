@@ -51,12 +51,12 @@ class Sale extends \Eloquent {
 
     public function scopeActive($query)
     {
-        return $query->where('state','=',true);
+        return $query->where('sales.state','=',true);
     }
     public function scopeBranching($query)
     {
         $user=\Auth::user();
-        return $query->where('branch_id','=',$user->staff->branch_id);
+        return $query->where('sales.branch_id','=',$user->staff->branch_id);
     }
 
     public function stamp()

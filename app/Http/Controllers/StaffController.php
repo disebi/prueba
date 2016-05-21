@@ -54,7 +54,7 @@ class StaffController extends Controller {
         $obj=$request->all();
 
         $credentials = ['email'=>$obj['email'],
-                        'password'=>'clave2adistri',
+                        'password'=>$obj['password'],
                         'name'=>$obj['nick'],
                         'role_id'=>$obj['role_list']];
 
@@ -122,6 +122,7 @@ class StaffController extends Controller {
         $credentials = ['email'=>$user['email'],
             'name'=>$obj['nick'],
             'role_id'=>$obj['role_list']];
+
         $staffCredentials = ['user_id'=>$user->id,
             'branch_id'=>$obj['branch_list'],
             'position_id'=>$obj['position_list'],

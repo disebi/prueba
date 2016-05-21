@@ -2,13 +2,13 @@
 
 @section('bread')
           <h1>
-            Ordenes
+            Remisiones
             <small>Reporte </small>
            </h1>
 
 @endsection
 @section('content')
- <div class="col-md-12">
+
          <div class="box box-widget">
                      <div class="box-header with-border">
                        <div>
@@ -36,7 +36,20 @@
                                                              <input name="date_end" id="date_end" type="hidden" value="{{ (isset($end) ? $end : null) }}"/>
                                                          </div>
                                                      </div>
-                         <div class="col-md-4">
+                     <div class="col-md-4">
+                    <div class="form-group">
+                                            {!! Form:: label ('branch_list','Sucursal')!!}
+                                            {!! Form:: select ('branch_list',$branches, isset($branch) ? $branch : null,['class'=>'form-control input-lg','id'=>'branch_list'])!!}
+                                        </div>
+                     </div>
+
+                     <div class="col-md-4">
+                                         <div class="form-group">
+                                                                 {!! Form:: label ('state','Estado')!!}
+                                                                 {!! Form:: select ('state',$states, isset($state) ? $state : null,['class'=>'form-control input-lg','id'=>'state_list'])!!}
+                                                             </div>
+                                          </div>
+                     <div class="col-md-4">
                          <div class="form-group">
                       {!! Form:: label ('actions','Acciones')!!}
                       <div class="form-actions">
@@ -49,9 +62,7 @@
                      </div>
 {{----}}
                    </div>
-         </div>
 
-           <div class="col-xs-12">
            @if(!empty($model) && isset($model))
                        <div class="box">
                          <div class="box-header">
@@ -63,11 +74,12 @@
 
                              <thead>
                                <tr>
-                                    <th>Vendedor</th>
-                                    <th>Total</th>
-                                    <th class="text-center">Cliente</th>
-                                    <th class="text-center">Zona</th>
+                                    <th>Responsable</th>
+                                    <th>Supervisor Destino</th>
+                                    <th class="text-center">Sucursal Origen</th>
+                                    <th class="text-center">Sucursal Destino</th>
                                     <th class="text-center">Proceso</th>
+                                    <th class="text-center">Fecha</th>
                                     <th class="text-center">Acciones</th>
                                </tr>
                              </thead>
@@ -75,19 +87,22 @@
                                @foreach($model as $order)
                                <tr>
                                  <td> {{$order->name.' '.$order->last_name}}</td>
-                                 <td> {{$order->total}}</td>
-                                 <td class="text-center"> {{$order->client}}</td>
-                                 <td class="text-center"> {{$order->zone}}</td>
+                                 <td> {{$order->nameto.' '.$order->last_nameto}}</td>
+                                 <td class="text-center"> {{$order->branch}}</td>
+                                 <td class="text-center"> {{$order->branchto}}</td>
                                  <td class="text-center">
-                                 @if($order->process == 1)
+                                 @if($order->process == 0)
                                  <label class="label label-warning">En espera</label>
+                                 @elseif($order->process == 1)
+                                 <label class="label label-warning">Enviados</label>
                                  @elseif($order->process ==2)
-                                   <label class="label label-primary">Siendo entregado</label>
+                                   <label class="label label-primary">Aceptados</label>
                                   @elseif($order->process ==3)
-                                   <label class="label label-success">Facturado</label>
+                                   <label class="label label-success">Concluidos</label>
                                    @endif
                                    </td>
-                                 <td class="text-center"><a href="/ordenes/{{$order->id}}" class="btn btn-default"><i class="fa fa-search"></i></a></td>
+                                   <td class="text-center"> {{$order->created_at}}</td>
+                                 <td class="text-center"><a href="/remisiones/{{$order->id}}" class="btn btn-default"><i class="fa fa-search"></i></a></td>
                                </tr>
                                @endforeach
                              </tbody>
@@ -102,7 +117,7 @@
                         @else
                                                 <p class="text-center">No existen datos para mostrar</p>
                                                 @endif
-                     </div><!-- /.col -->
+
 @endsection
 
 @include('partials._range')
@@ -110,5 +125,7 @@
 @section('javascripts')
 <script type="text/javascript">
 $("#staff_list").select2();
+$("#branch_list").select2();
+$("#state_list").select2();
 </script>
 @append

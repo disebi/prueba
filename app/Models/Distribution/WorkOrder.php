@@ -31,11 +31,27 @@ class WorkOrder extends Model {
 
     public function scopeActive($query)
     {
-        return $query->where('state','=',true);
+        return $query->where('work_orders.state','=',true);
     }
     public function scopeBranching($query)
     {
         $user=\Auth::user();
-        return $query->where('branch_id','=',$user->staff->branch_id);
+        return $query->where('work_orders.branch_id','=',$user->staff->branch_id);
+    }
+
+    public function scopePendent($query)
+    {
+        return $query->where('work_orders.process','=',0);
+    }
+
+    public function scopeAccepted($query)
+    {
+        return $query->where('work_orders.process','=',1);
+    }
+
+    public function setOut()
+    {
+         $this->process = 2;
+        $this->save();
     }
 }

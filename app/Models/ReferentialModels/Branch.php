@@ -10,6 +10,9 @@ class Branch extends \Eloquent {
     public function deposit(){
         return $this->hasOne('App\Models\ReferentialModels\Deposit');
     }
+    public function city(){
+        return $this->hasOne('App\Models\ReferentialModels\City');
+    }
 
     public function visit(){
         return $this->hasMany('App\Models\Distribution\Visit');
@@ -18,6 +21,15 @@ class Branch extends \Eloquent {
     public function orders()
     {
         return $this->hasMany('App\Models\Distribution\Order');
+    }
+    public function staff()
+    {
+        return $this->hasMany('App\Staff');
+    }
+
+    public function objective()
+    {
+        return $this->city->zone->sum('obj');
     }
 }
 

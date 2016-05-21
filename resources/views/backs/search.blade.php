@@ -5,7 +5,7 @@
 
 
 @section('content')
-  <div class="col-xs-12">
+
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Buscar</h3>
@@ -13,11 +13,11 @@
                 <div class="box-body">
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-            </div><!-- /.col -->
-  <div class="col-xs-12">
+
+        @if(!$model->isEmpty())
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Listas de registros de Compras</h3>
+                  <h3 class="box-title">Listas de registros de Salidas</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="tablalista" class="table table-bordered table-striped">
@@ -28,7 +28,9 @@
                         <th>Conductor</th>
                         <th>Vehiculo</th>
                         <th>km</th>
-                        <th>tanque</th>
+                        <th>Tanque</th>
+                        <th>Razon</th>
+                        <th>Fecha</th>
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -40,7 +42,14 @@
                         <td>{{$order->drive->description}}</td>
                         <td>{{$order->km}}</td>
                         <td>{{$order->tanque}}</td>
-                        <td> {{date_format($order->created_at,"d/m/Y")}}</td>
+                         @if($order->razon==0)
+                                                                           <td><span class="label label-warning">Otro</span></td>
+                                                                          @elseif($order->razon==1)
+                                                                          <td><span class="label label-success">Entrega</span></td>
+                                                                          @elseif($order->razon==2)
+                                                                             <td><span class="label label-info">Remision</span></td>
+                                                                          @endif
+                           <td> {{date_format($order->created_at,"d/m/Y")}}</td>
                         <td>
                            <a class="btn btn-primary" href="/makeBack/{{$order->id}}" ><i class="fa fa-plus"></i> </a>
                                                    </td>
@@ -55,6 +64,9 @@
                   {!! $model->render() !!}
                     </div>
               </div><!-- /.box -->
-            </div><!-- /.col -->
+              @else
+              <p class="text-danger text-center"> No existen salidas pendientes</p>
+              @endif
+
 @stop
 @include('...partials._functionMsj')

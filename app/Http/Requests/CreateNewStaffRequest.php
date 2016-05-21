@@ -50,8 +50,8 @@ class CreateNewStaffRequest extends Request {
                 "email" => "required|email|unique:users,email",
                 "nick" => "required|unique:users,name",
                 "ci" => "required|unique:staff,ci",
-//                "password" => "required|min:8",
-//                "password2" => "required|min:8|same:password",
+                "password" => "required|min:8",
+                "password2" => "required|min:8|same:password",
                 "branch_list" => "exists:branches,id",
                 "position_list" => "exists:cities,id"
             ];
@@ -72,11 +72,11 @@ class CreateNewStaffRequest extends Request {
             "email.email" => 'Favor completar con un email validio',
             "email.unique" => 'El correo ingresado ya esta siendo usado por otro usuario',
             "nick.unique" => 'El nick ingresado ya esta siendo usado por otro usuario',
-//            "password.required" => 'Favor completar con clave',
-//            "password.min" => 'La clave debe tener minimo 8 letras',
-//            "password2.min" => 'La clave debe tener minimo 8 letras',
-//            "password2.required" => 'Favor completar ambas clave',
-//            "password2.same" => 'Ambas claves deben de ser iguales',
+            "password.required" => 'Favor completar con clave',
+            "password.min" => 'La clave debe tener minimo 8 letras',
+            "password2.min" => 'La clave debe tener minimo 8 letras',
+            "password2.required" => 'Favor completar ambas clave',
+            "password2.same" => 'Ambas claves deben de ser iguales',
             "branch_list.required" => 'Favor seleccione una sucursal',
             "position_list.required" => 'Favor seleccione un cargo'
         ];

@@ -2,7 +2,7 @@
 @include('partials.bread._index',['button'=>action('ReferentialControllers'.$controlador.'Controller@create')])
 
 @section('content')
-<div class="col-xs-12">
+
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title">Listas de registros de {{$referencial}}</h3>
@@ -41,7 +41,7 @@
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-            </div><!-- /.col -->
+
 @stop
 
 @include('partials._paginate')

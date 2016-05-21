@@ -1,12 +1,15 @@
 @extends('app2')
 
+@section('bread')
+          <h1>
+            Dashboard
+            <small>Admin </small>
+           </h1>
 
+@endsection
 @section('content')
-  <section class="content-header">
-  <h2>Dashboard</h2>
-  </section>
-  <section class="content">
-  <div class="row">
+
+
   <div class="col-md-9">
     <div class="panel panel-success">
     				<div class="panel-heading">Informacion Semanal</div>
@@ -16,155 +19,110 @@
     			</div>
 
 
-           <div class="col-lg-3 col-xs-6">
-             <!-- small box -->
-             <div class="small-box bg-aqua">
-               <div class="inner">
-                 <h3>{{$order_count}}</h3>
+            <div class="col-md-4">
+                         <!-- small box -->
+                         <div class="small-box bg-aqua">
+                           <div class="inner">
+                             <h3>{{$order_count}}</h3>
 
-                 <p>Ordenes en el Mes</p>
-               </div>
-               <div class="icon">
-                 <i class="ion ion-bag"></i>
-               </div>
-               <a href="/ordenes" class="small-box-footer">Mas <i class="fa fa-arrow-circle-right"></i></a>
-             </div>
-           </div>
-           <!-- ./col -->
-           <div class="col-lg-3 col-xs-6">
-             <!-- small box -->
-             <div class="small-box bg-green">
-               <div class="inner">
-                 <h3>{{$visit_count}} </h3>
+                             <p>Ordenes en el Mes</p>
+                           </div>
+                           <div class="icon">
+                             <i class="ion ion-bag"></i>
+                           </div>
+                           <a href="/ordenes" class="small-box-footer">Mas <i class="fa fa-arrow-circle-right"></i></a>
+                         </div>
+                       </div>
+                       <!-- ./col -->
+                       <div class="col-md-4">
+                         <!-- small box -->
+                         <div class="small-box bg-green">
+                           <div class="inner">
+                             <h3>{{$visit_count}} </h3>
 
-                 <p>Visitas del Mes</p>
-               </div>
-               <div class="icon">
-                 <i class="ion ion-stats-bars"></i>
-               </div>
-               <a href="/visitas" class="small-box-footer">Mas <i class="fa fa-arrow-circle-right"></i></a>
-             </div>
-           </div>
-           <!-- ./col -->
-           <div class="col-lg-3 col-xs-6">
-             <!-- small box -->
-             <div class="small-box bg-yellow">
-               <div class="inner">
-                 <h3>44</h3>
+                             <p>Visitas del Mes</p>
+                           </div>
+                           <div class="icon">
+                             <i class="ion ion-stats-bars"></i>
+                           </div>
+                           <a href="/visitas" class="small-box-footer">Mas <i class="fa fa-arrow-circle-right"></i></a>
+                         </div>
+                       </div>
+                       <!-- ./col -->
+                       <div class="col-md-4">
+                         <!-- small box -->
+                         <div class="small-box bg-yellow">
+                           <div class="inner">
+                             <h3>{{number_format($sale_count,0,'.','.')}}</h3>
 
-                 <p>User Registrations</p>
-               </div>
-               <div class="icon">
-                 <i class="ion ion-person-add"></i>
-               </div>
-               <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-             </div>
-           </div>
-           <!-- ./col -->
-           <div class="col-lg-3 col-xs-6">
-             <!-- small box -->
-
-           </div>
-
-           <div class="col-lg-3 col-xs-6">
-                                 <!-- small box -->
-                                 <div class="small-box bg-red">
-                                   <div class="inner">
-                                     <h3>65</h3>
-
-                                     <p>Unique Visitors</p>
-                                   </div>
-                                   <div class="icon">
-                                     <i class="ion ion-pie-graph"></i>
-                                   </div>
-                                   <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                                 </div>
-                               </div>
+                             <p>Ventas</p>
+                           </div>
+                           <div class="icon">
+                             <i class="ion ion-person-add"></i>
+                           </div>
+                           <a href="/ventas" class="small-box-footer">Ver mas<i class="fa fa-arrow-circle-right"></i></a>
+                         </div>
+                       </div>
+                       <!-- ./col -->
 
             <div class="col-md-12">
-            <div class="box box-info">
-                                                       <div class="box-header with-border">
-                                                         <h3 class="box-title">Ordenes de Trabajo para Hoy</h3>
+             <div class="box box-info">
+                                                                   <div class="box-header with-border">
+                                                                     <h3 class="box-title">Ordenes de Trabajo para Hoy</h3>
 
-                                                         <div class="box-tools pull-right">
-                                                           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                                           </button>
-                                                           <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                                                         </div>
-                                                       </div>
-                                                       <!-- /.box-header -->
-                                                       <div class="box-body">
-                                                         <div class="table-responsive">
-                                                           <table class="table no-margin">
-                                                             <thead>
-                                                             <tr>
-                                                               <th>Order ID</th>
-                                                               <th>Item</th>
-                                                               <th>Status</th>
-                                                               <th>Camion</th>
-                                                             </tr>
-                                                             </thead>
-                                                             <tbody>
-                                                             <tr>
-                                                               <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                               <td>Call of Duty IV</td>
-                                                               <td><span class="label label-success">Shipped</span></td>
-                                                              <td> - </td>
-                                                             </tr>
-                                                             <tr>
-                                                               <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                               <td>Samsung Smart TV</td>
-                                                               <td><span class="label label-warning">Pending</span></td>
-                                                               <td> - </td>
-                                                             </tr>
-                                                             <tr>
-                                                               <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                               <td>iPhone 6 Plus</td>
-                                                               <td><span class="label label-danger">Delivered</span></td>
-                                                               <td> - </td>
-                                                             </tr>
-                                                             <tr>
-                                                               <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                               <td>Samsung Smart TV</td>
-                                                               <td><span class="label label-info">Processing</span></td>
-                                                               <td> - </td>
-                                                             </tr>
-                                                             <tr>
-                                                               <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                               <td>Samsung Smart TV</td>
-                                                               <td><span class="label label-warning">Pending</span></td>
-                                                               <td> - </td>
-                                                             </tr>
-                                                             <tr>
-                                                               <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                               <td>iPhone 6 Plus</td>
-                                                               <td><span class="label label-danger">Delivered</span></td>
-                                                              <td> - </td>
-                                                             </tr>
-                                                             <tr>
-                                                               <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                               <td>Call of Duty IV</td>
-                                                               <td><span class="label label-success">Shipped</span></td>
-                                                              <td> - </td>
-                                                             </tr>
-                                                             </tbody>
-                                                           </table>
-                                                         </div>
-                                                         <!-- /.table-responsive -->
-                                                       </div>
-                                                       <!-- /.box-body -->
-                                                      <div class="box-footer clearfix">
-                                                                    <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-                                                                    <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-                                                                  </div>
-                                                                  <!-- /.box-footer -->
-                                                                </div>
+                                                                     <div class="box-tools pull-right">
+                                                                       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                                                       </button>
+                                                                       <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                                                     </div>
+                                                                   </div>
+                                                                   <!-- /.box-header -->
+                                                                   <div class="box-body">
+                                                                     <div class="table-responsive">
+                                                                       <table class="table no-margin">
+                                                                         <thead>
+                                                                         <tr>
+                                                                           <th>Orden</th>
+                                                                           <th>Zona</th>
+                                                                           <th>Estado</th>
+                                                                           <th>Fecha</th>
+                                                                         </tr>
+                                                                         </thead>
+                                                                         <tbody>
+                                                                         @foreach($works as $work)
+                                                                         <tr>
+                                                                           <td><a href="/ordenes_trabajo/{{$work->id}}">{{$work->id}}</a></td>
+                                                                           <td>{{$work->visit->zone->description}}</td>
+                                                                           @if($work->process==0)
+                                                                           <td><span class="label label-danger">En espera</span></td>
+                                                                           @elseif($work->process==1)
+                                                                           <td><span class="label label-success">Aceptado</span></td>
+                                                                           @elseif($work->process==2)
+                                                                           <td><span class="label label-success">Concluido</span></td>
+                                                                           @endif
+                                                                          <td> {{$work->created_at->format('d-m-Y')}} </td>
+                                                                         </tr>
+                                                                         @endforeach
+                                                                         </tbody>
+                                                                       </table>
+                                                                     </div>
+                                                                     <!-- /.table-responsive -->
+                                                                   </div>
+                                                                   <!-- /.box-body -->
+                                                                  <div class="box-footer clearfix">
+                                                                                <a href="/ordenes_trabajo/create" class="btn btn-sm btn-info btn-flat pull-left">Nueva Orden</a>
+                                                                                <a href="/ordenes_trabajo" class="btn btn-sm btn-default btn-flat pull-right">Ver todas</a>
+                                                                              </div>
+                                                                              <!-- /.box-footer -->
+                                                                            </div>
             </div>
+
+
            <!-- ./col -->
 
   </div>
   <div class="col-md-3">
-  <div class="col-md-12">
+
     <div class="panel panel-warning">
       				<div class="panel-heading">Mejores Vendedores</div>
       				<div class="panel-body">
@@ -174,24 +132,23 @@
                             <thead>
                               <tr>
                                 <th>Nombre</th>
-                                <th>Venta de Hoy</th>
+                                <th>Venta</th>
                               </tr>
                             </thead>
                             <tbody>
-                            @for($x=0; $x<10; $x++)
+                            @foreach($top as $salesman)
                               <tr>
-                                <td>John</td>
-                                <td>Doe</td>
+                                <td><a href="/homeSalesmen/{{$salesman->id}}"> {{$salesman->name.' '.$salesman->last_name}}</a></td>
+                                <td>{{number_format($salesman->sum,0,'','.')}}</td>
 
                               </tr>
-                            @endfor
+                            @endforeach
                             </tbody>
                           </table>
       				</div>
       			</div>
-  </div>
-      			<div class="col-md-12">
-      			<div class="panel panel-success">
+
+    <div class="panel panel-success">
                             <div class="panel-heading ">
                               Compras hechas
 
@@ -222,14 +179,28 @@
                             </div>
                             <!-- /.box-footer -->
                           </div>
-      			</div>
+
 
   </div>
-  </div>
+  <div class="col-md-12">
+ <div class="panel panel-success">
+                              				<div class="panel-heading">Agenda</div>
+                              				<div class="panel-body">
 
-  </section>
+                                              <ul class="users-list clearfix">
+                                              @foreach ($salesmen as $salesman)
+                                                                  <li>
+                                                                    <img src="/img/user.png"  height="90px" width="90px" alt="User Image">
+                                                                    <a class="users-list-name" href="/homeSalesmen/{{$salesman->id}}">{{$salesman->name.' '.$salesman->last_name}}</a>
+                                                                    <span class="users-list-date">{{$salesman->position->description}}</span>
+                                                                  </li>
+                                               @endforeach
+                                              </ul>
+                              				</div>
+                              			</div>
 
-@stop
+</div>
+@append
 
 @section('javascripts')
 <script src="/js/amcharts/amcharts.js"></script>
@@ -239,101 +210,29 @@
 
 $( document ).ready(function() {
 
- barGeneralView ('chartdiv',[[1000000,500000,600000,900000,1700000,1600000,1000000],[2000000,2000000,2000000,2000000,2000000,2000000,2000000],[3000000,3000000,3000000,3000000,3000000,3000000,3000000]],['#669900','#ff3399','#ffcc00'],'titulo',7);
+ barGeneralView ('chartdiv',{!!json_encode($month)!!}, {{$obj}} ,
+
+                             ['#669900','#ff3399','#ffcc00'],'Mes');
 });
+
+
 function showDay(days){
     var d = new Date();
     d.setDate(d.getDate() - days);
     return ["Dom","Lun","Mar","Mierc","Juev","Vier","Sab"][d.getUTCDay()];
 }
-function barGeneralView (div,sales,color,title,days,month){
+function barGeneralView (div,sales,obj,color,title){
     var data= [];
-    var hoydate = new Date();
-    var hoy= hoydate.getDate();
+    var obj_lin=(Number(obj)/30).toFixed(2);
 
-    if(month==null){
-        for (var x= 0;x<days;x++){
-
-            if(x==(days-1)){
-                if (sales[1][x] == 1) {
+        for (var x= 0;x<sales.length; x++){
                     data.push ({
-                        "dia": 'Hoy',
-                        "monto": (sales[0][x]/1000000).toFixed(2),
-                        "alpha": 0.2,
-                        "dashLengthColumn": 5
-                    })
-
-                } else {
-                    data.push ( {
-                        "dia": 'Hoy',
-                        "monto": (sales[0][x]/1000000).toFixed(2),
-                        "objetivo": (sales[1][x]/1000000).toFixed(2),
-                        "dashLengthColumn": 5,
-                        "alpha": 0.2
-                    })
-                }
-            }else {
-                if (sales[1][x] == 1) {
-                    data.push ( {
-                        "dia": showDay(6 - x),
-                        "monto": (sales[0][x] / 1000000).toFixed(2)
-                    })
-
-                } else {
-                    data.push ({
-                        "dia": showDay(6 - x),
-                        "monto": (sales[0][x] / 1000000).toFixed(2),
-                        "objetivo": (sales[1][x] / 1000000).toFixed(2)
-                    })
-                }
-            }
-            if(sales[2][x]!=1){
-                data[x]["tendencia"]=(sales[2][x]/1000000).toFixed(2)
-            }
-        }
-    }else{
-        for (var x= 0;x<days;x++){
-
-            if(x==(hoy-1)){
-                if (sales[1][x] == 1) {
-                    data.push ({
-                        "dia": 'Hoy',
-                        "monto": Math.round(sales[0][x]/1000000),
-                        "alpha": 0.2,
-                        "dashLengthColumn": 5
-                    })
-
-                } else {
-                    data.push ( {
-                        "dia": 'Hoy',
-                        "monto": Math.round(sales[0][x]/1000000),
-                        "objetivo": Math.round(sales[1][x]/1000000),
-                        "dashLengthColumn": 5,
-                        "alpha": 0.2
-                    })
-                }
-            }else {
-                if (sales[1][x] == 1) {
-                    data.push ( {
                         "dia": x+1,
-                        "monto": Math.round(sales[0][x] / 1000000)
-
+                        "monto": sales[x],
+                       "objetivo": obj_lin
                     })
-
-                } else {
-                    data.push ({
-                        "dia":x+1,
-                        "monto": Math.round(sales[0][x] / 1000000),
-                        "objetivo": Math.round(sales[1][x] / 1000000)
-                    })
-                }
-            }
-            if(sales[2][x]!=1){
-                data[x]["tendencia"]=Math.round(sales[2][x]/1000000)
-            }
         }
-    }
-
+console.log(data);
 
     AmCharts.makeChart(div, {
         "type"         : "serial",
@@ -377,7 +276,7 @@ function barGeneralView (div,sales,color,title,days,month){
         },
         "graphs": [{
             "alphaField": "alpha",
-            "balloonText": "<span style='font-size:12px;'>[[title]] en [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
+            "balloonText": "<span style='font-size:12px;'>[[title]] en [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]] </span>",
             "fillAlphas": 1,
             "title": "Monto",
             "type": "column",
@@ -385,7 +284,7 @@ function barGeneralView (div,sales,color,title,days,month){
             "dashLengthField": "dashLengthColumn"
         }, {
             "id": "graph2",
-            "balloonText": "<span style='font-size:12px;'>[[title]] en [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
+            "balloonText": "<span style='font-size:12px;'>[[title]] en [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]] </span>",
             "bullet": "round",
             "lineThickness": 3,
             "bulletSize": 7,
@@ -397,21 +296,7 @@ function barGeneralView (div,sales,color,title,days,month){
             "lineAlpha": 1,
             "title": "Objetivo",
             "valueField": "objetivo"
-        },{
-            "id": "graph3",
-            "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
-            "bullet": "round",
-            "lineThickness": 3,
-            "bulletSize": 7,
-            "bulletBorderAlpha": 1,
-            "bulletColor": "#FFFFFF",
-            "useLineColorForBulletBorder": true,
-            "bulletBorderThickness": 3,
-            "fillAlphas": 0,
-            "lineAlpha": 1,
-            "title": "Tendencia",
-            "valueField": "tendencia"
-            }],
+        }],
         "categoryField": "dia",
         "categoryAxis": {
             "position":"top",

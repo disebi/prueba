@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Distribution\Sale;
+use App\Models\ReferentialModels\Branch;
 use App\Models\ReferentialModels\Zone;
 use App\Services\Reports;
 use App\Staff;
@@ -76,6 +77,29 @@ class ReportController extends Controller {
       }
       return view('reports.orders');
 }
+  public function remissions(){
+      $input=\Input::all();
+      $branches = Branch::where('id', '!=', \Auth::user()->staff->branch_id)->lists('description','id');
+      $states = [
+          4=>'Todos',
+          0=>'En espera',
+          1=>'Enviados',
+          2=>'Aceptados',
+          3=>'Concluidos',
+      ];
+      if(isset($input['date_start'])){
+          $report=new Reports($input);
+          if(isset($input['download']))
+              $report->remissions_download();
+          $model = $report->remissions($input);
+          list($start, $end) = $this->getDates($input);
+          $branch=$input['branch_list'];
+          $state=$input['state'];
+
+          return view('reports.remissions',compact('model','start','state','end','branch','branches','states'));
+      }
+      return view('reports.remissions',compact('branches','states'));
+}
 
     /**
      * @param $input
@@ -83,6 +107,7 @@ class ReportController extends Controller {
      */
     public function getDates($input)
     {
+        $end='';
         if (isset($input['date_start'])) {
             $start = $input['date_start'];
         }

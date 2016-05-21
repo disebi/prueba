@@ -63,7 +63,6 @@ class Reports {
         $this->spread($sql,'Comision',"Nombre;Apellido;Total;zona;porcentaje;ganancia; Fecha");
     }
 
-
     function salesman(){
 
         $input = $this->input;
@@ -114,7 +113,6 @@ class Reports {
     }
 
     function orders(){
-
         $input = $this->input;
         list($input, $date_to) = $this->getDateRange($input);
 
@@ -194,6 +192,45 @@ class Reports {
         $this->spread($sql,'Visitas',"Visita;Nombre;Apellido;Zona;Nro Ordenes;Total;Process");
     }
 
+    function remissions(){
+
+        $input = $this->input;
+        list($input, $date_to) = $this->getDateRange($input);
+
+        $operation = $input['state'] == 4 ? '!=' : '=';
+        $sql=\DB::table('remissions')
+            ->select(\DB::raw('remissions.id, staff.name, staff.last_name ,staff_to.name nameto, branches.description branch, branch_to.description branchto, staff_to.last_name last_nameto, remissions.process, remissions.created_at'))
+            ->join('staff','remissions.staff_id', '=','staff.id')
+            ->join('staff as staff_to','remissions.staff_to', '=','staff_to.id')
+            ->join('branches','remissions.branch_id', '=','branches.id')
+            ->join('branches as branch_to','remissions.branch_to', '=','branch_to.id')
+            ->where('remissions.created_at', '>=',$input['date_start'])
+            ->where('remissions.created_at', '<=',$date_to->toDateString())
+            ->where('remissions.branch_id', '=',\Auth::user()->staff->branch_id)
+            ->where('remissions.process',$operation, $input['state'])
+            ->paginate(40);
+        return $sql;
+    }
+
+    function remissions_download(){
+        $input = $this->input;
+        list($input, $date_to) = $this->getDateRange($input);
+
+        $operation = $input['state'] == 4 ? '!=' : '=';
+        $sql=\DB::table('remissions')
+            ->select(\DB::raw('remissions.id, staff.name, staff.last_name ,staff_to.name nameto, staff_to.last_name last_nameto, branches.description branch, branch_to.description branchto, remissions.process, remissions.created_at'))
+            ->join('staff','remissions.staff_id', '=','staff.id')
+            ->join('staff as staff_to','remissions.staff_to', '=','staff_to.id')
+            ->join('branches','remissions.branch_id', '=','branches.id')
+            ->join('branches as branch_to','remissions.branch_to', '=','branch_to.id')
+            ->where('remissions.created_at', '>=',$input['date_start'])
+            ->where('remissions.created_at', '<=',$date_to->toDateString())
+            ->where('remissions.branch_id', '=',\Auth::user()->staff->branch_id)
+            ->where('remissions.process',$operation, $input['state'])
+            ->get();
+        $this->spread($sql,'Remisiones',"Remision;Nombre;Apellido;Nombre Recibio; Apellido Recibio;Origen;Destino;Proceso;Fecha");
+    }
+
     public function getDateRange($input)
     {
         if ($input['date_start'] == "")
@@ -203,6 +240,9 @@ class Reports {
         $date_to = Carbon::createFromFormat('Y-m-d', $input['date_end'])->addDay(1)->hour(0)->minute(0)->second(0);
         return array($input, $date_to);
     }
+
+
+
 
 
 }

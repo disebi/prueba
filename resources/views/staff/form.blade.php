@@ -108,6 +108,24 @@
   </div>
 </div>
 
+@if(!isset($user))
+<div class="control-group">
+<label class="col-md-4 control-label">Password</label>
+<div class="controls">
+{!! Form:: text ('password', null,['placeholder'=>'ingresar clave',  'class'=>'form-control'])!!}
+<input placeholder="ingresar la clave" type="password" class="form-control" name="password2">
+							<p class="help-block">Clave del empleado</p>
+  </div>
+</div>
+
+<div class="control-group">
+<label class="col-md-4 control-label">Confirmar Password</label>
+<div class="controls">
+{!! Form:: text ('password2', null,['placeholder'=>'ingresar clave',  'class'=>'form-control'])!!}
+							<p class="help-block">Clave del empleado</p>
+  </div>
+</div>
+@endif
 </div>
 
 </div>
